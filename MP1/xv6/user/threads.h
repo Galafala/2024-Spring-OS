@@ -18,11 +18,7 @@ struct thread {
     struct thread *next;
     
     // task part
-    jmp_buf task_envs[task_num]; // for task function
-    jmp_buf task_return_envs[task_num]; // for task return
-    int task_sets[task_num]; // 1: indicate jmp_buf (task_env) has been set, 0: indicate jmp_buf (task_env) not set
-    void* tasks[task_num];
-    void* task_args[task_num];
+    struct task *tasks[task_num];
     int task_id;
 };
 
@@ -37,14 +33,14 @@ void thread_start_threading(void);
 // part 2
 void thread_assign_task(struct thread *t, void (*f)(void *), void *arg);
 
-typedef struct{
+struct task{
     void (*fp)(void *arg);
     void *arg;
     jmp_buf env;
     int buf_set;
-}task;
+};
 
-task *task_create(void (*f)(void *), void *arg);
+struct task *task_create(void (*f)(void *), void *arg);
 void push(struct thread *t);
 void pop(struct thread *t);
 #endif // THREADS_H_
