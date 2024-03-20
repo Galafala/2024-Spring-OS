@@ -19,15 +19,15 @@ struct thread {
     
     // task part
     struct task *tasks;
-    struct task *current_task;
+    jmp_buf task_env; // for task function
+    int task_buf_set; // 1: indicate jmp_buf (task_env) has been set, 0: indicate jmp_buf (task_env) not set
 };
 
 struct task{ // added
     void (*fp)(void *arg);
     void *arg;
-    jmp_buf env; // for task function
-    int buf_set; // 1: indicate jmp_buf (env) has been set, 0: indicate jmp_buf (env) not set
     int executed;
+    int yielded;
     struct task *previous;
 };
 

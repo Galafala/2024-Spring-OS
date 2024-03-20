@@ -1,5 +1,26 @@
-*.o
 *.json
-*.d
 *.zip
 *.pptx
+
+# LaTeX files
+*.tex
+*.dvi
+*.idx
+*.aux
+*.log
+*.ind
+*.ilg
+
+# Object files, dependency files, assembly files, symbol files
+*/*.o
+*/*.d
+*/*.asm
+*/*.sym
+
+# Specific files
+$U/initcode
+$U/initcode.out
+$K/kernel
+fs.img
+mkfs/mkfs
+.gdbinit

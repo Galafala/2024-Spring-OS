@@ -5,7 +5,6 @@
 #include "user/setjmp.h"
 // TODO: necessary defines, if any
 
-#define task_num 128
 struct thread {
     void (*fp)(void *arg);
     void *arg;
@@ -14,12 +13,22 @@ struct thread {
     jmp_buf env; // for thread function
     int buf_set; // 1: indicate jmp_buf (env) has been set, 0: indicate jmp_buf (env) not set
     int ID;
+    int executed;
     struct thread *previous;
     struct thread *next;
     
     // task part
-    struct task *tasks[task_num];
-    int task_id;
+    struct task *tasks;
+    struct task *current_task;
+};
+
+struct task{ // added
+    void (*fp)(void *arg);
+    void *arg;
+    jmp_buf env; // for task function
+    int buf_set; // 1: indicate jmp_buf (env) has been set, 0: indicate jmp_buf (env) not set
+    int executed;
+    struct task *previous;
 };
 
 struct thread *thread_create(void (*f)(void *), void *arg);
@@ -33,14 +42,7 @@ void thread_start_threading(void);
 // part 2
 void thread_assign_task(struct thread *t, void (*f)(void *), void *arg);
 
-struct task{
-    void (*fp)(void *arg);
-    void *arg;
-    jmp_buf env;
-    int buf_set;
-};
-
-struct task *task_create(void (*f)(void *), void *arg);
-void push(struct thread *t);
-void pop(struct thread *t);
+struct task *task_create(void (*f)(void *), void *arg); // added
+void push(struct thread *t, void (*f)(void *), void *arg); // added
+void pop(); // added
 #endif // THREADS_H_

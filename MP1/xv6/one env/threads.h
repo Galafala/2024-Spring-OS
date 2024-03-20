@@ -25,8 +25,6 @@ struct thread {
 struct task{ // added
     void (*fp)(void *arg);
     void *arg;
-    jmp_buf env; // for task function
-    int buf_set; // 1: indicate jmp_buf (env) has been set, 0: indicate jmp_buf (env) not set
     int executed;
     struct task *previous;
 };
@@ -37,6 +35,7 @@ void thread_yield(void);
 void dispatch(void);
 void schedule(void);
 void thread_exit(void);
+void task_exit(void); // added
 void thread_start_threading(void);
 
 // part 2

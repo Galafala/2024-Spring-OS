@@ -23,7 +23,7 @@ struct thread *thread_create(void (*f)(void *), void *arg){
     t->executed = 0;
 
     t->tasks = NULL;
-    // t->task_buf_set = 0;
+    t->task_buf_set = 0;
     id++;
     return t;
 }
@@ -31,8 +31,8 @@ struct task *task_create(void (*f)(void *), void *arg){
     struct task *t = (struct task*) malloc(sizeof(struct task));
     t->fp = f;
     t->arg = arg;
-    t->buf_set = 0;
     t->executed = 0;
+    t->yielded = 0;
     t->previous = NULL;
     return t;
 }
@@ -52,86 +52,65 @@ void thread_add_runqueue(struct thread *t){
 }
 void thread_yield(void){
     //TODO 
-    if (current_thread->tasks)
-    {   
-        if (current_thread->current_task->executed)
-        {
-            if (setjmp(current_thread->current_task->env) == 0)
-            {
-                schedule();
-                dispatch();
-            }
-        }
-        else
-        {
-            if (setjmp(current_thread->env) == 0)
-            {
-                schedule();
-                dispatch();
-            }
-        }
-    }
-    else
-    {
-        if (setjmp(current_thread->env) == 0)
-        {
+    if (!current_thread->tasks){
+        if (setjmp(current_thread->env) == 0){
             schedule();
             dispatch();
         }
     }
-    
+    else{
+        if (setjmp(current_thread->task_env) == 0){
+            current_thread->tasks->yielded = 1;
+            schedule();
+            dispatch();
+        }
+        else{
+            pop();
+            dispatch();
+        }
+    }
 }
 void dispatch(void){
     // TODO
-    if (!current_thread->buf_set) // if the jmp_buf has been set
-    {
+    if (!current_thread->buf_set){ // if the jmp_buf has been set
         current_thread->buf_set = 1; // set the jmp_buf
-        if (setjmp(current_thread->env) == 0)
-        {
+        if (setjmp(current_thread->env) == 0){
             current_thread->env->sp = (unsigned long)current_thread->stack_p; // set the stack pointer
             longjmp(current_thread->env, 1);
         }
     }
-    if (current_thread->tasks && !current_thread->tasks->buf_set)
-    { 
-        current_thread->tasks->buf_set = 1;
-        if (setjmp(current_thread->tasks->env) == 0)
-        {   
-            if (current_thread->current_task->executed)
-            {   
-                current_thread->tasks->env->sp = (unsigned long)current_thread->current_task->env->sp;
-            }
-            else
-            {
-                current_thread->tasks->env->sp = (unsigned long)current_thread->env->sp;
-            }
-            longjmp(current_thread->tasks->env, 1);
-        }
-        current_thread->current_task = current_thread->tasks;
-    }
-    if (current_thread->tasks && current_thread->current_task->buf_set)
-    {   
-        if (!current_thread->current_task->executed)
-        {   
-            current_thread->current_task->executed = 1;
-            current_thread->current_task->fp(current_thread->current_task->arg); // task function
-            pop();
-            dispatch();
-        }
-        else
-        {
-            longjmp(current_thread->current_task->env, 1);
+    if (current_thread->tasks && !current_thread->task_buf_set){
+        current_thread->task_buf_set = 1;
+        if (setjmp(current_thread->task_env) == 0){
+            current_thread->task_env->sp = (unsigned long)current_thread->env->sp;
+            longjmp(current_thread->task_env, 1);
         }
     }
-    else if (!current_thread->executed)
-    {
+    if (current_thread->tasks && current_thread->task_buf_set){
+        if (!current_thread->tasks->executed){
+            current_thread->tasks->executed = 1;
+            current_thread->tasks->fp(current_thread->tasks->arg); // task function
+            if (current_thread->tasks->yielded){
+                longjmp(current_thread->task_env, 1);
+            }
+            else{
+                pop();
+                dispatch();
+            }
+        }
+        else{
+            longjmp(current_thread->task_env, 1);
+        }
+    }
+    else if (!current_thread->executed){
         current_thread->executed = 1;
+        current_thread->task_buf_set = 0;
         current_thread->env->ra = (unsigned long)thread_exit;
         current_thread->fp(current_thread->arg); // thread function
         thread_exit();
     }
-    else
-    {
+    else{
+        current_thread->task_buf_set = 0;
         longjmp(current_thread->env, 1);
     }
 }
@@ -179,12 +158,10 @@ void push(struct thread *t, void (*f)(void *), void *arg){
     }
     else{
         t->tasks = tmp;
-        t->current_task = tmp;
     }
 }
 void pop(){
     struct task *tmp = current_thread->tasks;
     free(tmp);
     current_thread->tasks = current_thread->tasks->previous;
-    current_thread->current_task = current_thread->tasks;
 }

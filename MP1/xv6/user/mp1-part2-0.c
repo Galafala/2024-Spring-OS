@@ -4,10 +4,22 @@
 
 #define NULL 0
 
+// void task2(void *arg)
+// {   
+//     int i = *(int *) arg;
+//     while (i<105){
+//         printf("task 2: %d\n", i++);
+//         // printf("next\n");
+//         if (i % 4 == 3){
+//             thread_yield();
+//         }
+//     }
+// }
 void task2(void *arg)
-{
+{   
     int i = *(int *) arg;
     printf("task 2: %d\n", i);
+    // printf("next\n");
     if (i % 4 == 3){
         thread_yield();
     }
