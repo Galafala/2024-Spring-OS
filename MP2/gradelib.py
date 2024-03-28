@@ -17,7 +17,7 @@ TOTAL = POSSIBLE = 0
 PART_TOTAL = PART_POSSIBLE = 0
 CURRENT_TEST = None
 
-def test(points, title=None, parent=None):
+def test(points, title=None, parent=None, base="qemu"):
     """Decorator for declaring test functions.  If title is None, the
     title of the test will be derived from the function name by
     stripping the leading "test_" and replacing underscores with
@@ -52,7 +52,7 @@ def test(points, title=None, parent=None):
             try:
                 if parent_failed:
                     raise AssertionError('Parent failed: %s' % parent.__name__)
-                fn()
+                fn(title, base)
             except AssertionError as e:
                 fail = str(e)
 

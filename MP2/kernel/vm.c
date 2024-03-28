@@ -632,16 +632,22 @@ uint64 calculate_va(int index, int level, uint64 preVa) {
     return va;
 }
 
-void print_format(pte_t *pte, uint64 va, int page_num, int level, int isLast){
+void print_format(pte_t *pte, uint64 va, int page_num, int level, int isLastOne, int isLastTwo){
   if (level == 0){
     printf("+-- %d: ", page_num);
   }
-  else {
-    if (isLast) printf(" ");
+  else if (level == 1){
+    if (isLastOne) printf(" ");
     else printf("|");
-    int degree = level * 4 - 1;
-    for (int i = 0; i < degree; i++) printf(" ");
-    printf("+-- %d: ", page_num);
+    printf("   +-- %d: ", page_num);
+  }
+  else if (level == 2){
+    if (isLastOne) printf("    ");
+    else printf("|   ");
+    if (isLastTwo) printf(" ");
+    else printf("|");
+    printf("   +-- %d: ", page_num);
+
   }
   if (*pte & PTE_V) {
     printf("pte=%p va=%p pa=%p", pte, va, PTE2PA(*pte));
@@ -661,25 +667,30 @@ void print_format(pte_t *pte, uint64 va, int page_num, int level, int isLast){
   printf("\n");
 }
 
-void vmTraversal(pagetable_t pagetable, int level, uint64 preVa, int last, int isLast) {
+void vmTraversal(pagetable_t pagetable, int level, uint64 preVa, int lastOne, int lastTwo, int isLastOne, int isLastTwo) {
   if (level > 2) return;
+  if (level == 0) for(int i = 0; i < 512; i++) if (pagetable[i]) lastOne = i;
+  if (level == 1) for(int i = 0; i < 512; i++) if (pagetable[i]) lastTwo = i;
   for (int i = 0; i < 512; i++) {
     pte_t *pte = &pagetable[i];
     if (!*pte) continue;
     if (level == 0) {
       preVa = 0;
-      isLast = (i == last) ? 1 : 0;
+      isLastOne = (i == lastOne);
+    }
+    else if (level == 1) {
+      isLastTwo = (i == lastTwo);
     }
     uint64 va = calculate_va(i, level, preVa);
-    print_format(pte, va, i, level, isLast);
-    vmTraversal((pagetable_t)PTE2PA(*pte), level+1, va, last, isLast);
+    print_format(pte, va, i, level, isLastOne, isLastTwo);
+    vmTraversal((pagetable_t)PTE2PA(*pte), level+1, va, lastOne, lastTwo, isLastOne, isLastTwo);
   }
 }
 
 void vmprint(pagetable_t pagetable) {
   /* TODO */
-  int last = 0;
-  for (int i = 0; i < 512; i++) if (pagetable[i]) last = i;
+  // int last = 0;
+  // for (int i = 0; i < 512; i++) if (pagetable[i]) last = i;
   printf("page table %p\n", pagetable);
-  vmTraversal(pagetable, 0, 0, last, 0);
+  vmTraversal(pagetable, 0, 0, 0, 0, 0, 0);
 }

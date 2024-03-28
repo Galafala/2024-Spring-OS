@@ -221,7 +221,12 @@ UPROGS=\
 	$U/_mp2_2\
 	$U/_mp2_3\
 	$U/_mp2_4\
-	$U/_mp2_5
+	$U/_mp2_5\
+	$U/_custom_1\
+	$U/_custom_2\
+	$U/_custom_3\
+	$U/_custom_4\
+	$U/_custom_5
 
 
 
