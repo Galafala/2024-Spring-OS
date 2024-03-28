@@ -28,10 +28,6 @@ int handle_pgfault() {
   /* TODO */
   /* Find the address that caused the fault */
   uint64 base = PGROUNDDOWN(r_stval());
-  // pagetable_t pagetable = myproc()->pagetable;
-  // char *pa = kalloc();
-  // memset(pa, 0, PGSIZE);
-  // mappages(pagetable, base, PGSIZE, (uint64)pa, PTE_U|PTE_R|PTE_W|PTE_X);
   madvise(base, PGSIZE, MADV_WILLNEED);
   return 0;
 }

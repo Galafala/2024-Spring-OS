@@ -15,9 +15,9 @@
 // you may want to declare page replacement buffer here
 // or other files
 #ifdef PG_REPLACEMENT_USE_LRU
-static lru_t *lru = 0;
+lru_t lru;
 #elif defined(PG_REPLACEMENT_USE_FIFO)
-static queue_t *q = 0;
+queue_t q;
 #endif
 
 /*
@@ -113,17 +113,42 @@ walk(pagetable_t pagetable, uint64 va, int alloc)
   // NTU OS 2024
   // pte is accessed, so determine how
   // it affects the page replacement buffer here
+  
+  if (!(*pte & PTE_U)) return pte;
+  if (va == 0 || va == 0x1000 || va == 0x2000) return pte;
   #ifdef PG_REPLACEMENT_USE_LRU
   // TODO
-  if (!lru) {
-    lru = (lru_t *)kalloc();
-    lru_clear(lru);
+  int idx = lru_find(&lru, (uint64)pte);
+  if (idx != -1){ // pte is in the lru
+    lru_pop(&lru, idx);
+  } 
+  else if (lru_full(&lru)){ // pte is not in the lru and the lru is full
+    idx = 0;
+    for (int i = 0; i < lru.size; i++) {
+      pte_t *tmp = (pte_t *) lru.bucket[i];
+      if (*tmp & PTE_P) continue;
+      idx = i;
+      break;
+    }
+    lru_pop(&lru, idx);
   }
+  lru_push(&lru, (uint64)pte);
   #elif defined(PG_REPLACEMENT_USE_FIFO)
-  if (!q){
-    q = (queue_t *)kalloc();
-    q_clear(q);
+  int idx = q_find(&q, (uint64)pte);
+  if (idx != -1) {
+    return pte;
   }
+  else if (q_full(&q)) {
+    idx = 0;
+    for (int i = 0; i < q.size; i++) {
+      pte_t *tmp = (pte_t *) q.bucket[i];
+      if (*tmp & PTE_P) continue;
+      idx = i;
+      break;
+    }
+    q_pop_idx(&q, idx);
+  }
+  q_push(&q, (uint64)pte);
   #endif
   return pte;
 }
@@ -169,7 +194,6 @@ mappages(pagetable_t pagetable, uint64 va, uint64 size, uint64 pa, int perm)
 {
   uint64 a, last;
   pte_t *pte;
-
   if(size == 0)
     panic("mappages: size");
   a = PGROUNDDOWN(va);
@@ -180,6 +204,7 @@ mappages(pagetable_t pagetable, uint64 va, uint64 size, uint64 pa, int perm)
     if(*pte & PTE_V)
       panic("mappages: remap");
     *pte = PA2PTE(pa) | perm | PTE_V;
+    walk(pagetable, a, 0); // NTU OS 2024
     if(a == last)
       break;
     a += PGSIZE;
@@ -498,10 +523,9 @@ int madvise(uint64 base, uint64 len, int advice) {
   else if (advice == MADV_WILLNEED) { // Expands to 1
     // TODO
     begin_op();
-    // printf("begin: %p, last: %p\n", begin, last);
     for (uint64 va = begin; va <= last; va += PGSIZE) {
-      uint64 blk = balloc_page(ROOTDEV);
       pte_t *pte = walk(pgtbl, va, 0);
+      uint64 blk = PTE2BLOCKNO(*pte);
       if (pte != 0 && !(*pte & PTE_V)) {
         char *pa = kalloc();
         if (pa == 0) {
@@ -510,32 +534,6 @@ int madvise(uint64 base, uint64 len, int advice) {
         }
         read_page_from_disk(ROOTDEV, pa, blk);
         mappages(pgtbl, va, PGSIZE, (uint64)pa, PTE_U|PTE_R|PTE_W|PTE_X);
-          
-        // NTU OS 2024
-        #ifdef PG_REPLACEMENT_USE_LRU
-        // TODO
-        if (lru_empty(lru)) lru_init(lru, pgtbl);
-        int idx = lru_find(lru, pte);
-        if (idx != -1){ // pte is in the lru
-          lru_pop(lru, idx);
-        } 
-        else if (lru_full(lru)) { // pte is not in the lru and the lru is full
-          lru_pop(lru, 0);
-        }
-        lru_push(lru, pte);
-        #elif defined(PG_REPLACEMENT_USE_FIFO)
-        // TODO
-        if (q_empty(q)) q_init(q, pgtbl);          
-        int idx = q_find(q, pte);
-        if (idx != -1);
-        else if (q_full(q)) {
-          q_pop_idx(q, 0);
-          q_push(q, pte);
-        }
-        else {
-          q_push(q, pte);
-        }
-        #endif
       }
     }
 
@@ -561,14 +559,14 @@ int madvise(uint64 base, uint64 len, int advice) {
         // page replacement buffer
         #ifdef PG_REPLACEMENT_USE_LRU
         // TODO
-        if (lru_empty(lru)) lru_init(lru, pgtbl);
-        int idx = lru_find(lru, pte);
-        if (idx != -1) lru_pop(lru, idx);
+        int idx = lru_find(&lru, (uint64)pte);
+        if (idx != -1) lru_pop(&lru, idx);
         #elif defined(PG_REPLACEMENT_USE_FIFO)
         // TODO
-        if (q_empty(q)) q_init(q, pgtbl);
-        int idx = q_find(q, pte);
-        if (idx != -1) q_pop_idx(q, idx);
+        int idx = q_find(&q, (uint64)pte);
+        if (idx != -1) {
+          q_pop_idx(&q, idx);
+        }
         #endif
       }
     }
@@ -581,18 +579,6 @@ int madvise(uint64 base, uint64 len, int advice) {
     for (uint64 va = begin; va <= last; va += PGSIZE) {
       pte_t *pte = walk(pgtbl, va, 0);
       if (pte != 0 && (*pte & PTE_V)) {
-        #ifdef PG_REPLACEMENT_USE_LRU
-        // TODO
-        if (lru_empty(lru)) lru_init(lru, pgtbl);
-        int idx = lru_find(lru, pte);
-        if (idx != -1){ // pte is in the lru
-          lru_pop(lru, idx);
-        } 
-        else if (lru_full(lru)) { // pte is not in the lru and the lru is full
-          lru_pop(lru, 0);
-        }
-        lru_push(lru, pte);
-        #endif
         *pte |= PTE_P;
       }
     }
@@ -604,18 +590,6 @@ int madvise(uint64 base, uint64 len, int advice) {
       pte_t *pte = walk(pgtbl, va, 0);
       if (pte != 0 && (*pte & PTE_V)) {
         *pte &= ~PTE_P;
-        #ifdef PG_REPLACEMENT_USE_LRU
-        // TODO
-        if (lru_empty(lru)) lru_init(lru, pgtbl);
-        int idx = lru_find(lru, pte);
-        if (idx != -1){ // pte is in the lru
-          lru_pop(lru, idx);
-        } 
-        else if (lru_full(lru)) { // pte is not in the lru and the lru is full
-          lru_pop(lru, 0);
-        }
-        lru_push(lru, pte);
-        #endif
       }
     }
   }
@@ -630,16 +604,16 @@ void pgprint() {
   // TODO
   printf("Page replacement buffers\n");
   printf("------Start------------\n");
-  for (int i = 0; i < lru->size; i++) {
-    printf("pte: %p\n", lru->bucket[i]);
+  for (int i = 0; i < lru.size; i++) {
+    printf("pte: %p\n", lru.bucket[i]);
   }
   printf("------End--------------\n");
   #elif defined(PG_REPLACEMENT_USE_FIFO)
   // TODO
   printf("Page replacement buffers\n");
   printf("------Start------------\n");
-  for (int i = 0; i < q->size; i++) {
-    printf("pte: %p\n", q->bucket[i]);
+  for (int i = 0; i < q.size; i++) {
+    printf("pte: %p\n", q.bucket[i]);
   }
   printf("------End--------------\n");
   #endif

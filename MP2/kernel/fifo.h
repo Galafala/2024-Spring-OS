@@ -11,14 +11,13 @@ typedef unsigned long uint64;
 
 typedef struct queue {
 	uint32 size;
-	uint64 *bucket[PG_BUF_SIZE];
+	uint64 bucket[PG_BUF_SIZE];
 } queue_t;
 
-void q_traversal(queue_t *q, uint64* pgtbl, int level);
-void q_init(queue_t *q, uint64* pgtbl);
-int q_push(queue_t *q, uint64 *e);
-uint64* q_pop_idx(queue_t *q, int idx);
-int q_find(queue_t *q, uint64 *e);
+void q_init(queue_t *q);
+int q_push(queue_t *q, uint64 e);
+uint64 q_pop_idx(queue_t *q, int idx);
+int q_find(queue_t *q, uint64 e);
 int q_empty(queue_t *q);
 int q_full(queue_t *q);
 int q_clear(queue_t *q);

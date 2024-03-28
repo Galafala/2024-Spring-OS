@@ -11,14 +11,13 @@ typedef unsigned long uint64;
 
 typedef struct lru {
 	uint32 size;
-	uint64 *bucket[PG_BUF_SIZE];
+	uint64 bucket[PG_BUF_SIZE];
 } lru_t;
 
-void lru_traversal(lru_t *q, uint64* pgtbl, int level);
-void lru_init(lru_t *lru, uint64* pgtbl);
-int lru_push(lru_t *lru, uint64 *e);
-uint64* lru_pop(lru_t *lru, int idx);
+void lru_init(lru_t *lru);
+int lru_push(lru_t *lru, uint64 e);
+uint64 lru_pop(lru_t *lru, int idx);
 int lru_empty(lru_t *lru);
 int lru_full(lru_t *lru);
 int lru_clear(lru_t *lru);
-int lru_find(lru_t *lru, uint64 *e);
+int lru_find(lru_t *lru, uint64 e);
