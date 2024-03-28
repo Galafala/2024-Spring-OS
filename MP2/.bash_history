@@ -209,3 +209,49 @@ make clean
 make clean
 make qemu
 exit
+cd
+make clean
+make grade
+make grade
+make qemu
+make qemu
+make qemu
+make qemu
+make qemu
+make qemu
+make qemu
+make qemu
+make qemu
+make qemu
+make qemu
+make qemu
+make qemu
+make qemu
+make qemu
+make qemu
+make qemu
+make fifo
+make clean
+make fifo
+make clean
+make lru
+make lru
+make lru
+make lru
+make lru
+make clean
+make grade
+make lru
+make grade\
+make grade
+make grade
+make grade
+make grade
+make grade
+make grade
+make STUDENT_ZIP=b08611041 zip
+make STUDENT_ID=b08611041 zip
+make qemu
+make qemu
+make STUDENT_ID=b08611041 zip
+exit

@@ -123,14 +123,15 @@ walk(pagetable_t pagetable, uint64 va, int alloc)
     lru_pop(&lru, idx);
   } 
   else if (lru_full(&lru)){ // pte is not in the lru and the lru is full
-    idx = 0;
+    idx = -1;
     for (int i = 0; i < lru.size; i++) {
       pte_t *tmp = (pte_t *) lru.bucket[i];
       if (*tmp & PTE_P) continue;
       idx = i;
+      lru_pop(&lru, idx);
       break;
     }
-    lru_pop(&lru, idx);
+    if (idx == -1) return pte;
   }
   lru_push(&lru, (uint64)pte);
   #elif defined(PG_REPLACEMENT_USE_FIFO)
@@ -139,14 +140,15 @@ walk(pagetable_t pagetable, uint64 va, int alloc)
     return pte;
   }
   else if (q_full(&q)) {
-    idx = 0;
+    idx = -1;
     for (int i = 0; i < q.size; i++) {
       pte_t *tmp = (pte_t *) q.bucket[i];
       if (*tmp & PTE_P) continue;
       idx = i;
+      q_pop_idx(&q, idx);
       break;
     }
-    q_pop_idx(&q, idx);
+    if (idx == -1) return pte;
   }
   q_push(&q, (uint64)pte);
   #endif
@@ -525,18 +527,17 @@ int madvise(uint64 base, uint64 len, int advice) {
     begin_op();
     for (uint64 va = begin; va <= last; va += PGSIZE) {
       pte_t *pte = walk(pgtbl, va, 0);
-      uint64 blk = PTE2BLOCKNO(*pte);
       if (pte != 0 && !(*pte & PTE_V)) {
+        uint64 blk = PTE2BLOCKNO(*pte);
         char *pa = kalloc();
-        if (pa == 0) {
-          end_op();
-          return -1;
-        }
+        memset(pa, 0, PGSIZE);
         read_page_from_disk(ROOTDEV, pa, blk);
-        mappages(pgtbl, va, PGSIZE, (uint64)pa, PTE_U|PTE_R|PTE_W|PTE_X);
+        bfree_page(ROOTDEV, blk);
+        int perm = PTE_U|PTE_R|PTE_W|PTE_X;
+        if (*pte & PTE_D) perm |= PTE_D;
+        mappages(pgtbl, va, PGSIZE, (uint64)pa, perm);
       }
     }
-
     end_op();
     return 0;
   } 
@@ -660,8 +661,8 @@ void print_format(pte_t *pte, uint64 va, int page_num, int level, int isLastOne,
   if (*pte & PTE_W) printf(" W");
   if (*pte & PTE_X) printf(" X");
   if (*pte & PTE_U) printf(" U");
-  if (*pte & PTE_D) printf(" D");
   if (*pte & PTE_S) printf(" S");
+  else if (*pte & PTE_D) printf(" D");
   if (*pte & PTE_P) printf(" P");
 
   printf("\n");
@@ -689,8 +690,6 @@ void vmTraversal(pagetable_t pagetable, int level, uint64 preVa, int lastOne, in
 
 void vmprint(pagetable_t pagetable) {
   /* TODO */
-  // int last = 0;
-  // for (int i = 0; i < 512; i++) if (pagetable[i]) last = i;
   printf("page table %p\n", pagetable);
   vmTraversal(pagetable, 0, 0, 0, 0, 0, 0);
 }

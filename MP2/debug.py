@@ -20,6 +20,7 @@ def compare_and_print(file1_lines, file2_lines):
     diff = differ.compare(file1_lines, file2_lines)
     for line in diff:
         if line.startswith('+ '):
+            # continue
             print(COLORS["add"] + line + COLORS["reset"], end='')
         elif line.startswith('- '):
             continue  # Skip unchanged lines
@@ -33,4 +34,4 @@ def main(file1_path, file2_path):
     compare_and_print(file1_lines, file2_lines)
 
 # Uncomment to run with example files (replace 'path_to_file1.txt' and 'path_to_file2.txt' with actual file paths)
-main('./custom_2.out', './mp2_output/custom_2.out')
+main('./custom_2.out.', './mp2_output/custom_2.out')
