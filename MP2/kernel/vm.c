@@ -119,9 +119,7 @@ walk(pagetable_t pagetable, uint64 va, int alloc)
   #ifdef PG_REPLACEMENT_USE_LRU
   // TODO
   int idx = lru_find(&lru, (uint64)pte);
-  if (idx != -1){ // pte is in the lru
-    lru_pop(&lru, idx);
-  } 
+  if (idx != -1) lru_pop(&lru, idx); // pte is in the lru
   else if (lru_full(&lru)){ // pte is not in the lru and the lru is full
     idx = -1;
     for (int i = 0; i < lru.size; i++) {
@@ -136,9 +134,7 @@ walk(pagetable_t pagetable, uint64 va, int alloc)
   lru_push(&lru, (uint64)pte);
   #elif defined(PG_REPLACEMENT_USE_FIFO)
   int idx = q_find(&q, (uint64)pte);
-  if (idx != -1) {
-    return pte;
-  }
+  if (idx != -1) return pte;
   else if (q_full(&q)) {
     idx = -1;
     for (int i = 0; i < q.size; i++) {
@@ -533,9 +529,7 @@ int madvise(uint64 base, uint64 len, int advice) {
         memset(pa, 0, PGSIZE);
         read_page_from_disk(ROOTDEV, pa, blk);
         bfree_page(ROOTDEV, blk);
-        int perm = PTE_U|PTE_R|PTE_W|PTE_X;
-        if (*pte & PTE_D) perm |= PTE_D;
-        mappages(pgtbl, va, PGSIZE, (uint64)pa, perm);
+        mappages(pgtbl, va, PGSIZE, (uint64)pa, PTE_FLAGS(*pte) & ~PTE_S);
       }
     }
     end_op();
@@ -565,9 +559,7 @@ int madvise(uint64 base, uint64 len, int advice) {
         #elif defined(PG_REPLACEMENT_USE_FIFO)
         // TODO
         int idx = q_find(&q, (uint64)pte);
-        if (idx != -1) {
-          q_pop_idx(&q, idx);
-        }
+        if (idx != -1) q_pop_idx(&q, idx);
         #endif
       }
     }

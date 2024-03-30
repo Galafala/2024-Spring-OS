@@ -41,23 +41,23 @@ make[1]: Leaving directory '/root'
 == Test mp2_1 (6%) ==
 fatal: not a git repository (or any parent up to mount point /)
 Stopping at filesystem boundary (GIT_DISCOVERY_ACROSS_FILESYSTEM not set).
-mp2_1: OK (29.8s) 
+mp2_1: OK (34.8s) 
 == Test mp2_2 (12%) ==
-mp2_2: OK (35.7s) 
+mp2_2: OK (30.1s) 
 == Test mp2_3 (12%) ==
-mp2_3: OK (43.1s) 
+mp2_3: OK (32.1s) 
 == Test mp2_4 (12%) ==
-mp2_4: OK (29.9s) 
+mp2_4: OK (30.0s) 
 == Test mp2_5 (18%) ==
-mp2_5: OK (45.0s) 
+mp2_5: OK (32.3s) 
 == Test custom_1 (4%) ==
-custom_1: OK (63.5s) 
+custom_1: OK (50.5s) 
 == Test custom_2 (8%) ==
-custom_2: OK (60.5s) 
+custom_2: OK (55.0s) 
 == Test custom_3 (8%) ==
-custom_3: OK (35.9s) 
+custom_3: OK (32.3s) 
 == Test custom_4 (8%) ==
-custom_4: OK (41.0s) 
+custom_4: OK (37.8s) 
 == Test custom_5 (12%) ==
-custom_5: OK (36.7s) 
+custom_5: OK (41.3s) 
 Score: 100/100

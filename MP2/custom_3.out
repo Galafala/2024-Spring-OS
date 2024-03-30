@@ -2,8 +2,8 @@
 
 xv6 kernel is booting
 
-hart 2 starting
 hart 1 starting
+hart 2 starting
 init: starting sh
 $ custom_3
 page table 0x0000000087f49000
@@ -326,4 +326,4 @@ page table 0x0000000087f49000
         +-- 510: pte=0x0000000087f47ff0 va=0x0000003fffffe000 pa=0x0000000087f65000 V R W D
         +-- 511: pte=0x0000000087f47ff8 va=0x0000003ffffff000 pa=0x0000000080007000 V R X
 Saved string: abcd
-$ qemu-system-riscv64: terminating on signal 15 from pid 27233 (make)
+$ qemu-system-riscv64: terminating on signal 15 from pid 13167 (make)

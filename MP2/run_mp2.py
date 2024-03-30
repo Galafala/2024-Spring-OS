@@ -6,6 +6,9 @@ gen = 0
 name = ['mp2_1', 'mp2_2', 'mp2_3', 'mp2_4', 'mp2_5', 'custom_1', 'custom_2', 'custom_3', 'custom_4', 'custom_5']
 bases = ['qemu', 'qemu', 'qemu', 'fifo', 'lru', 'qemu', 'qemu', 'qemu', 'fifo', 'lru']
 scores = [6, 12, 12, 12, 18, 4, 8, 8, 8, 12]
+# name = ['custom_4', 'custom_5']
+# bases = ['fifo', 'lru']
+# scores = [8, 12]
 
 for s, base, score in zip(name, bases, scores):
 

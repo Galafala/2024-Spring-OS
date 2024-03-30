@@ -255,3 +255,38 @@ make qemu
 make qemu
 make STUDENT_ID=b08611041 zip
 exit
+cd
+make clean
+make fifo
+make fifo
+make fifo
+make fifo
+make fifo
+make fifo
+make fifo
+make qemu
+make clean
+make qemu
+make qemu
+exit
+cd
+make clean
+mp2_4
+make qemu
+make qemu
+make clean
+make qemu
+make fifo
+make clean
+make fifo
+make fifo
+make clean
+make fifo
+make clean
+make grade
+make grade
+make qemu
+make qemu
+make clean
+make STUDENT_ID=b08611041 zip
+exit

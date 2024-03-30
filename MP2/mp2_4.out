@@ -1,12 +1,9 @@
-nmeta 46 (boot, super, log blocks 30 inode blocks 13, bitmap blocks 1) blocks 954 total 1000
-balloc: first 878 blocks have been allocated
-balloc: write bitmap block at sector 45
 *** Now run 'gdb' in another window.
 
 xv6 kernel is booting
 
-hart 1 starting
 hart 2 starting
+hart 1 starting
 init: starting sh
 $ mp2_4
 page table 0x0000000087f49000
@@ -114,4 +111,4 @@ pte: 0x0000000087f44090
 pte: 0x0000000087f44098
 pte: 0x0000000087f44028
 ------End--------------
-$ qemu-system-riscv64: terminating on signal 15 from pid 23456 (make)
+$ qemu-system-riscv64: terminating on signal 15 from pid 9390 (make)
