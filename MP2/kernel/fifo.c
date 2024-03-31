@@ -17,7 +17,6 @@ int q_push(queue_t *q, uint64 e){
 }
 
 uint64 q_pop_idx(queue_t *q, int idx){
-	if (idx >= q->size || idx < 0) return 0;
 	uint64 e = q->bucket[idx];
 	for (int i = idx; i < q->size-1; i++){
 		q->bucket[i] = q->bucket[i+1];
@@ -43,7 +42,6 @@ int q_clear(queue_t *q){
 }
 
 int q_find(queue_t *q, uint64 e){
-	if (q_empty(q)) return -1;
 	for (int i=0; i < q->size; i++){
 		if (q->bucket[i] == e) return i;
 	}

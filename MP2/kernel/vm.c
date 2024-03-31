@@ -102,7 +102,7 @@ walk(pagetable_t pagetable, uint64 va, int alloc)
     if(*pte & PTE_V) {
       pagetable = (pagetable_t)PTE2PA(*pte);
     } else {
-      if(!alloc || (pagetable = (pde_t*)kalloc()) == 0)
+      if(!alloc || ((pagetable = (pde_t*)kalloc()) == 0))
         return 0;
       memset(pagetable, 0, PGSIZE);
       *pte = PA2PTE(pagetable) | PTE_V;
@@ -114,14 +114,12 @@ walk(pagetable_t pagetable, uint64 va, int alloc)
   // pte is accessed, so determine how
   // it affects the page replacement buffer here
   
-  if (!(*pte & PTE_U)) return pte;
   if (va == 0 || va == 0x1000 || va == 0x2000) return pte;
   #ifdef PG_REPLACEMENT_USE_LRU
   // TODO
   int idx = lru_find(&lru, (uint64)pte);
   if (idx != -1) lru_pop(&lru, idx); // pte is in the lru
-  else if (lru_full(&lru)){ // pte is not in the lru and the lru is full
-    idx = -1;
+  else if (lru_full(&lru)){ // pte is not in the lru and the lru is full;
     for (int i = 0; i < lru.size; i++) {
       pte_t *tmp = (pte_t *) lru.bucket[i];
       if (*tmp & PTE_P) continue;
@@ -135,8 +133,7 @@ walk(pagetable_t pagetable, uint64 va, int alloc)
   #elif defined(PG_REPLACEMENT_USE_FIFO)
   int idx = q_find(&q, (uint64)pte);
   if (idx != -1) return pte;
-  else if (q_full(&q)) {
-    idx = -1;
+  else if (q_full(&q)){
     for (int i = 0; i < q.size; i++) {
       pte_t *tmp = (pte_t *) q.bucket[i];
       if (*tmp & PTE_P) continue;
@@ -202,7 +199,6 @@ mappages(pagetable_t pagetable, uint64 va, uint64 size, uint64 pa, int perm)
     if(*pte & PTE_V)
       panic("mappages: remap");
     *pte = PA2PTE(pa) | perm | PTE_V;
-    walk(pagetable, a, 0); // NTU OS 2024
     if(a == last)
       break;
     a += PGSIZE;

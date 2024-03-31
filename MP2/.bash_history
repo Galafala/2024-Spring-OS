@@ -290,3 +290,64 @@ make qemu
 make clean
 make STUDENT_ID=b08611041 zip
 exit
+cd
+make fifo
+exit
+cd
+make fifo
+make fifo
+make clean
+make lru
+make lru
+make lru
+make lru
+make lru
+make lru
+make lru
+make lru
+make lru
+make lru
+make lru
+make lru
+make lru
+make lru
+make lru
+make lru
+make lru
+make lru
+make lru
+make lru
+make lru
+make lru
+make lru
+exit
+cd
+make lru
+make lru
+make lru
+make lru
+make lru
+make lru
+make lru
+make lru
+make lru
+make lru
+make lru
+make lru
+make grade
+exit
+cd
+make lru
+make lru
+make lru
+make clean
+make fifo
+make grade
+make grade
+make grade
+make clean
+make fifo
+make clean
+make grade
+make STUDENT_ID=b08611041 zip
+exit

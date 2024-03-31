@@ -24,3 +24,4 @@ $K/kernel
 fs.img
 mkfs/mkfs
 .gdbinit
+.bash_history
