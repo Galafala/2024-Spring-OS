@@ -8,7 +8,7 @@ import os
 os.system("make -s --no-print-directory clean")
 r = Runner(save("xv6.out"))
 
-@test(3, "task1")
+@test(3, "rttask1")
 def test_uthread():
     r.run_qemu(shell_script([
         'rttask1'
@@ -24,7 +24,7 @@ thread#1 finish one cycle at 13: 0 cycles left"""
     if not re.findall(expected, r.qemu.output, re.M):
         raise AssertionError('Output does not match expected output')
 
-@test(3, "task2")
+@test(3, "rttask2")
 def test_uthread():
     r.run_qemu(shell_script([
         'rttask2'
@@ -38,7 +38,7 @@ thread#1 misses a deadline at 14"""
     if not re.findall(expected, r.qemu.output, re.M):
         raise AssertionError('Output does not match expected output')
 
-@test(3, "task3")
+@test(3, "rttask3")
 def test_uthread():
     r.run_qemu(shell_script([
         'rttask3'
@@ -59,7 +59,7 @@ thread#2 misses a deadline at 15"""
     if not re.findall(expected, r.qemu.output, re.M):
         raise AssertionError('Output does not match expected output')
     
-@test(3, "task4")
+@test(3, "rttask4")
 def test_uthread():
     r.run_qemu(shell_script([
         'rttask4'

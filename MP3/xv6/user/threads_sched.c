@@ -6,6 +6,16 @@
 
 #define NULL 0
 
+struct threads_sched_result fill_sparse(struct threads_sched_args args) {
+    int sleep_time = -1;
+    struct release_queue_entry *cur;
+    list_for_each_entry(cur, args.release_queue, thread_list) {
+        if (sleep_time < 0 || sleep_time < cur->release_time - args.current_time)
+            sleep_time = cur->release_time - args.current_time;
+    }
+    return (struct threads_sched_result) { .scheduled_thread_list_member = args.run_queue, .allocated_time = sleep_time };
+}
+
 /* default scheduling algorithm */
 struct threads_sched_result schedule_default(struct threads_sched_args args)
 {
@@ -42,15 +52,9 @@ struct threads_sched_result schedule_wrr(struct threads_sched_args args)
         }
     }
 
-    if (process_thread == NULL) {
-        int sleep_time = -1;
-        struct release_queue_entry *cur;
-        list_for_each_entry(cur, args.release_queue, thread_list) {
-            if (sleep_time < 0 || sleep_time < cur->release_time - args.current_time)
-                sleep_time = cur->release_time - args.current_time;
-        }
-        return (struct threads_sched_result) { .scheduled_thread_list_member = args.run_queue, .allocated_time = sleep_time };
-    }
+    if (process_thread == NULL) 
+        return fill_sparse(args);
+    
 
     int time_quantum = args.time_quantum;
     int executing_time = process_thread->remaining_time;
@@ -82,15 +86,8 @@ struct threads_sched_result schedule_sjf(struct threads_sched_args args)
         }
     }
 
-    if (shortest_thread == NULL) {
-        int sleep_time = -1;
-        struct release_queue_entry *cur;
-        list_for_each_entry(cur, args.release_queue, thread_list) {
-            if (sleep_time < 0 || sleep_time < cur->release_time - args.current_time)
-                sleep_time = cur->release_time - args.current_time;
-        }
-        return (struct threads_sched_result) { .scheduled_thread_list_member = args.run_queue, .allocated_time = sleep_time };
-    }
+    if (shortest_thread == NULL) 
+        return fill_sparse(args);
 
     struct release_queue_entry *cur;
     int executing_time = shortest_thread->remaining_time;
@@ -131,15 +128,9 @@ struct threads_sched_result schedule_lst(struct threads_sched_args args)
         }
     }
 
-    if (least_slack_thread == NULL) {
-        int sleep_time = -1;
-        struct release_queue_entry *cur;
-        list_for_each_entry(cur, args.release_queue, thread_list) {
-            if (sleep_time < 0 || sleep_time < cur->release_time - args.current_time)
-                sleep_time = cur->release_time - args.current_time;
-        }
-        return (struct threads_sched_result) { .scheduled_thread_list_member = args.run_queue, .allocated_time = sleep_time };
-    }
+    if (least_slack_thread == NULL) 
+        return fill_sparse(args);
+
 
     struct release_queue_entry *cur;
     int slack_time = least_slack_thread->current_deadline - current_time - least_slack_thread->remaining_time;
@@ -176,20 +167,12 @@ struct threads_sched_result schedule_dm(struct threads_sched_args args)
         }
     }
     
-    if (highest_priority_thread == NULL) {
-        int sleep_time = -1;
-        struct release_queue_entry *cur;
-        list_for_each_entry(cur, args.release_queue, thread_list) {
-            if (sleep_time < 0 || sleep_time < cur->release_time - current_time)
-                sleep_time = cur->release_time - current_time;
-        }
-        return (struct threads_sched_result) { .scheduled_thread_list_member = args.run_queue, .allocated_time = sleep_time };
-    }
-
-    if (highest_priority_thread->remaining_time > highest_priority_thread->current_deadline - current_time) {
+    if (highest_priority_thread == NULL) 
+        return fill_sparse(args);
+    
+    if (highest_priority_thread->remaining_time > highest_priority_thread->current_deadline - current_time) 
         return (struct threads_sched_result) { .scheduled_thread_list_member = &highest_priority_thread->thread_list, .allocated_time = 0 };
-    }
-
+    
     struct release_queue_entry *cur;
     int executing_time = highest_priority_thread->remaining_time;
     list_for_each_entry(cur, args.release_queue, thread_list) {

@@ -27,5 +27,6 @@ struct threads_sched_result schedule_wrr(struct threads_sched_args args);
 struct threads_sched_result schedule_sjf(struct threads_sched_args args);
 struct threads_sched_result schedule_lst(struct threads_sched_args args);
 struct threads_sched_result schedule_dm(struct threads_sched_args args);
+struct threads_sched_result fill_sparse(struct threads_sched_args args);
 
 #endif
