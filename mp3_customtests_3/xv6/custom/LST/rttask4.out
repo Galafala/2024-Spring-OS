@@ -1,0 +1,5 @@
+run_queue is empty, sleep for 1 ticks
+dispatch thread#1 at 1: allocated_time=64
+thread#1 finish one cycle at 65: 9 cycles left
+dispatch thread#2 at 65: allocated_time=37
+thread#2 misses a deadline at 102

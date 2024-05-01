@@ -1,0 +1,44 @@
+run_queue is empty, sleep for 2 ticks
+dispatch thread#1 at 2: allocated_time=2
+dispatch thread#2 at 4: allocated_time=2
+dispatch thread#3 at 6: allocated_time=2
+dispatch thread#4 at 8: allocated_time=2
+dispatch thread#5 at 10: allocated_time=2
+dispatch thread#6 at 12: allocated_time=2
+dispatch thread#7 at 14: allocated_time=2
+dispatch thread#8 at 16: allocated_time=2
+dispatch thread#9 at 18: allocated_time=2
+dispatch thread#10 at 20: allocated_time=2
+dispatch thread#11 at 22: allocated_time=2
+dispatch thread#12 at 24: allocated_time=2
+dispatch thread#13 at 26: allocated_time=2
+dispatch thread#14 at 28: allocated_time=2
+dispatch thread#15 at 30: allocated_time=4
+thread#15 finish one cycle at 34: 0 cycles left
+dispatch thread#14 at 34: allocated_time=2
+thread#14 finish one cycle at 36: 0 cycles left
+dispatch thread#13 at 36: allocated_time=2
+thread#13 finish one cycle at 38: 0 cycles left
+dispatch thread#12 at 38: allocated_time=2
+thread#12 finish one cycle at 40: 0 cycles left
+dispatch thread#11 at 40: allocated_time=2
+thread#11 finish one cycle at 42: 0 cycles left
+dispatch thread#10 at 42: allocated_time=2
+thread#10 finish one cycle at 44: 0 cycles left
+dispatch thread#9 at 44: allocated_time=2
+thread#9 finish one cycle at 46: 0 cycles left
+dispatch thread#8 at 46: allocated_time=2
+thread#8 finish one cycle at 48: 0 cycles left
+dispatch thread#7 at 48: allocated_time=2
+thread#7 finish one cycle at 50: 0 cycles left
+dispatch thread#6 at 50: allocated_time=2
+thread#6 finish one cycle at 52: 0 cycles left
+dispatch thread#5 at 52: allocated_time=2
+thread#5 finish one cycle at 54: 0 cycles left
+dispatch thread#4 at 54: allocated_time=2
+thread#4 finish one cycle at 56: 0 cycles left
+dispatch thread#3 at 56: allocated_time=2
+thread#3 finish one cycle at 58: 0 cycles left
+dispatch thread#2 at 58: allocated_time=2
+thread#2 finish one cycle at 60: 0 cycles left
+thread#1 misses a deadline at 60

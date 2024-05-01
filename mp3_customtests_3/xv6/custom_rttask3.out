@@ -1,0 +1,8 @@
+*** Now run 'gdb' in another window.
+
+xv6 kernel is booting
+
+init: starting sh
+$ custom_rttask3
+thread#1199963892 misses a deadline at 4247
+$ qemu-system-riscv64: terminating on signal 15 from pid 12560 (make)

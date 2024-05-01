@@ -1,0 +1,13 @@
+dispatch thread#1 at 0: allocated_time=20
+dispatch thread#15 at 20: allocated_time=1
+thread#15 finish one cycle at 21: 9 cycles left
+dispatch thread#1 at 21: allocated_time=1
+dispatch thread#14 at 22: allocated_time=1
+thread#14 finish one cycle at 23: 9 cycles left
+dispatch thread#15 at 23: allocated_time=1
+thread#15 finish one cycle at 24: 8 cycles left
+dispatch thread#13 at 24: allocated_time=1
+thread#13 finish one cycle at 25: 9 cycles left
+dispatch thread#14 at 25: allocated_time=1
+thread#14 finish one cycle at 26: 8 cycles left
+thread#15 misses a deadline at 26

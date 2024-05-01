@@ -1,0 +1,3 @@
+dispatch thread#1 at 0: allocated_time=64
+thread#1 finish one cycle at 64: 0 cycles left
+thread#2 misses a deadline at 48

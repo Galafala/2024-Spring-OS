@@ -1,0 +1,10 @@
+*** Now run 'gdb' in another window.
+
+xv6 kernel is booting
+
+init: starting sh
+$ custom_rttask5
+dispatch thread#1 at 0: allocated_time=64
+thread#1 finish one cycle at 64: 0 cycles left
+thread#15 misses a deadline at 22
+$ qemu-system-riscv64: terminating on signal 15 from pid 4273 (make)

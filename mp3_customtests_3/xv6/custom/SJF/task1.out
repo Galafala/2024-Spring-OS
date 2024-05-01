@@ -1,0 +1,30 @@
+dispatch thread#1 at 0: allocated_time=64
+thread#1 finish at 64
+dispatch thread#2 at 64: allocated_time=64
+thread#2 finish at 128
+dispatch thread#3 at 128: allocated_time=64
+thread#3 finish at 192
+dispatch thread#4 at 192: allocated_time=64
+thread#4 finish at 256
+dispatch thread#5 at 256: allocated_time=64
+thread#5 finish at 320
+dispatch thread#6 at 320: allocated_time=64
+thread#6 finish at 384
+dispatch thread#7 at 384: allocated_time=64
+thread#7 finish at 448
+dispatch thread#8 at 448: allocated_time=64
+thread#8 finish at 512
+dispatch thread#9 at 512: allocated_time=64
+thread#9 finish at 576
+dispatch thread#10 at 576: allocated_time=64
+thread#10 finish at 640
+dispatch thread#11 at 640: allocated_time=64
+thread#11 finish at 704
+dispatch thread#12 at 704: allocated_time=64
+thread#12 finish at 768
+dispatch thread#13 at 768: allocated_time=64
+thread#13 finish at 832
+dispatch thread#14 at 832: allocated_time=64
+thread#14 finish at 896
+dispatch thread#15 at 896: allocated_time=64
+thread#15 finish at 960
