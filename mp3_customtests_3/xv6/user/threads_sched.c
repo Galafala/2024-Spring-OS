@@ -95,7 +95,8 @@ struct threads_sched_result schedule_sjf(struct threads_sched_args args)
         if (interval > executing_time) continue;
         if (current_time + shortest_thread->remaining_time < cur->release_time || interval > executing_time) continue; 
         int remaining_time = shortest_thread->remaining_time - interval;
-        if (remaining_time <= cur->thrd->processing_time) continue;
+        if (remaining_time < cur->thrd->processing_time) continue;
+        if (remaining_time == cur->thrd->processing_time && shortest_thread->ID < cur->thrd->ID) continue;
         executing_time = interval;
     }
 

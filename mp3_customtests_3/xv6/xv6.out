@@ -47,4 +47,4 @@ dispatch thread#15 at 173: allocated_time=64
 thread#15 finish at 237
 
 exited
-$ qemu-system-riscv64: terminating on signal 15 from pid 19564 (make)
+$ qemu-system-riscv64: terminating on signal 15 from pid 678 (make)

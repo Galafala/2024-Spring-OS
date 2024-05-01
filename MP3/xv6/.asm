@@ -18,12 +18,12 @@ void f(void *arg)
     while (1) {
         k++;
        a:	00002797          	auipc	a5,0x2
-       e:	46678793          	addi	a5,a5,1126 # 2470 <k>
+       e:	55e78793          	addi	a5,a5,1374 # 2568 <k>
       12:	439c                	lw	a5,0(a5)
       14:	2785                	addiw	a5,a5,1
       16:	0007871b          	sext.w	a4,a5
       1a:	00002797          	auipc	a5,0x2
-      1e:	45678793          	addi	a5,a5,1110 # 2470 <k>
+      1e:	54e78793          	addi	a5,a5,1358 # 2568 <k>
       22:	c398                	sw	a4,0(a5)
       24:	b7dd                	j	a <f+0xa>
 
@@ -113,7 +113,7 @@ int main(int argc, char **argv)
       ec:	7ea080e7          	jalr	2026(ra) # 18d2 <thread_start_threading>
     printf("\nexited\n");
       f0:	00002517          	auipc	a0,0x2
-      f4:	1e850513          	addi	a0,a0,488 # 22d8 <schedule_dm+0x1ee>
+      f4:	2e050513          	addi	a0,a0,736 # 23d0 <schedule_dm+0x1ec>
       f8:	00001097          	auipc	ra,0x1
       fc:	9e8080e7          	jalr	-1560(ra) # ae0 <printf>
     exit(0);
@@ -988,7 +988,7 @@ printint(int fd, int xx, int base, int sgn)
      6f6:	0017871b          	addiw	a4,a5,1
      6fa:	fee42623          	sw	a4,-20(s0)
      6fe:	00002697          	auipc	a3,0x2
-     702:	d3268693          	addi	a3,a3,-718 # 2430 <digits>
+     702:	e2a68693          	addi	a3,a3,-470 # 2528 <digits>
      706:	02061713          	slli	a4,a2,0x20
      70a:	9301                	srli	a4,a4,0x20
      70c:	9736                	add	a4,a4,a3
@@ -1075,7 +1075,7 @@ printptr(int fd, uint64 x) {
      7d2:	fd043783          	ld	a5,-48(s0)
      7d6:	93f1                	srli	a5,a5,0x3c
      7d8:	00002717          	auipc	a4,0x2
-     7dc:	c5870713          	addi	a4,a4,-936 # 2430 <digits>
+     7dc:	d5070713          	addi	a4,a4,-688 # 2528 <digits>
      7e0:	97ba                	add	a5,a5,a4
      7e2:	0007c703          	lbu	a4,0(a5)
      7e6:	fdc42783          	lw	a5,-36(s0)
@@ -1246,7 +1246,7 @@ vprintf(int fd, const char *fmt, va_list ap)
      996:	eb8d                	bnez	a5,9c8 <vprintf+0x1a6>
           s = "(null)";
      998:	00002797          	auipc	a5,0x2
-     99c:	95078793          	addi	a5,a5,-1712 # 22e8 <schedule_dm+0x1fe>
+     99c:	a4878793          	addi	a5,a5,-1464 # 23e0 <schedule_dm+0x1fc>
      9a0:	fef43423          	sd	a5,-24(s0)
         while(*s != 0){
      9a4:	a015                	j	9c8 <vprintf+0x1a6>
@@ -1436,7 +1436,7 @@ free(void *ap)
      b40:	fef43023          	sd	a5,-32(s0)
   for(p = freep; !(bp > p && bp < p->s.ptr); p = p->s.ptr)
      b44:	00002797          	auipc	a5,0x2
-     b48:	94478793          	addi	a5,a5,-1724 # 2488 <freep>
+     b48:	a3c78793          	addi	a5,a5,-1476 # 2580 <freep>
      b4c:	639c                	ld	a5,0(a5)
      b4e:	fef43423          	sd	a5,-24(s0)
      b52:	a815                	j	b86 <free+0x56>
@@ -1530,7 +1530,7 @@ free(void *ap)
      c3a:	e398                	sd	a4,0(a5)
   freep = p;
      c3c:	00002797          	auipc	a5,0x2
-     c40:	84c78793          	addi	a5,a5,-1972 # 2488 <freep>
+     c40:	94478793          	addi	a5,a5,-1724 # 2580 <freep>
      c44:	fe843703          	ld	a4,-24(s0)
      c48:	e398                	sd	a4,0(a5)
 }
@@ -1591,8 +1591,8 @@ morecore(uint nu)
      cb6:	00000097          	auipc	ra,0x0
      cba:	e7a080e7          	jalr	-390(ra) # b30 <free>
   return freep;
-     cbe:	00001797          	auipc	a5,0x1
-     cc2:	7ca78793          	addi	a5,a5,1994 # 2488 <freep>
+     cbe:	00002797          	auipc	a5,0x2
+     cc2:	8c278793          	addi	a5,a5,-1854 # 2580 <freep>
      cc6:	639c                	ld	a5,0(a5)
 }
      cc8:	853e                	mv	a0,a5
@@ -1623,29 +1623,29 @@ malloc(uint nbytes)
      cea:	2785                	addiw	a5,a5,1
      cec:	fcf42e23          	sw	a5,-36(s0)
   if((prevp = freep) == 0){
-     cf0:	00001797          	auipc	a5,0x1
-     cf4:	79878793          	addi	a5,a5,1944 # 2488 <freep>
+     cf0:	00002797          	auipc	a5,0x2
+     cf4:	89078793          	addi	a5,a5,-1904 # 2580 <freep>
      cf8:	639c                	ld	a5,0(a5)
      cfa:	fef43023          	sd	a5,-32(s0)
      cfe:	fe043783          	ld	a5,-32(s0)
      d02:	ef95                	bnez	a5,d3e <malloc+0x6c>
     base.s.ptr = freep = prevp = &base;
-     d04:	00001797          	auipc	a5,0x1
-     d08:	77478793          	addi	a5,a5,1908 # 2478 <base>
+     d04:	00002797          	auipc	a5,0x2
+     d08:	86c78793          	addi	a5,a5,-1940 # 2570 <base>
      d0c:	fef43023          	sd	a5,-32(s0)
-     d10:	00001797          	auipc	a5,0x1
-     d14:	77878793          	addi	a5,a5,1912 # 2488 <freep>
+     d10:	00002797          	auipc	a5,0x2
+     d14:	87078793          	addi	a5,a5,-1936 # 2580 <freep>
      d18:	fe043703          	ld	a4,-32(s0)
      d1c:	e398                	sd	a4,0(a5)
-     d1e:	00001797          	auipc	a5,0x1
-     d22:	76a78793          	addi	a5,a5,1898 # 2488 <freep>
+     d1e:	00002797          	auipc	a5,0x2
+     d22:	86278793          	addi	a5,a5,-1950 # 2580 <freep>
      d26:	6398                	ld	a4,0(a5)
-     d28:	00001797          	auipc	a5,0x1
-     d2c:	75078793          	addi	a5,a5,1872 # 2478 <base>
+     d28:	00002797          	auipc	a5,0x2
+     d2c:	84878793          	addi	a5,a5,-1976 # 2570 <base>
      d30:	e398                	sd	a4,0(a5)
     base.s.size = 0;
-     d32:	00001797          	auipc	a5,0x1
-     d36:	74678793          	addi	a5,a5,1862 # 2478 <base>
+     d32:	00002797          	auipc	a5,0x2
+     d36:	83e78793          	addi	a5,a5,-1986 # 2570 <base>
      d3a:	0007a423          	sw	zero,8(a5)
   }
   for(p = prevp->s.ptr; ; prevp = p, p = p->s.ptr){
@@ -1695,7 +1695,7 @@ malloc(uint nbytes)
       }
       freep = prevp;
      dae:	00001797          	auipc	a5,0x1
-     db2:	6da78793          	addi	a5,a5,1754 # 2488 <freep>
+     db2:	7d278793          	addi	a5,a5,2002 # 2580 <freep>
      db6:	fe043703          	ld	a4,-32(s0)
      dba:	e398                	sd	a4,0(a5)
       return (void*)(p + 1);
@@ -1705,7 +1705,7 @@ malloc(uint nbytes)
     }
     if(p == freep)
      dc4:	00001797          	auipc	a5,0x1
-     dc8:	6c478793          	addi	a5,a5,1732 # 2488 <freep>
+     dc8:	7bc78793          	addi	a5,a5,1980 # 2580 <freep>
      dcc:	639c                	ld	a5,0(a5)
      dce:	fe843703          	ld	a4,-24(s0)
      dd2:	02f71063          	bne	a4,a5,df2 <malloc+0x120>
@@ -1890,12 +1890,12 @@ static inline void list_del(struct list_head *entry)
     entry->next = LIST_POISON1;
      f48:	fe843783          	ld	a5,-24(s0)
      f4c:	00100737          	lui	a4,0x100
-     f50:	10070713          	addi	a4,a4,256 # 100100 <__global_pointer$+0xfd4d0>
+     f50:	10070713          	addi	a4,a4,256 # 100100 <__global_pointer$+0xfd3d8>
      f54:	e398                	sd	a4,0(a5)
     entry->prev = LIST_POISON2;
      f56:	fe843783          	ld	a5,-24(s0)
      f5a:	00200737          	lui	a4,0x200
-     f5e:	20070713          	addi	a4,a4,512 # 200200 <__global_pointer$+0x1fd5d0>
+     f5e:	20070713          	addi	a4,a4,512 # 200200 <__global_pointer$+0x1fd4d8>
      f62:	e798                	sd	a4,8(a5)
 }
      f64:	0001                	nop
@@ -1984,12 +1984,12 @@ struct thread *thread_create(void (*f)(void *), void *arg, int is_real_time, int
     1008:	e798                	sd	a4,8(a5)
     t->ID = _id++;
     100a:	00001797          	auipc	a5,0x1
-    100e:	46278793          	addi	a5,a5,1122 # 246c <_id.1231>
+    100e:	55a78793          	addi	a5,a5,1370 # 2564 <_id.1229>
     1012:	439c                	lw	a5,0(a5)
     1014:	0017871b          	addiw	a4,a5,1
     1018:	0007069b          	sext.w	a3,a4
     101c:	00001717          	auipc	a4,0x1
-    1020:	45070713          	addi	a4,a4,1104 # 246c <_id.1231>
+    1020:	54870713          	addi	a4,a4,1352 # 2564 <_id.1229>
     1024:	c314                	sw	a3,0(a4)
     1026:	fe843703          	ld	a4,-24(s0)
     102a:	df5c                	sw	a5,60(a4)
@@ -2110,7 +2110,7 @@ void thread_add_at(struct thread *t, int arrival_time)
     1122:	fe843783          	ld	a5,-24(s0)
     1126:	07a1                	addi	a5,a5,8
     1128:	00001597          	auipc	a1,0x1
-    112c:	33058593          	addi	a1,a1,816 # 2458 <release_queue>
+    112c:	42858593          	addi	a1,a1,1064 # 2550 <release_queue>
     1130:	853e                	mv	a0,a5
     1132:	00000097          	auipc	ra,0x0
     1136:	d96080e7          	jalr	-618(ra) # ec8 <list_add_tail>
@@ -2132,7 +2132,7 @@ void __release()
     struct release_queue_entry *cur, *nxt;
     list_for_each_entry_safe(cur, nxt, &release_queue, thread_list) {
     114c:	00001797          	auipc	a5,0x1
-    1150:	30c78793          	addi	a5,a5,780 # 2458 <release_queue>
+    1150:	40478793          	addi	a5,a5,1028 # 2550 <release_queue>
     1154:	639c                	ld	a5,0(a5)
     1156:	fcf43c23          	sd	a5,-40(s0)
     115a:	fd843783          	ld	a5,-40(s0)
@@ -2149,7 +2149,7 @@ void __release()
     117a:	fe843783          	ld	a5,-24(s0)
     117e:	4f98                	lw	a4,24(a5)
     1180:	00001797          	auipc	a5,0x1
-    1184:	31878793          	addi	a5,a5,792 # 2498 <threading_system_time>
+    1184:	41078793          	addi	a5,a5,1040 # 2590 <threading_system_time>
     1188:	439c                	lw	a5,0(a5)
     118a:	06e7c363          	blt	a5,a4,11f0 <__release+0xac>
             cur->thrd->remaining_time = cur->thrd->processing_time;
@@ -2175,7 +2175,7 @@ void __release()
     11bc:	639c                	ld	a5,0(a5)
     11be:	02878793          	addi	a5,a5,40
     11c2:	00001597          	auipc	a1,0x1
-    11c6:	28658593          	addi	a1,a1,646 # 2448 <run_queue>
+    11c6:	37e58593          	addi	a1,a1,894 # 2540 <run_queue>
     11ca:	853e                	mv	a0,a5
     11cc:	00000097          	auipc	ra,0x0
     11d0:	cfc080e7          	jalr	-772(ra) # ec8 <list_add_tail>
@@ -2201,7 +2201,7 @@ void __release()
     120c:	fe843783          	ld	a5,-24(s0)
     1210:	00878713          	addi	a4,a5,8
     1214:	00001797          	auipc	a5,0x1
-    1218:	24478793          	addi	a5,a5,580 # 2458 <release_queue>
+    1218:	33c78793          	addi	a5,a5,828 # 2550 <release_queue>
     121c:	f4f71fe3          	bne	a4,a5,117a <__release+0x36>
         }
     }
@@ -2226,7 +2226,7 @@ void __thread_exit(struct thread *to_remove)
     1238:	fe843783          	ld	a5,-24(s0)
     123c:	7b98                	ld	a4,48(a5)
     123e:	00001797          	auipc	a5,0x1
-    1242:	25278793          	addi	a5,a5,594 # 2490 <current>
+    1242:	34a78793          	addi	a5,a5,842 # 2588 <current>
     1246:	e398                	sd	a4,0(a5)
     list_del(&to_remove->thread_list);
     1248:	fe843783          	ld	a5,-24(s0)
@@ -2254,7 +2254,7 @@ void __thread_exit(struct thread *to_remove)
     1282:	3da080e7          	jalr	986(ra) # 1658 <__dispatch>
     thrdresume(main_thrd_id);
     1286:	00001797          	auipc	a5,0x1
-    128a:	1e278793          	addi	a5,a5,482 # 2468 <main_thrd_id>
+    128a:	2da78793          	addi	a5,a5,730 # 2560 <main_thrd_id>
     128e:	439c                	lw	a5,0(a5)
     1290:	853e                	mv	a0,a5
     1292:	fffff097          	auipc	ra,0xfffff
@@ -2276,14 +2276,14 @@ void thread_exit(void)
     12aa:	1800                	addi	s0,sp,48
     if (current == &run_queue) {
     12ac:	00001797          	auipc	a5,0x1
-    12b0:	1e478793          	addi	a5,a5,484 # 2490 <current>
+    12b0:	2dc78793          	addi	a5,a5,732 # 2588 <current>
     12b4:	6398                	ld	a4,0(a5)
     12b6:	00001797          	auipc	a5,0x1
-    12ba:	19278793          	addi	a5,a5,402 # 2448 <run_queue>
+    12ba:	28a78793          	addi	a5,a5,650 # 2540 <run_queue>
     12be:	02f71063          	bne	a4,a5,12de <thread_exit+0x3a>
         fprintf(2, "[FATAL] thread_exit is called on a nonexistent thread\n");
     12c2:	00001597          	auipc	a1,0x1
-    12c6:	02e58593          	addi	a1,a1,46 # 22f0 <schedule_dm+0x206>
+    12c6:	12658593          	addi	a1,a1,294 # 23e8 <schedule_dm+0x204>
     12ca:	4509                	li	a0,2
     12cc:	fffff097          	auipc	ra,0xfffff
     12d0:	7bc080e7          	jalr	1980(ra) # a88 <fprintf>
@@ -2295,7 +2295,7 @@ void thread_exit(void)
 
     struct thread *to_remove = list_entry(current, struct thread, thread_list);
     12de:	00001797          	auipc	a5,0x1
-    12e2:	1b278793          	addi	a5,a5,434 # 2490 <current>
+    12e2:	2aa78793          	addi	a5,a5,682 # 2588 <current>
     12e6:	639c                	ld	a5,0(a5)
     12e8:	fef43423          	sd	a5,-24(s0)
     12ec:	fe843783          	ld	a5,-24(s0)
@@ -2312,13 +2312,13 @@ void thread_exit(void)
     130c:	fcf42e23          	sw	a5,-36(s0)
     threading_system_time += consume_ticks;
     1310:	00001797          	auipc	a5,0x1
-    1314:	18878793          	addi	a5,a5,392 # 2498 <threading_system_time>
+    1314:	28078793          	addi	a5,a5,640 # 2590 <threading_system_time>
     1318:	439c                	lw	a5,0(a5)
     131a:	fdc42703          	lw	a4,-36(s0)
     131e:	9fb9                	addw	a5,a5,a4
     1320:	0007871b          	sext.w	a4,a5
     1324:	00001797          	auipc	a5,0x1
-    1328:	17478793          	addi	a5,a5,372 # 2498 <threading_system_time>
+    1328:	26c78793          	addi	a5,a5,620 # 2590 <threading_system_time>
     132c:	c398                	sw	a4,0(a5)
 
     __release();
@@ -2345,7 +2345,7 @@ void __finish_current()
     1352:	1800                	addi	s0,sp,48
     struct thread *current_thread = list_entry(current, struct thread, thread_list);
     1354:	00001797          	auipc	a5,0x1
-    1358:	13c78793          	addi	a5,a5,316 # 2490 <current>
+    1358:	23478793          	addi	a5,a5,564 # 2588 <current>
     135c:	639c                	ld	a5,0(a5)
     135e:	fef43423          	sd	a5,-24(s0)
     1362:	fe843783          	ld	a5,-24(s0)
@@ -2363,14 +2363,14 @@ void __finish_current()
     1380:	fe043783          	ld	a5,-32(s0)
     1384:	5fd8                	lw	a4,60(a5)
     1386:	00001797          	auipc	a5,0x1
-    138a:	11278793          	addi	a5,a5,274 # 2498 <threading_system_time>
+    138a:	20a78793          	addi	a5,a5,522 # 2590 <threading_system_time>
     138e:	4390                	lw	a2,0(a5)
     1390:	fe043783          	ld	a5,-32(s0)
     1394:	4bfc                	lw	a5,84(a5)
     1396:	86be                	mv	a3,a5
     1398:	85ba                	mv	a1,a4
     139a:	00001517          	auipc	a0,0x1
-    139e:	f8e50513          	addi	a0,a0,-114 # 2328 <schedule_dm+0x23e>
+    139e:	08650513          	addi	a0,a0,134 # 2420 <schedule_dm+0x23c>
     13a2:	fffff097          	auipc	ra,0xfffff
     13a6:	73e080e7          	jalr	1854(ra) # ae0 <printf>
            current_thread->ID, threading_system_time, current_thread->n);
@@ -2381,16 +2381,16 @@ void __finish_current()
     13b0:	04f05563          	blez	a5,13fa <__finish_current+0xae>
         struct list_head *to_remove = current;
     13b4:	00001797          	auipc	a5,0x1
-    13b8:	0dc78793          	addi	a5,a5,220 # 2490 <current>
+    13b8:	1d478793          	addi	a5,a5,468 # 2588 <current>
     13bc:	639c                	ld	a5,0(a5)
     13be:	fcf43c23          	sd	a5,-40(s0)
         current = current->prev;
     13c2:	00001797          	auipc	a5,0x1
-    13c6:	0ce78793          	addi	a5,a5,206 # 2490 <current>
+    13c6:	1c678793          	addi	a5,a5,454 # 2588 <current>
     13ca:	639c                	ld	a5,0(a5)
     13cc:	6798                	ld	a4,8(a5)
     13ce:	00001797          	auipc	a5,0x1
-    13d2:	0c278793          	addi	a5,a5,194 # 2490 <current>
+    13d2:	1ba78793          	addi	a5,a5,442 # 2588 <current>
     13d6:	e398                	sd	a4,0(a5)
         list_del(to_remove);
     13d8:	fd843503          	ld	a0,-40(s0)
@@ -2428,7 +2428,7 @@ void __rt_finish_current()
     1416:	1800                	addi	s0,sp,48
     struct thread *current_thread = list_entry(current, struct thread, thread_list);
     1418:	00001797          	auipc	a5,0x1
-    141c:	07878793          	addi	a5,a5,120 # 2490 <current>
+    141c:	17078793          	addi	a5,a5,368 # 2588 <current>
     1420:	639c                	ld	a5,0(a5)
     1422:	fef43423          	sd	a5,-24(s0)
     1426:	fe843783          	ld	a5,-24(s0)
@@ -2446,14 +2446,14 @@ void __rt_finish_current()
     1444:	fe043783          	ld	a5,-32(s0)
     1448:	5fd8                	lw	a4,60(a5)
     144a:	00001797          	auipc	a5,0x1
-    144e:	04e78793          	addi	a5,a5,78 # 2498 <threading_system_time>
+    144e:	14678793          	addi	a5,a5,326 # 2590 <threading_system_time>
     1452:	4390                	lw	a2,0(a5)
     1454:	fe043783          	ld	a5,-32(s0)
     1458:	4bfc                	lw	a5,84(a5)
     145a:	86be                	mv	a3,a5
     145c:	85ba                	mv	a1,a4
     145e:	00001517          	auipc	a0,0x1
-    1462:	ee250513          	addi	a0,a0,-286 # 2340 <schedule_dm+0x256>
+    1462:	fda50513          	addi	a0,a0,-38 # 2438 <schedule_dm+0x254>
     1466:	fffff097          	auipc	ra,0xfffff
     146a:	67a080e7          	jalr	1658(ra) # ae0 <printf>
            current_thread->ID, threading_system_time, current_thread->n);
@@ -2464,16 +2464,16 @@ void __rt_finish_current()
     1474:	04f05563          	blez	a5,14be <__rt_finish_current+0xae>
         struct list_head *to_remove = current;
     1478:	00001797          	auipc	a5,0x1
-    147c:	01878793          	addi	a5,a5,24 # 2490 <current>
+    147c:	11078793          	addi	a5,a5,272 # 2588 <current>
     1480:	639c                	ld	a5,0(a5)
     1482:	fcf43c23          	sd	a5,-40(s0)
         current = current->prev;
     1486:	00001797          	auipc	a5,0x1
-    148a:	00a78793          	addi	a5,a5,10 # 2490 <current>
+    148a:	10278793          	addi	a5,a5,258 # 2588 <current>
     148e:	639c                	ld	a5,0(a5)
     1490:	6798                	ld	a4,8(a5)
     1492:	00001797          	auipc	a5,0x1
-    1496:	ffe78793          	addi	a5,a5,-2 # 2490 <current>
+    1496:	0f678793          	addi	a5,a5,246 # 2588 <current>
     149a:	e398                	sd	a4,0(a5)
         list_del(to_remove);
     149c:	fd843503          	ld	a0,-40(s0)
@@ -2516,7 +2516,7 @@ void switch_handler(void *arg)
     14e4:	fef43423          	sd	a5,-24(s0)
     struct thread *current_thread = list_entry(current, struct thread, thread_list);
     14e8:	00001797          	auipc	a5,0x1
-    14ec:	fa878793          	addi	a5,a5,-88 # 2490 <current>
+    14ec:	0a078793          	addi	a5,a5,160 # 2588 <current>
     14f0:	639c                	ld	a5,0(a5)
     14f2:	fef43023          	sd	a5,-32(s0)
     14f6:	fe043783          	ld	a5,-32(s0)
@@ -2527,14 +2527,14 @@ void switch_handler(void *arg)
     1502:	fe843783          	ld	a5,-24(s0)
     1506:	0007871b          	sext.w	a4,a5
     150a:	00001797          	auipc	a5,0x1
-    150e:	f8e78793          	addi	a5,a5,-114 # 2498 <threading_system_time>
+    150e:	08678793          	addi	a5,a5,134 # 2590 <threading_system_time>
     1512:	439c                	lw	a5,0(a5)
     1514:	2781                	sext.w	a5,a5
     1516:	9fb9                	addw	a5,a5,a4
     1518:	2781                	sext.w	a5,a5
     151a:	0007871b          	sext.w	a4,a5
     151e:	00001797          	auipc	a5,0x1
-    1522:	f7a78793          	addi	a5,a5,-134 # 2498 <threading_system_time>
+    1522:	07278793          	addi	a5,a5,114 # 2590 <threading_system_time>
     1526:	c398                	sw	a4,0(a5)
      __release();
     1528:	00000097          	auipc	ra,0x0
@@ -2559,14 +2559,14 @@ void switch_handler(void *arg)
     1558:	fd843783          	ld	a5,-40(s0)
     155c:	4ff8                	lw	a4,92(a5)
     155e:	00001797          	auipc	a5,0x1
-    1562:	f3a78793          	addi	a5,a5,-198 # 2498 <threading_system_time>
+    1562:	03278793          	addi	a5,a5,50 # 2590 <threading_system_time>
     1566:	439c                	lw	a5,0(a5)
     1568:	02f74163          	blt	a4,a5,158a <switch_handler+0xb6>
             (threading_system_time == current_thread->current_deadline && current_thread->remaining_time > 0)) {
     156c:	fd843783          	ld	a5,-40(s0)
     1570:	4ff8                	lw	a4,92(a5)
     1572:	00001797          	auipc	a5,0x1
-    1576:	f2678793          	addi	a5,a5,-218 # 2498 <threading_system_time>
+    1576:	01e78793          	addi	a5,a5,30 # 2590 <threading_system_time>
     157a:	439c                	lw	a5,0(a5)
         if (threading_system_time > current_thread->current_deadline || 
     157c:	02f71e63          	bne	a4,a5,15b8 <switch_handler+0xe4>
@@ -2578,12 +2578,12 @@ void switch_handler(void *arg)
     158a:	fd843783          	ld	a5,-40(s0)
     158e:	5fd8                	lw	a4,60(a5)
     1590:	00001797          	auipc	a5,0x1
-    1594:	f0878793          	addi	a5,a5,-248 # 2498 <threading_system_time>
+    1594:	00078793          	mv	a5,a5
     1598:	439c                	lw	a5,0(a5)
     159a:	863e                	mv	a2,a5
     159c:	85ba                	mv	a1,a4
     159e:	00001517          	auipc	a0,0x1
-    15a2:	dda50513          	addi	a0,a0,-550 # 2378 <schedule_dm+0x28e>
+    15a2:	ed250513          	addi	a0,a0,-302 # 2470 <schedule_dm+0x28c>
     15a6:	fffff097          	auipc	ra,0xfffff
     15aa:	53a080e7          	jalr	1338(ra) # ae0 <printf>
             exit(0);
@@ -2613,16 +2613,16 @@ void switch_handler(void *arg)
         // move the current thread to the end of the run_queue
         struct list_head *to_remove = current;
     15de:	00001797          	auipc	a5,0x1
-    15e2:	eb278793          	addi	a5,a5,-334 # 2490 <current>
+    15e2:	faa78793          	addi	a5,a5,-86 # 2588 <current>
     15e6:	639c                	ld	a5,0(a5)
     15e8:	fcf43823          	sd	a5,-48(s0)
         current = current->prev;
     15ec:	00001797          	auipc	a5,0x1
-    15f0:	ea478793          	addi	a5,a5,-348 # 2490 <current>
+    15f0:	f9c78793          	addi	a5,a5,-100 # 2588 <current>
     15f4:	639c                	ld	a5,0(a5)
     15f6:	6798                	ld	a4,8(a5)
     15f8:	00001797          	auipc	a5,0x1
-    15fc:	e9878793          	addi	a5,a5,-360 # 2490 <current>
+    15fc:	f9078793          	addi	a5,a5,-112 # 2588 <current>
     1600:	e398                	sd	a4,0(a5)
         list_del(to_remove);
     1602:	fd043503          	ld	a0,-48(s0)
@@ -2630,7 +2630,7 @@ void switch_handler(void *arg)
     160a:	91e080e7          	jalr	-1762(ra) # f24 <list_del>
         list_add_tail(to_remove, &run_queue);
     160e:	00001597          	auipc	a1,0x1
-    1612:	e3a58593          	addi	a1,a1,-454 # 2448 <run_queue>
+    1612:	f3258593          	addi	a1,a1,-206 # 2540 <run_queue>
     1616:	fd043503          	ld	a0,-48(s0)
     161a:	00000097          	auipc	ra,0x0
     161e:	8ae080e7          	jalr	-1874(ra) # ec8 <list_add_tail>
@@ -2647,7 +2647,7 @@ void switch_handler(void *arg)
     1636:	026080e7          	jalr	38(ra) # 1658 <__dispatch>
     thrdresume(main_thrd_id);
     163a:	00001797          	auipc	a5,0x1
-    163e:	e2e78793          	addi	a5,a5,-466 # 2468 <main_thrd_id>
+    163e:	f2678793          	addi	a5,a5,-218 # 2560 <main_thrd_id>
     1642:	439c                	lw	a5,0(a5)
     1644:	853e                	mv	a0,a5
     1646:	fffff097          	auipc	ra,0xfffff
@@ -2669,10 +2669,10 @@ void __dispatch()
     165e:	1800                	addi	s0,sp,48
     if (current == &run_queue) {
     1660:	00001797          	auipc	a5,0x1
-    1664:	e3078793          	addi	a5,a5,-464 # 2490 <current>
+    1664:	f2878793          	addi	a5,a5,-216 # 2588 <current>
     1668:	6398                	ld	a4,0(a5)
     166a:	00001797          	auipc	a5,0x1
-    166e:	dde78793          	addi	a5,a5,-546 # 2448 <run_queue>
+    166e:	ed678793          	addi	a5,a5,-298 # 2540 <run_queue>
     1672:	16f70663          	beq	a4,a5,17de <__dispatch+0x186>
     if (allocated_time < 0) {
         fprintf(2, "[FATAL] allocated_time is negative\n");
@@ -2681,7 +2681,7 @@ void __dispatch()
 
     struct thread *current_thread = list_entry(current, struct thread, thread_list);
     1676:	00001797          	auipc	a5,0x1
-    167a:	e1a78793          	addi	a5,a5,-486 # 2490 <current>
+    167a:	f1278793          	addi	a5,a5,-238 # 2588 <current>
     167e:	639c                	ld	a5,0(a5)
     1680:	fef43423          	sd	a5,-24(s0)
     1684:	fe843783          	ld	a5,-24(s0)
@@ -2692,7 +2692,7 @@ void __dispatch()
     1694:	43bc                	lw	a5,64(a5)
     1696:	cf85                	beqz	a5,16ce <__dispatch+0x76>
     1698:	00001797          	auipc	a5,0x1
-    169c:	e0878793          	addi	a5,a5,-504 # 24a0 <allocated_time>
+    169c:	f0078793          	addi	a5,a5,-256 # 2598 <allocated_time>
     16a0:	639c                	ld	a5,0(a5)
     16a2:	e795                	bnez	a5,16ce <__dispatch+0x76>
         printf("thread#%d misses a deadline at %d\n", current_thread->ID, current_thread->current_deadline);
@@ -2703,7 +2703,7 @@ void __dispatch()
     16b0:	863e                	mv	a2,a5
     16b2:	85ba                	mv	a1,a4
     16b4:	00001517          	auipc	a0,0x1
-    16b8:	cc450513          	addi	a0,a0,-828 # 2378 <schedule_dm+0x28e>
+    16b8:	dbc50513          	addi	a0,a0,-580 # 2470 <schedule_dm+0x28c>
     16bc:	fffff097          	auipc	ra,0xfffff
     16c0:	424080e7          	jalr	1060(ra) # ae0 <printf>
         exit(0);
@@ -2716,15 +2716,15 @@ void __dispatch()
     16ce:	fe043783          	ld	a5,-32(s0)
     16d2:	5fd8                	lw	a4,60(a5)
     16d4:	00001797          	auipc	a5,0x1
-    16d8:	dc478793          	addi	a5,a5,-572 # 2498 <threading_system_time>
+    16d8:	ebc78793          	addi	a5,a5,-324 # 2590 <threading_system_time>
     16dc:	4390                	lw	a2,0(a5)
     16de:	00001797          	auipc	a5,0x1
-    16e2:	dc278793          	addi	a5,a5,-574 # 24a0 <allocated_time>
+    16e2:	eba78793          	addi	a5,a5,-326 # 2598 <allocated_time>
     16e6:	639c                	ld	a5,0(a5)
     16e8:	86be                	mv	a3,a5
     16ea:	85ba                	mv	a1,a4
     16ec:	00001517          	auipc	a0,0x1
-    16f0:	cb450513          	addi	a0,a0,-844 # 23a0 <schedule_dm+0x2b6>
+    16f0:	dac50513          	addi	a0,a0,-596 # 2498 <schedule_dm+0x2b4>
     16f4:	fffff097          	auipc	ra,0xfffff
     16f8:	3ec080e7          	jalr	1004(ra) # ae0 <printf>
 
@@ -2734,13 +2734,13 @@ void __dispatch()
     1702:	c7a1                	beqz	a5,174a <__dispatch+0xf2>
         thrdstop(allocated_time, &(current_thread->thrdstop_context_id), switch_handler, (void *)allocated_time);
     1704:	00001797          	auipc	a5,0x1
-    1708:	d9c78793          	addi	a5,a5,-612 # 24a0 <allocated_time>
+    1708:	e9478793          	addi	a5,a5,-364 # 2598 <allocated_time>
     170c:	639c                	ld	a5,0(a5)
     170e:	0007871b          	sext.w	a4,a5
     1712:	fe043783          	ld	a5,-32(s0)
     1716:	03878593          	addi	a1,a5,56
     171a:	00001797          	auipc	a5,0x1
-    171e:	d8678793          	addi	a5,a5,-634 # 24a0 <allocated_time>
+    171e:	e7e78793          	addi	a5,a5,-386 # 2598 <allocated_time>
     1722:	639c                	ld	a5,0(a5)
     1724:	86be                	mv	a3,a5
     1726:	00000617          	auipc	a2,0x0
@@ -2770,13 +2770,13 @@ void __dispatch()
     1762:	df98                	sw	a4,56(a5)
         thrdstop(allocated_time, &(current_thread->thrdstop_context_id), switch_handler, (void *)allocated_time);
     1764:	00001797          	auipc	a5,0x1
-    1768:	d3c78793          	addi	a5,a5,-708 # 24a0 <allocated_time>
+    1768:	e3478793          	addi	a5,a5,-460 # 2598 <allocated_time>
     176c:	639c                	ld	a5,0(a5)
     176e:	0007871b          	sext.w	a4,a5
     1772:	fe043783          	ld	a5,-32(s0)
     1776:	03878593          	addi	a1,a5,56
     177a:	00001797          	auipc	a5,0x1
-    177e:	d2678793          	addi	a5,a5,-730 # 24a0 <allocated_time>
+    177e:	e1e78793          	addi	a5,a5,-482 # 2598 <allocated_time>
     1782:	639c                	ld	a5,0(a5)
     1784:	86be                	mv	a3,a5
     1786:	00000617          	auipc	a2,0x0
@@ -2790,7 +2790,7 @@ void __dispatch()
     179e:	0207d063          	bgez	a5,17be <__dispatch+0x166>
             fprintf(2, "[ERROR] number of threads may exceed MAX_THRD_NUM\n");
     17a2:	00001597          	auipc	a1,0x1
-    17a6:	c2e58593          	addi	a1,a1,-978 # 23d0 <schedule_dm+0x2e6>
+    17a6:	d2658593          	addi	a1,a1,-730 # 24c8 <schedule_dm+0x2e4>
     17aa:	4509                	li	a0,2
     17ac:	fffff097          	auipc	ra,0xfffff
     17b0:	2dc080e7          	jalr	732(ra) # a88 <fprintf>
@@ -2836,23 +2836,23 @@ void __schedule()
     17ee:	1080                	addi	s0,sp,96
     struct threads_sched_args args = {
     17f0:	00001797          	auipc	a5,0x1
-    17f4:	ca878793          	addi	a5,a5,-856 # 2498 <threading_system_time>
+    17f4:	da078793          	addi	a5,a5,-608 # 2590 <threading_system_time>
     17f8:	439c                	lw	a5,0(a5)
     17fa:	fcf42c23          	sw	a5,-40(s0)
     17fe:	4789                	li	a5,2
     1800:	fcf42e23          	sw	a5,-36(s0)
     1804:	00001797          	auipc	a5,0x1
-    1808:	c4478793          	addi	a5,a5,-956 # 2448 <run_queue>
+    1808:	d3c78793          	addi	a5,a5,-708 # 2540 <run_queue>
     180c:	fef43023          	sd	a5,-32(s0)
     1810:	00001797          	auipc	a5,0x1
-    1814:	c4878793          	addi	a5,a5,-952 # 2458 <release_queue>
+    1814:	d4078793          	addi	a5,a5,-704 # 2550 <release_queue>
     1818:	fef43423          	sd	a5,-24(s0)
-#ifdef THREAD_SCHEDULER_LST
-    r = schedule_lst(args);
+#ifdef THREAD_SCHEDULER_WRR
+    r = schedule_wrr(args);
 #endif
 
-#ifdef THREAD_SCHEDULER_DM
-    r = schedule_dm(args);
+#ifdef THREAD_SCHEDULER_SJF
+    r = schedule_sjf(args);
     181c:	fd843783          	ld	a5,-40(s0)
     1820:	faf43023          	sd	a5,-96(s0)
     1824:	fe043783          	ld	a5,-32(s0)
@@ -2861,24 +2861,27 @@ void __schedule()
     1830:	faf43823          	sd	a5,-80(s0)
     1834:	fa040793          	addi	a5,s0,-96
     1838:	853e                	mv	a0,a5
-    183a:	00001097          	auipc	ra,0x1
-    183e:	8b0080e7          	jalr	-1872(ra) # 20ea <schedule_dm>
+    183a:	00000097          	auipc	ra,0x0
+    183e:	4a4080e7          	jalr	1188(ra) # 1cde <schedule_sjf>
     1842:	872a                	mv	a4,a0
     1844:	87ae                	mv	a5,a1
     1846:	fce43423          	sd	a4,-56(s0)
     184a:	fcf43823          	sd	a5,-48(s0)
+
+#ifdef THREAD_SCHEDULER_DM
+    r = schedule_dm(args);
 #endif
 
     current = r.scheduled_thread_list_member;
     184e:	fc843703          	ld	a4,-56(s0)
     1852:	00001797          	auipc	a5,0x1
-    1856:	c3e78793          	addi	a5,a5,-962 # 2490 <current>
+    1856:	d3678793          	addi	a5,a5,-714 # 2588 <current>
     185a:	e398                	sd	a4,0(a5)
     allocated_time = r.allocated_time;
     185c:	fd042783          	lw	a5,-48(s0)
     1860:	873e                	mv	a4,a5
     1862:	00001797          	auipc	a5,0x1
-    1866:	c3e78793          	addi	a5,a5,-962 # 24a0 <allocated_time>
+    1866:	d3678793          	addi	a5,a5,-714 # 2598 <allocated_time>
     186a:	e398                	sd	a4,0(a5)
 }
     186c:	0001                	nop
@@ -2898,24 +2901,24 @@ void back_to_main_handler(void *arg)
     187e:	fea43423          	sd	a0,-24(s0)
     sleeping = 0;
     1882:	00001797          	auipc	a5,0x1
-    1886:	c1a78793          	addi	a5,a5,-998 # 249c <sleeping>
+    1886:	d1278793          	addi	a5,a5,-750 # 2594 <sleeping>
     188a:	0007a023          	sw	zero,0(a5)
     threading_system_time += (uint64)arg;
     188e:	fe843783          	ld	a5,-24(s0)
     1892:	0007871b          	sext.w	a4,a5
     1896:	00001797          	auipc	a5,0x1
-    189a:	c0278793          	addi	a5,a5,-1022 # 2498 <threading_system_time>
+    189a:	cfa78793          	addi	a5,a5,-774 # 2590 <threading_system_time>
     189e:	439c                	lw	a5,0(a5)
     18a0:	2781                	sext.w	a5,a5
     18a2:	9fb9                	addw	a5,a5,a4
     18a4:	2781                	sext.w	a5,a5
     18a6:	0007871b          	sext.w	a4,a5
     18aa:	00001797          	auipc	a5,0x1
-    18ae:	bee78793          	addi	a5,a5,-1042 # 2498 <threading_system_time>
+    18ae:	ce678793          	addi	a5,a5,-794 # 2590 <threading_system_time>
     18b2:	c398                	sw	a4,0(a5)
     thrdresume(main_thrd_id);
     18b4:	00001797          	auipc	a5,0x1
-    18b8:	bb478793          	addi	a5,a5,-1100 # 2468 <main_thrd_id>
+    18b8:	cac78793          	addi	a5,a5,-852 # 2560 <main_thrd_id>
     18bc:	439c                	lw	a5,0(a5)
     18be:	853e                	mv	a0,a5
     18c0:	fffff097          	auipc	ra,0xfffff
@@ -2937,13 +2940,13 @@ void thread_start_threading()
     18d8:	0800                	addi	s0,sp,16
     threading_system_time = 0;
     18da:	00001797          	auipc	a5,0x1
-    18de:	bbe78793          	addi	a5,a5,-1090 # 2498 <threading_system_time>
+    18de:	cb678793          	addi	a5,a5,-842 # 2590 <threading_system_time>
     18e2:	0007a023          	sw	zero,0(a5)
     current = &run_queue;
     18e6:	00001797          	auipc	a5,0x1
-    18ea:	baa78793          	addi	a5,a5,-1110 # 2490 <current>
+    18ea:	ca278793          	addi	a5,a5,-862 # 2588 <current>
     18ee:	00001717          	auipc	a4,0x1
-    18f2:	b5a70713          	addi	a4,a4,-1190 # 2448 <run_queue>
+    18f2:	c5270713          	addi	a4,a4,-942 # 2540 <run_queue>
     18f6:	e398                	sd	a4,0(a5)
 
     // call thrdstop just for obtain an ID
@@ -2952,13 +2955,13 @@ void thread_start_threading()
     18fa:	00000617          	auipc	a2,0x0
     18fe:	f7c60613          	addi	a2,a2,-132 # 1876 <back_to_main_handler>
     1902:	00001597          	auipc	a1,0x1
-    1906:	b6658593          	addi	a1,a1,-1178 # 2468 <main_thrd_id>
+    1906:	c5e58593          	addi	a1,a1,-930 # 2560 <main_thrd_id>
     190a:	3e800513          	li	a0,1000
     190e:	fffff097          	auipc	ra,0xfffff
     1912:	d2c080e7          	jalr	-724(ra) # 63a <thrdstop>
     cancelthrdstop(main_thrd_id, 0);
     1916:	00001797          	auipc	a5,0x1
-    191a:	b5278793          	addi	a5,a5,-1198 # 2468 <main_thrd_id>
+    191a:	c4a78793          	addi	a5,a5,-950 # 2560 <main_thrd_id>
     191e:	439c                	lw	a5,0(a5)
     1920:	4581                	li	a1,0
     1922:	853e                	mv	a0,a5
@@ -2975,7 +2978,7 @@ void thread_start_threading()
     193a:	eb2080e7          	jalr	-334(ra) # 17e8 <__schedule>
         cancelthrdstop(main_thrd_id, 0);
     193e:	00001797          	auipc	a5,0x1
-    1942:	b2a78793          	addi	a5,a5,-1238 # 2468 <main_thrd_id>
+    1942:	c2278793          	addi	a5,a5,-990 # 2560 <main_thrd_id>
     1946:	439c                	lw	a5,0(a5)
     1948:	4581                	li	a1,0
     194a:	853e                	mv	a0,a5
@@ -2987,13 +2990,13 @@ void thread_start_threading()
 
         if (list_empty(&run_queue) && list_empty(&release_queue)) {
     195c:	00001517          	auipc	a0,0x1
-    1960:	aec50513          	addi	a0,a0,-1300 # 2448 <run_queue>
+    1960:	be450513          	addi	a0,a0,-1052 # 2540 <run_queue>
     1964:	fffff097          	auipc	ra,0xfffff
     1968:	60a080e7          	jalr	1546(ra) # f6e <list_empty>
     196c:	87aa                	mv	a5,a0
     196e:	cb99                	beqz	a5,1984 <thread_start_threading+0xb2>
     1970:	00001517          	auipc	a0,0x1
-    1974:	ae850513          	addi	a0,a0,-1304 # 2458 <release_queue>
+    1974:	be050513          	addi	a0,a0,-1056 # 2550 <release_queue>
     1978:	fffff097          	auipc	ra,0xfffff
     197c:	5f6080e7          	jalr	1526(ra) # f6e <list_empty>
     1980:	87aa                	mv	a5,a0
@@ -3004,49 +3007,49 @@ void thread_start_threading()
         // no thread in run_queue, release_queue not empty
         printf("run_queue is empty, sleep for %d ticks\n", allocated_time);
     1984:	00001797          	auipc	a5,0x1
-    1988:	b1c78793          	addi	a5,a5,-1252 # 24a0 <allocated_time>
+    1988:	c1478793          	addi	a5,a5,-1004 # 2598 <allocated_time>
     198c:	639c                	ld	a5,0(a5)
     198e:	85be                	mv	a1,a5
     1990:	00001517          	auipc	a0,0x1
-    1994:	a7850513          	addi	a0,a0,-1416 # 2408 <schedule_dm+0x31e>
+    1994:	b7050513          	addi	a0,a0,-1168 # 2500 <schedule_dm+0x31c>
     1998:	fffff097          	auipc	ra,0xfffff
     199c:	148080e7          	jalr	328(ra) # ae0 <printf>
         sleeping = 1;
     19a0:	00001797          	auipc	a5,0x1
-    19a4:	afc78793          	addi	a5,a5,-1284 # 249c <sleeping>
+    19a4:	bf478793          	addi	a5,a5,-1036 # 2594 <sleeping>
     19a8:	4705                	li	a4,1
     19aa:	c398                	sw	a4,0(a5)
         thrdstop(allocated_time, &main_thrd_id, back_to_main_handler, (void *)allocated_time);
     19ac:	00001797          	auipc	a5,0x1
-    19b0:	af478793          	addi	a5,a5,-1292 # 24a0 <allocated_time>
+    19b0:	bec78793          	addi	a5,a5,-1044 # 2598 <allocated_time>
     19b4:	639c                	ld	a5,0(a5)
     19b6:	0007871b          	sext.w	a4,a5
     19ba:	00001797          	auipc	a5,0x1
-    19be:	ae678793          	addi	a5,a5,-1306 # 24a0 <allocated_time>
+    19be:	bde78793          	addi	a5,a5,-1058 # 2598 <allocated_time>
     19c2:	639c                	ld	a5,0(a5)
     19c4:	86be                	mv	a3,a5
     19c6:	00000617          	auipc	a2,0x0
     19ca:	eb060613          	addi	a2,a2,-336 # 1876 <back_to_main_handler>
     19ce:	00001597          	auipc	a1,0x1
-    19d2:	a9a58593          	addi	a1,a1,-1382 # 2468 <main_thrd_id>
+    19d2:	b9258593          	addi	a1,a1,-1134 # 2560 <main_thrd_id>
     19d6:	853a                	mv	a0,a4
     19d8:	fffff097          	auipc	ra,0xfffff
     19dc:	c62080e7          	jalr	-926(ra) # 63a <thrdstop>
         while (sleeping) {
     19e0:	0001                	nop
     19e2:	00001797          	auipc	a5,0x1
-    19e6:	aba78793          	addi	a5,a5,-1350 # 249c <sleeping>
+    19e6:	bb278793          	addi	a5,a5,-1102 # 2594 <sleeping>
     19ea:	439c                	lw	a5,0(a5)
     19ec:	fbfd                	bnez	a5,19e2 <thread_start_threading+0x110>
     while (!list_empty(&run_queue) || !list_empty(&release_queue)) {
     19ee:	00001517          	auipc	a0,0x1
-    19f2:	a5a50513          	addi	a0,a0,-1446 # 2448 <run_queue>
+    19f2:	b5250513          	addi	a0,a0,-1198 # 2540 <run_queue>
     19f6:	fffff097          	auipc	ra,0xfffff
     19fa:	578080e7          	jalr	1400(ra) # f6e <list_empty>
     19fe:	87aa                	mv	a5,a0
     1a00:	d79d                	beqz	a5,192e <thread_start_threading+0x5c>
     1a02:	00001517          	auipc	a0,0x1
-    1a06:	a5650513          	addi	a0,a0,-1450 # 2458 <release_queue>
+    1a06:	b4e50513          	addi	a0,a0,-1202 # 2550 <release_queue>
     1a0a:	fffff097          	auipc	ra,0xfffff
     1a0e:	564080e7          	jalr	1380(ra) # f6e <list_empty>
     1a12:	87aa                	mv	a5,a0
@@ -3065,937 +3068,1043 @@ void thread_start_threading()
     1a20:	0141                	addi	sp,sp,16
     1a22:	8082                	ret
 
-0000000000001a24 <fill_sparse>:
+0000000000001a24 <list_empty>:
+{
+    1a24:	1101                	addi	sp,sp,-32
+    1a26:	ec22                	sd	s0,24(sp)
+    1a28:	1000                	addi	s0,sp,32
+    1a2a:	fea43423          	sd	a0,-24(s0)
+    return head->next == head;
+    1a2e:	fe843783          	ld	a5,-24(s0)
+    1a32:	639c                	ld	a5,0(a5)
+    1a34:	fe843703          	ld	a4,-24(s0)
+    1a38:	40f707b3          	sub	a5,a4,a5
+    1a3c:	0017b793          	seqz	a5,a5
+    1a40:	0ff7f793          	andi	a5,a5,255
+    1a44:	2781                	sext.w	a5,a5
+}
+    1a46:	853e                	mv	a0,a5
+    1a48:	6462                	ld	s0,24(sp)
+    1a4a:	6105                	addi	sp,sp,32
+    1a4c:	8082                	ret
+
+0000000000001a4e <fill_sparse>:
 #include "user/threads.h"
 #include "user/threads_sched.h"
 
 #define NULL 0
 
 struct threads_sched_result fill_sparse(struct threads_sched_args args) {
-    1a24:	715d                	addi	sp,sp,-80
-    1a26:	e4a2                	sd	s0,72(sp)
-    1a28:	e0a6                	sd	s1,64(sp)
-    1a2a:	0880                	addi	s0,sp,80
-    1a2c:	84aa                	mv	s1,a0
+    1a4e:	715d                	addi	sp,sp,-80
+    1a50:	e4a2                	sd	s0,72(sp)
+    1a52:	e0a6                	sd	s1,64(sp)
+    1a54:	0880                	addi	s0,sp,80
+    1a56:	84aa                	mv	s1,a0
     int sleep_time = -1;
-    1a2e:	57fd                	li	a5,-1
-    1a30:	fef42623          	sw	a5,-20(s0)
+    1a58:	57fd                	li	a5,-1
+    1a5a:	fef42623          	sw	a5,-20(s0)
     struct release_queue_entry *cur;
     list_for_each_entry(cur, args.release_queue, thread_list) {
-    1a34:	689c                	ld	a5,16(s1)
-    1a36:	639c                	ld	a5,0(a5)
-    1a38:	fcf43c23          	sd	a5,-40(s0)
-    1a3c:	fd843783          	ld	a5,-40(s0)
-    1a40:	17e1                	addi	a5,a5,-8
-    1a42:	fef43023          	sd	a5,-32(s0)
-    1a46:	a0a9                	j	1a90 <fill_sparse+0x6c>
-        if (sleep_time < 0 || sleep_time < cur->release_time - args.current_time)
-    1a48:	fec42783          	lw	a5,-20(s0)
-    1a4c:	2781                	sext.w	a5,a5
-    1a4e:	0007cf63          	bltz	a5,1a6c <fill_sparse+0x48>
-    1a52:	fe043783          	ld	a5,-32(s0)
-    1a56:	4f98                	lw	a4,24(a5)
-    1a58:	409c                	lw	a5,0(s1)
-    1a5a:	40f707bb          	subw	a5,a4,a5
-    1a5e:	0007871b          	sext.w	a4,a5
-    1a62:	fec42783          	lw	a5,-20(s0)
-    1a66:	2781                	sext.w	a5,a5
-    1a68:	00e7da63          	bge	a5,a4,1a7c <fill_sparse+0x58>
-            sleep_time = cur->release_time - args.current_time;
-    1a6c:	fe043783          	ld	a5,-32(s0)
-    1a70:	4f98                	lw	a4,24(a5)
-    1a72:	409c                	lw	a5,0(s1)
-    1a74:	40f707bb          	subw	a5,a4,a5
-    1a78:	fef42623          	sw	a5,-20(s0)
-    list_for_each_entry(cur, args.release_queue, thread_list) {
+    1a5e:	689c                	ld	a5,16(s1)
+    1a60:	639c                	ld	a5,0(a5)
+    1a62:	fcf43c23          	sd	a5,-40(s0)
+    1a66:	fd843783          	ld	a5,-40(s0)
+    1a6a:	17e1                	addi	a5,a5,-8
+    1a6c:	fef43023          	sd	a5,-32(s0)
+    1a70:	a0a9                	j	1aba <fill_sparse+0x6c>
+        if (sleep_time < 0 || sleep_time > cur->release_time - args.current_time)
+    1a72:	fec42783          	lw	a5,-20(s0)
+    1a76:	2781                	sext.w	a5,a5
+    1a78:	0007cf63          	bltz	a5,1a96 <fill_sparse+0x48>
     1a7c:	fe043783          	ld	a5,-32(s0)
-    1a80:	679c                	ld	a5,8(a5)
-    1a82:	fcf43823          	sd	a5,-48(s0)
-    1a86:	fd043783          	ld	a5,-48(s0)
-    1a8a:	17e1                	addi	a5,a5,-8
-    1a8c:	fef43023          	sd	a5,-32(s0)
-    1a90:	fe043783          	ld	a5,-32(s0)
-    1a94:	00878713          	addi	a4,a5,8
-    1a98:	689c                	ld	a5,16(s1)
-    1a9a:	faf717e3          	bne	a4,a5,1a48 <fill_sparse+0x24>
+    1a80:	4f98                	lw	a4,24(a5)
+    1a82:	409c                	lw	a5,0(s1)
+    1a84:	40f707bb          	subw	a5,a4,a5
+    1a88:	0007871b          	sext.w	a4,a5
+    1a8c:	fec42783          	lw	a5,-20(s0)
+    1a90:	2781                	sext.w	a5,a5
+    1a92:	00f75a63          	bge	a4,a5,1aa6 <fill_sparse+0x58>
+            sleep_time = cur->release_time - args.current_time;
+    1a96:	fe043783          	ld	a5,-32(s0)
+    1a9a:	4f98                	lw	a4,24(a5)
+    1a9c:	409c                	lw	a5,0(s1)
+    1a9e:	40f707bb          	subw	a5,a4,a5
+    1aa2:	fef42623          	sw	a5,-20(s0)
+    list_for_each_entry(cur, args.release_queue, thread_list) {
+    1aa6:	fe043783          	ld	a5,-32(s0)
+    1aaa:	679c                	ld	a5,8(a5)
+    1aac:	fcf43823          	sd	a5,-48(s0)
+    1ab0:	fd043783          	ld	a5,-48(s0)
+    1ab4:	17e1                	addi	a5,a5,-8
+    1ab6:	fef43023          	sd	a5,-32(s0)
+    1aba:	fe043783          	ld	a5,-32(s0)
+    1abe:	00878713          	addi	a4,a5,8
+    1ac2:	689c                	ld	a5,16(s1)
+    1ac4:	faf717e3          	bne	a4,a5,1a72 <fill_sparse+0x24>
     }
     return (struct threads_sched_result) { .scheduled_thread_list_member = args.run_queue, .allocated_time = sleep_time };
-    1a9e:	649c                	ld	a5,8(s1)
-    1aa0:	fcf43023          	sd	a5,-64(s0)
-    1aa4:	fec42783          	lw	a5,-20(s0)
-    1aa8:	fcf42423          	sw	a5,-56(s0)
-    1aac:	4701                	li	a4,0
-    1aae:	fc043703          	ld	a4,-64(s0)
-    1ab2:	4781                	li	a5,0
-    1ab4:	fc843783          	ld	a5,-56(s0)
-    1ab8:	863a                	mv	a2,a4
-    1aba:	86be                	mv	a3,a5
-    1abc:	8732                	mv	a4,a2
-    1abe:	87b6                	mv	a5,a3
+    1ac8:	649c                	ld	a5,8(s1)
+    1aca:	fcf43023          	sd	a5,-64(s0)
+    1ace:	fec42783          	lw	a5,-20(s0)
+    1ad2:	fcf42423          	sw	a5,-56(s0)
+    1ad6:	4701                	li	a4,0
+    1ad8:	fc043703          	ld	a4,-64(s0)
+    1adc:	4781                	li	a5,0
+    1ade:	fc843783          	ld	a5,-56(s0)
+    1ae2:	863a                	mv	a2,a4
+    1ae4:	86be                	mv	a3,a5
+    1ae6:	8732                	mv	a4,a2
+    1ae8:	87b6                	mv	a5,a3
 }
-    1ac0:	853a                	mv	a0,a4
-    1ac2:	85be                	mv	a1,a5
-    1ac4:	6426                	ld	s0,72(sp)
-    1ac6:	6486                	ld	s1,64(sp)
-    1ac8:	6161                	addi	sp,sp,80
-    1aca:	8082                	ret
+    1aea:	853a                	mv	a0,a4
+    1aec:	85be                	mv	a1,a5
+    1aee:	6426                	ld	s0,72(sp)
+    1af0:	6486                	ld	s1,64(sp)
+    1af2:	6161                	addi	sp,sp,80
+    1af4:	8082                	ret
 
-0000000000001acc <schedule_default>:
+0000000000001af6 <schedule_default>:
 
 /* default scheduling algorithm */
 struct threads_sched_result schedule_default(struct threads_sched_args args)
 {
-    1acc:	715d                	addi	sp,sp,-80
-    1ace:	e4a2                	sd	s0,72(sp)
-    1ad0:	e0a6                	sd	s1,64(sp)
-    1ad2:	0880                	addi	s0,sp,80
-    1ad4:	84aa                	mv	s1,a0
+    1af6:	715d                	addi	sp,sp,-80
+    1af8:	e4a2                	sd	s0,72(sp)
+    1afa:	e0a6                	sd	s1,64(sp)
+    1afc:	0880                	addi	s0,sp,80
+    1afe:	84aa                	mv	s1,a0
     struct thread *thread_with_smallest_id = NULL;
-    1ad6:	fe043423          	sd	zero,-24(s0)
+    1b00:	fe043423          	sd	zero,-24(s0)
     struct thread *th = NULL;
-    1ada:	fe043023          	sd	zero,-32(s0)
+    1b04:	fe043023          	sd	zero,-32(s0)
     list_for_each_entry(th, args.run_queue, thread_list) {
-    1ade:	649c                	ld	a5,8(s1)
-    1ae0:	639c                	ld	a5,0(a5)
-    1ae2:	fcf43c23          	sd	a5,-40(s0)
-    1ae6:	fd843783          	ld	a5,-40(s0)
-    1aea:	fd878793          	addi	a5,a5,-40
-    1aee:	fef43023          	sd	a5,-32(s0)
-    1af2:	a81d                	j	1b28 <schedule_default+0x5c>
+    1b08:	649c                	ld	a5,8(s1)
+    1b0a:	639c                	ld	a5,0(a5)
+    1b0c:	fcf43c23          	sd	a5,-40(s0)
+    1b10:	fd843783          	ld	a5,-40(s0)
+    1b14:	fd878793          	addi	a5,a5,-40
+    1b18:	fef43023          	sd	a5,-32(s0)
+    1b1c:	a81d                	j	1b52 <schedule_default+0x5c>
         if (thread_with_smallest_id == NULL || th->ID < thread_with_smallest_id->ID)
-    1af4:	fe843783          	ld	a5,-24(s0)
-    1af8:	cb89                	beqz	a5,1b0a <schedule_default+0x3e>
-    1afa:	fe043783          	ld	a5,-32(s0)
-    1afe:	5fd8                	lw	a4,60(a5)
-    1b00:	fe843783          	ld	a5,-24(s0)
-    1b04:	5fdc                	lw	a5,60(a5)
-    1b06:	00f75663          	bge	a4,a5,1b12 <schedule_default+0x46>
+    1b1e:	fe843783          	ld	a5,-24(s0)
+    1b22:	cb89                	beqz	a5,1b34 <schedule_default+0x3e>
+    1b24:	fe043783          	ld	a5,-32(s0)
+    1b28:	5fd8                	lw	a4,60(a5)
+    1b2a:	fe843783          	ld	a5,-24(s0)
+    1b2e:	5fdc                	lw	a5,60(a5)
+    1b30:	00f75663          	bge	a4,a5,1b3c <schedule_default+0x46>
             thread_with_smallest_id = th;
-    1b0a:	fe043783          	ld	a5,-32(s0)
-    1b0e:	fef43423          	sd	a5,-24(s0)
+    1b34:	fe043783          	ld	a5,-32(s0)
+    1b38:	fef43423          	sd	a5,-24(s0)
     list_for_each_entry(th, args.run_queue, thread_list) {
-    1b12:	fe043783          	ld	a5,-32(s0)
-    1b16:	779c                	ld	a5,40(a5)
-    1b18:	fcf43823          	sd	a5,-48(s0)
-    1b1c:	fd043783          	ld	a5,-48(s0)
-    1b20:	fd878793          	addi	a5,a5,-40
-    1b24:	fef43023          	sd	a5,-32(s0)
-    1b28:	fe043783          	ld	a5,-32(s0)
-    1b2c:	02878713          	addi	a4,a5,40
-    1b30:	649c                	ld	a5,8(s1)
-    1b32:	fcf711e3          	bne	a4,a5,1af4 <schedule_default+0x28>
+    1b3c:	fe043783          	ld	a5,-32(s0)
+    1b40:	779c                	ld	a5,40(a5)
+    1b42:	fcf43823          	sd	a5,-48(s0)
+    1b46:	fd043783          	ld	a5,-48(s0)
+    1b4a:	fd878793          	addi	a5,a5,-40
+    1b4e:	fef43023          	sd	a5,-32(s0)
+    1b52:	fe043783          	ld	a5,-32(s0)
+    1b56:	02878713          	addi	a4,a5,40
+    1b5a:	649c                	ld	a5,8(s1)
+    1b5c:	fcf711e3          	bne	a4,a5,1b1e <schedule_default+0x28>
     }
 
     struct threads_sched_result r;
     if (thread_with_smallest_id != NULL) {
-    1b36:	fe843783          	ld	a5,-24(s0)
-    1b3a:	cf89                	beqz	a5,1b54 <schedule_default+0x88>
+    1b60:	fe843783          	ld	a5,-24(s0)
+    1b64:	cf89                	beqz	a5,1b7e <schedule_default+0x88>
         r.scheduled_thread_list_member = &thread_with_smallest_id->thread_list;
-    1b3c:	fe843783          	ld	a5,-24(s0)
-    1b40:	02878793          	addi	a5,a5,40
-    1b44:	faf43823          	sd	a5,-80(s0)
+    1b66:	fe843783          	ld	a5,-24(s0)
+    1b6a:	02878793          	addi	a5,a5,40
+    1b6e:	faf43823          	sd	a5,-80(s0)
         r.allocated_time = thread_with_smallest_id->remaining_time;
-    1b48:	fe843783          	ld	a5,-24(s0)
-    1b4c:	4fbc                	lw	a5,88(a5)
-    1b4e:	faf42c23          	sw	a5,-72(s0)
-    1b52:	a039                	j	1b60 <schedule_default+0x94>
+    1b72:	fe843783          	ld	a5,-24(s0)
+    1b76:	4fbc                	lw	a5,88(a5)
+    1b78:	faf42c23          	sw	a5,-72(s0)
+    1b7c:	a039                	j	1b8a <schedule_default+0x94>
     } else {
         r.scheduled_thread_list_member = args.run_queue;
-    1b54:	649c                	ld	a5,8(s1)
-    1b56:	faf43823          	sd	a5,-80(s0)
+    1b7e:	649c                	ld	a5,8(s1)
+    1b80:	faf43823          	sd	a5,-80(s0)
         r.allocated_time = 1;
-    1b5a:	4785                	li	a5,1
-    1b5c:	faf42c23          	sw	a5,-72(s0)
+    1b84:	4785                	li	a5,1
+    1b86:	faf42c23          	sw	a5,-72(s0)
     }
 
     return r;
-    1b60:	fb043783          	ld	a5,-80(s0)
-    1b64:	fcf43023          	sd	a5,-64(s0)
-    1b68:	fb843783          	ld	a5,-72(s0)
-    1b6c:	fcf43423          	sd	a5,-56(s0)
-    1b70:	4701                	li	a4,0
-    1b72:	fc043703          	ld	a4,-64(s0)
-    1b76:	4781                	li	a5,0
-    1b78:	fc843783          	ld	a5,-56(s0)
-    1b7c:	863a                	mv	a2,a4
-    1b7e:	86be                	mv	a3,a5
-    1b80:	8732                	mv	a4,a2
-    1b82:	87b6                	mv	a5,a3
+    1b8a:	fb043783          	ld	a5,-80(s0)
+    1b8e:	fcf43023          	sd	a5,-64(s0)
+    1b92:	fb843783          	ld	a5,-72(s0)
+    1b96:	fcf43423          	sd	a5,-56(s0)
+    1b9a:	4701                	li	a4,0
+    1b9c:	fc043703          	ld	a4,-64(s0)
+    1ba0:	4781                	li	a5,0
+    1ba2:	fc843783          	ld	a5,-56(s0)
+    1ba6:	863a                	mv	a2,a4
+    1ba8:	86be                	mv	a3,a5
+    1baa:	8732                	mv	a4,a2
+    1bac:	87b6                	mv	a5,a3
 }
-    1b84:	853a                	mv	a0,a4
-    1b86:	85be                	mv	a1,a5
-    1b88:	6426                	ld	s0,72(sp)
-    1b8a:	6486                	ld	s1,64(sp)
-    1b8c:	6161                	addi	sp,sp,80
-    1b8e:	8082                	ret
+    1bae:	853a                	mv	a0,a4
+    1bb0:	85be                	mv	a1,a5
+    1bb2:	6426                	ld	s0,72(sp)
+    1bb4:	6486                	ld	s1,64(sp)
+    1bb6:	6161                	addi	sp,sp,80
+    1bb8:	8082                	ret
 
-0000000000001b90 <schedule_wrr>:
+0000000000001bba <schedule_wrr>:
 
 /* MP3 Part 1 - Non-Real-Time Scheduling */
 /* Weighted-Round-Robin Scheduling */
 struct threads_sched_result schedule_wrr(struct threads_sched_args args)
 {   
-    1b90:	7135                	addi	sp,sp,-160
-    1b92:	ed06                	sd	ra,152(sp)
-    1b94:	e922                	sd	s0,144(sp)
-    1b96:	e526                	sd	s1,136(sp)
-    1b98:	e14a                	sd	s2,128(sp)
-    1b9a:	fcce                	sd	s3,120(sp)
-    1b9c:	1100                	addi	s0,sp,160
-    1b9e:	84aa                	mv	s1,a0
+    1bba:	7135                	addi	sp,sp,-160
+    1bbc:	ed06                	sd	ra,152(sp)
+    1bbe:	e922                	sd	s0,144(sp)
+    1bc0:	e526                	sd	s1,136(sp)
+    1bc2:	e14a                	sd	s2,128(sp)
+    1bc4:	fcce                	sd	s3,120(sp)
+    1bc6:	1100                	addi	s0,sp,160
+    1bc8:	84aa                	mv	s1,a0
     // TODO: implement the weighted round-robin scheduling algorithm
+    if (list_empty(args.run_queue)) 
+    1bca:	649c                	ld	a5,8(s1)
+    1bcc:	853e                	mv	a0,a5
+    1bce:	00000097          	auipc	ra,0x0
+    1bd2:	e56080e7          	jalr	-426(ra) # 1a24 <list_empty>
+    1bd6:	87aa                	mv	a5,a0
+    1bd8:	cb85                	beqz	a5,1c08 <schedule_wrr+0x4e>
+        return fill_sparse(args);
+    1bda:	609c                	ld	a5,0(s1)
+    1bdc:	f6f43023          	sd	a5,-160(s0)
+    1be0:	649c                	ld	a5,8(s1)
+    1be2:	f6f43423          	sd	a5,-152(s0)
+    1be6:	689c                	ld	a5,16(s1)
+    1be8:	f6f43823          	sd	a5,-144(s0)
+    1bec:	f6040793          	addi	a5,s0,-160
+    1bf0:	853e                	mv	a0,a5
+    1bf2:	00000097          	auipc	ra,0x0
+    1bf6:	e5c080e7          	jalr	-420(ra) # 1a4e <fill_sparse>
+    1bfa:	872a                	mv	a4,a0
+    1bfc:	87ae                	mv	a5,a1
+    1bfe:	f8e43823          	sd	a4,-112(s0)
+    1c02:	f8f43c23          	sd	a5,-104(s0)
+    1c06:	a84d                	j	1cb8 <schedule_wrr+0xfe>
+
     struct thread *process_thread = NULL;
-    1ba0:	fc043423          	sd	zero,-56(s0)
+    1c08:	fc043423          	sd	zero,-56(s0)
     struct thread *th = NULL;
-    1ba4:	fc043023          	sd	zero,-64(s0)
+    1c0c:	fc043023          	sd	zero,-64(s0)
     list_for_each_entry(th, args.run_queue, thread_list) {
-    1ba8:	649c                	ld	a5,8(s1)
-    1baa:	639c                	ld	a5,0(a5)
-    1bac:	faf43823          	sd	a5,-80(s0)
-    1bb0:	fb043783          	ld	a5,-80(s0)
-    1bb4:	fd878793          	addi	a5,a5,-40
-    1bb8:	fcf43023          	sd	a5,-64(s0)
-    1bbc:	a025                	j	1be4 <schedule_wrr+0x54>
+    1c10:	649c                	ld	a5,8(s1)
+    1c12:	639c                	ld	a5,0(a5)
+    1c14:	faf43823          	sd	a5,-80(s0)
+    1c18:	fb043783          	ld	a5,-80(s0)
+    1c1c:	fd878793          	addi	a5,a5,-40
+    1c20:	fcf43023          	sd	a5,-64(s0)
+    1c24:	a025                	j	1c4c <schedule_wrr+0x92>
         if (process_thread == NULL) {
-    1bbe:	fc843783          	ld	a5,-56(s0)
-    1bc2:	e791                	bnez	a5,1bce <schedule_wrr+0x3e>
+    1c26:	fc843783          	ld	a5,-56(s0)
+    1c2a:	e791                	bnez	a5,1c36 <schedule_wrr+0x7c>
             process_thread = th;
-    1bc4:	fc043783          	ld	a5,-64(s0)
-    1bc8:	fcf43423          	sd	a5,-56(s0)
+    1c2c:	fc043783          	ld	a5,-64(s0)
+    1c30:	fcf43423          	sd	a5,-56(s0)
             break;
-    1bcc:	a01d                	j	1bf2 <schedule_wrr+0x62>
+    1c34:	a01d                	j	1c5a <schedule_wrr+0xa0>
     list_for_each_entry(th, args.run_queue, thread_list) {
-    1bce:	fc043783          	ld	a5,-64(s0)
-    1bd2:	779c                	ld	a5,40(a5)
-    1bd4:	faf43423          	sd	a5,-88(s0)
-    1bd8:	fa843783          	ld	a5,-88(s0)
-    1bdc:	fd878793          	addi	a5,a5,-40
-    1be0:	fcf43023          	sd	a5,-64(s0)
-    1be4:	fc043783          	ld	a5,-64(s0)
-    1be8:	02878713          	addi	a4,a5,40
-    1bec:	649c                	ld	a5,8(s1)
-    1bee:	fcf718e3          	bne	a4,a5,1bbe <schedule_wrr+0x2e>
+    1c36:	fc043783          	ld	a5,-64(s0)
+    1c3a:	779c                	ld	a5,40(a5)
+    1c3c:	faf43423          	sd	a5,-88(s0)
+    1c40:	fa843783          	ld	a5,-88(s0)
+    1c44:	fd878793          	addi	a5,a5,-40
+    1c48:	fcf43023          	sd	a5,-64(s0)
+    1c4c:	fc043783          	ld	a5,-64(s0)
+    1c50:	02878713          	addi	a4,a5,40
+    1c54:	649c                	ld	a5,8(s1)
+    1c56:	fcf718e3          	bne	a4,a5,1c26 <schedule_wrr+0x6c>
         }
     }
-
-    if (process_thread == NULL) 
-    1bf2:	fc843783          	ld	a5,-56(s0)
-    1bf6:	eb85                	bnez	a5,1c26 <schedule_wrr+0x96>
-        return fill_sparse(args);
-    1bf8:	609c                	ld	a5,0(s1)
-    1bfa:	f6f43023          	sd	a5,-160(s0)
-    1bfe:	649c                	ld	a5,8(s1)
-    1c00:	f6f43423          	sd	a5,-152(s0)
-    1c04:	689c                	ld	a5,16(s1)
-    1c06:	f6f43823          	sd	a5,-144(s0)
-    1c0a:	f6040793          	addi	a5,s0,-160
-    1c0e:	853e                	mv	a0,a5
-    1c10:	00000097          	auipc	ra,0x0
-    1c14:	e14080e7          	jalr	-492(ra) # 1a24 <fill_sparse>
-    1c18:	872a                	mv	a4,a0
-    1c1a:	87ae                	mv	a5,a1
-    1c1c:	f8e43823          	sd	a4,-112(s0)
-    1c20:	f8f43c23          	sd	a5,-104(s0)
-    1c24:	a085                	j	1c84 <schedule_wrr+0xf4>
     
-
     int time_quantum = args.time_quantum;
-    1c26:	40dc                	lw	a5,4(s1)
-    1c28:	faf42223          	sw	a5,-92(s0)
+    1c5a:	40dc                	lw	a5,4(s1)
+    1c5c:	faf42223          	sw	a5,-92(s0)
     int executing_time = process_thread->remaining_time;
-    1c2c:	fc843783          	ld	a5,-56(s0)
-    1c30:	4fbc                	lw	a5,88(a5)
-    1c32:	faf42e23          	sw	a5,-68(s0)
+    1c60:	fc843783          	ld	a5,-56(s0)
+    1c64:	4fbc                	lw	a5,88(a5)
+    1c66:	faf42e23          	sw	a5,-68(s0)
     if (process_thread->remaining_time > time_quantum * (process_thread->weight)) {
-    1c36:	fc843783          	ld	a5,-56(s0)
-    1c3a:	4fb4                	lw	a3,88(a5)
-    1c3c:	fc843783          	ld	a5,-56(s0)
-    1c40:	47bc                	lw	a5,72(a5)
-    1c42:	fa442703          	lw	a4,-92(s0)
-    1c46:	02f707bb          	mulw	a5,a4,a5
-    1c4a:	2781                	sext.w	a5,a5
-    1c4c:	8736                	mv	a4,a3
-    1c4e:	00e7dc63          	bge	a5,a4,1c66 <schedule_wrr+0xd6>
+    1c6a:	fc843783          	ld	a5,-56(s0)
+    1c6e:	4fb4                	lw	a3,88(a5)
+    1c70:	fc843783          	ld	a5,-56(s0)
+    1c74:	47bc                	lw	a5,72(a5)
+    1c76:	fa442703          	lw	a4,-92(s0)
+    1c7a:	02f707bb          	mulw	a5,a4,a5
+    1c7e:	2781                	sext.w	a5,a5
+    1c80:	8736                	mv	a4,a3
+    1c82:	00e7dc63          	bge	a5,a4,1c9a <schedule_wrr+0xe0>
         executing_time = time_quantum * (process_thread->weight);
-    1c52:	fc843783          	ld	a5,-56(s0)
-    1c56:	47bc                	lw	a5,72(a5)
-    1c58:	fa442703          	lw	a4,-92(s0)
-    1c5c:	02f707bb          	mulw	a5,a4,a5
-    1c60:	faf42e23          	sw	a5,-68(s0)
-    1c64:	a031                	j	1c70 <schedule_wrr+0xe0>
+    1c86:	fc843783          	ld	a5,-56(s0)
+    1c8a:	47bc                	lw	a5,72(a5)
+    1c8c:	fa442703          	lw	a4,-92(s0)
+    1c90:	02f707bb          	mulw	a5,a4,a5
+    1c94:	faf42e23          	sw	a5,-68(s0)
+    1c98:	a031                	j	1ca4 <schedule_wrr+0xea>
     }
     else {
         executing_time = process_thread->remaining_time;
-    1c66:	fc843783          	ld	a5,-56(s0)
-    1c6a:	4fbc                	lw	a5,88(a5)
-    1c6c:	faf42e23          	sw	a5,-68(s0)
+    1c9a:	fc843783          	ld	a5,-56(s0)
+    1c9e:	4fbc                	lw	a5,88(a5)
+    1ca0:	faf42e23          	sw	a5,-68(s0)
     }
     
     return (struct threads_sched_result) { .scheduled_thread_list_member = &process_thread->thread_list, .allocated_time = executing_time };
-    1c70:	fc843783          	ld	a5,-56(s0)
-    1c74:	02878793          	addi	a5,a5,40
-    1c78:	f8f43823          	sd	a5,-112(s0)
-    1c7c:	fbc42783          	lw	a5,-68(s0)
-    1c80:	f8f42c23          	sw	a5,-104(s0)
-    1c84:	4701                	li	a4,0
-    1c86:	f9043703          	ld	a4,-112(s0)
-    1c8a:	4781                	li	a5,0
-    1c8c:	f9843783          	ld	a5,-104(s0)
-    1c90:	893a                	mv	s2,a4
-    1c92:	89be                	mv	s3,a5
-    1c94:	874a                	mv	a4,s2
-    1c96:	87ce                	mv	a5,s3
+    1ca4:	fc843783          	ld	a5,-56(s0)
+    1ca8:	02878793          	addi	a5,a5,40
+    1cac:	f8f43823          	sd	a5,-112(s0)
+    1cb0:	fbc42783          	lw	a5,-68(s0)
+    1cb4:	f8f42c23          	sw	a5,-104(s0)
+    1cb8:	4701                	li	a4,0
+    1cba:	f9043703          	ld	a4,-112(s0)
+    1cbe:	4781                	li	a5,0
+    1cc0:	f9843783          	ld	a5,-104(s0)
+    1cc4:	893a                	mv	s2,a4
+    1cc6:	89be                	mv	s3,a5
+    1cc8:	874a                	mv	a4,s2
+    1cca:	87ce                	mv	a5,s3
 }
-    1c98:	853a                	mv	a0,a4
-    1c9a:	85be                	mv	a1,a5
-    1c9c:	60ea                	ld	ra,152(sp)
-    1c9e:	644a                	ld	s0,144(sp)
-    1ca0:	64aa                	ld	s1,136(sp)
-    1ca2:	690a                	ld	s2,128(sp)
-    1ca4:	79e6                	ld	s3,120(sp)
-    1ca6:	610d                	addi	sp,sp,160
-    1ca8:	8082                	ret
+    1ccc:	853a                	mv	a0,a4
+    1cce:	85be                	mv	a1,a5
+    1cd0:	60ea                	ld	ra,152(sp)
+    1cd2:	644a                	ld	s0,144(sp)
+    1cd4:	64aa                	ld	s1,136(sp)
+    1cd6:	690a                	ld	s2,128(sp)
+    1cd8:	79e6                	ld	s3,120(sp)
+    1cda:	610d                	addi	sp,sp,160
+    1cdc:	8082                	ret
 
-0000000000001caa <schedule_sjf>:
+0000000000001cde <schedule_sjf>:
 
 /* Shortest-Job-First Scheduling */
 struct threads_sched_result schedule_sjf(struct threads_sched_args args)
 {   
-    1caa:	7131                	addi	sp,sp,-192
-    1cac:	fd06                	sd	ra,184(sp)
-    1cae:	f922                	sd	s0,176(sp)
-    1cb0:	f526                	sd	s1,168(sp)
-    1cb2:	f14a                	sd	s2,160(sp)
-    1cb4:	ed4e                	sd	s3,152(sp)
-    1cb6:	0180                	addi	s0,sp,192
-    1cb8:	84aa                	mv	s1,a0
+    1cde:	7131                	addi	sp,sp,-192
+    1ce0:	fd06                	sd	ra,184(sp)
+    1ce2:	f922                	sd	s0,176(sp)
+    1ce4:	f526                	sd	s1,168(sp)
+    1ce6:	f14a                	sd	s2,160(sp)
+    1ce8:	ed4e                	sd	s3,152(sp)
+    1cea:	0180                	addi	s0,sp,192
+    1cec:	84aa                	mv	s1,a0
     // TODO: implement the shortest-job-first scheduling algorithm
+    if (list_empty(args.run_queue)) 
+    1cee:	649c                	ld	a5,8(s1)
+    1cf0:	853e                	mv	a0,a5
+    1cf2:	00000097          	auipc	ra,0x0
+    1cf6:	d32080e7          	jalr	-718(ra) # 1a24 <list_empty>
+    1cfa:	87aa                	mv	a5,a0
+    1cfc:	cb85                	beqz	a5,1d2c <schedule_sjf+0x4e>
+        return fill_sparse(args);
+    1cfe:	609c                	ld	a5,0(s1)
+    1d00:	f4f43023          	sd	a5,-192(s0)
+    1d04:	649c                	ld	a5,8(s1)
+    1d06:	f4f43423          	sd	a5,-184(s0)
+    1d0a:	689c                	ld	a5,16(s1)
+    1d0c:	f4f43823          	sd	a5,-176(s0)
+    1d10:	f4040793          	addi	a5,s0,-192
+    1d14:	853e                	mv	a0,a5
+    1d16:	00000097          	auipc	ra,0x0
+    1d1a:	d38080e7          	jalr	-712(ra) # 1a4e <fill_sparse>
+    1d1e:	872a                	mv	a4,a0
+    1d20:	87ae                	mv	a5,a1
+    1d22:	f6e43c23          	sd	a4,-136(s0)
+    1d26:	f8f43023          	sd	a5,-128(s0)
+    1d2a:	aa49                	j	1ebc <schedule_sjf+0x1de>
+
     int current_time = args.current_time;
-    1cba:	409c                	lw	a5,0(s1)
-    1cbc:	faf42823          	sw	a5,-80(s0)
+    1d2c:	409c                	lw	a5,0(s1)
+    1d2e:	faf42823          	sw	a5,-80(s0)
 
     // find the shortest thread in the run queue
     struct thread *shortest_thread = NULL;
-    1cc0:	fc043423          	sd	zero,-56(s0)
+    1d32:	fc043423          	sd	zero,-56(s0)
     struct thread *th = NULL;
-    1cc4:	fc043023          	sd	zero,-64(s0)
+    1d36:	fc043023          	sd	zero,-64(s0)
     list_for_each_entry(th, args.run_queue, thread_list) {
-    1cc8:	649c                	ld	a5,8(s1)
-    1cca:	639c                	ld	a5,0(a5)
-    1ccc:	faf43423          	sd	a5,-88(s0)
-    1cd0:	fa843783          	ld	a5,-88(s0)
-    1cd4:	fd878793          	addi	a5,a5,-40
-    1cd8:	fcf43023          	sd	a5,-64(s0)
-    1cdc:	a085                	j	1d3c <schedule_sjf+0x92>
+    1d3a:	649c                	ld	a5,8(s1)
+    1d3c:	639c                	ld	a5,0(a5)
+    1d3e:	faf43423          	sd	a5,-88(s0)
+    1d42:	fa843783          	ld	a5,-88(s0)
+    1d46:	fd878793          	addi	a5,a5,-40
+    1d4a:	fcf43023          	sd	a5,-64(s0)
+    1d4e:	a085                	j	1dae <schedule_sjf+0xd0>
         if (shortest_thread == NULL || th->remaining_time < shortest_thread->remaining_time) {
-    1cde:	fc843783          	ld	a5,-56(s0)
-    1ce2:	cb89                	beqz	a5,1cf4 <schedule_sjf+0x4a>
-    1ce4:	fc043783          	ld	a5,-64(s0)
-    1ce8:	4fb8                	lw	a4,88(a5)
-    1cea:	fc843783          	ld	a5,-56(s0)
-    1cee:	4fbc                	lw	a5,88(a5)
-    1cf0:	00f75763          	bge	a4,a5,1cfe <schedule_sjf+0x54>
+    1d50:	fc843783          	ld	a5,-56(s0)
+    1d54:	cb89                	beqz	a5,1d66 <schedule_sjf+0x88>
+    1d56:	fc043783          	ld	a5,-64(s0)
+    1d5a:	4fb8                	lw	a4,88(a5)
+    1d5c:	fc843783          	ld	a5,-56(s0)
+    1d60:	4fbc                	lw	a5,88(a5)
+    1d62:	00f75763          	bge	a4,a5,1d70 <schedule_sjf+0x92>
             shortest_thread = th;
-    1cf4:	fc043783          	ld	a5,-64(s0)
-    1cf8:	fcf43423          	sd	a5,-56(s0)
-    1cfc:	a02d                	j	1d26 <schedule_sjf+0x7c>
+    1d66:	fc043783          	ld	a5,-64(s0)
+    1d6a:	fcf43423          	sd	a5,-56(s0)
+    1d6e:	a02d                	j	1d98 <schedule_sjf+0xba>
         }
         else if (th->remaining_time == shortest_thread->remaining_time && th->ID < shortest_thread->ID) {
-    1cfe:	fc043783          	ld	a5,-64(s0)
-    1d02:	4fb8                	lw	a4,88(a5)
-    1d04:	fc843783          	ld	a5,-56(s0)
-    1d08:	4fbc                	lw	a5,88(a5)
-    1d0a:	00f71e63          	bne	a4,a5,1d26 <schedule_sjf+0x7c>
-    1d0e:	fc043783          	ld	a5,-64(s0)
-    1d12:	5fd8                	lw	a4,60(a5)
-    1d14:	fc843783          	ld	a5,-56(s0)
-    1d18:	5fdc                	lw	a5,60(a5)
-    1d1a:	00f75663          	bge	a4,a5,1d26 <schedule_sjf+0x7c>
+    1d70:	fc043783          	ld	a5,-64(s0)
+    1d74:	4fb8                	lw	a4,88(a5)
+    1d76:	fc843783          	ld	a5,-56(s0)
+    1d7a:	4fbc                	lw	a5,88(a5)
+    1d7c:	00f71e63          	bne	a4,a5,1d98 <schedule_sjf+0xba>
+    1d80:	fc043783          	ld	a5,-64(s0)
+    1d84:	5fd8                	lw	a4,60(a5)
+    1d86:	fc843783          	ld	a5,-56(s0)
+    1d8a:	5fdc                	lw	a5,60(a5)
+    1d8c:	00f75663          	bge	a4,a5,1d98 <schedule_sjf+0xba>
             shortest_thread = th;
-    1d1e:	fc043783          	ld	a5,-64(s0)
-    1d22:	fcf43423          	sd	a5,-56(s0)
+    1d90:	fc043783          	ld	a5,-64(s0)
+    1d94:	fcf43423          	sd	a5,-56(s0)
     list_for_each_entry(th, args.run_queue, thread_list) {
-    1d26:	fc043783          	ld	a5,-64(s0)
-    1d2a:	779c                	ld	a5,40(a5)
-    1d2c:	f8f43423          	sd	a5,-120(s0)
-    1d30:	f8843783          	ld	a5,-120(s0)
-    1d34:	fd878793          	addi	a5,a5,-40
-    1d38:	fcf43023          	sd	a5,-64(s0)
-    1d3c:	fc043783          	ld	a5,-64(s0)
-    1d40:	02878713          	addi	a4,a5,40
-    1d44:	649c                	ld	a5,8(s1)
-    1d46:	f8f71ce3          	bne	a4,a5,1cde <schedule_sjf+0x34>
+    1d98:	fc043783          	ld	a5,-64(s0)
+    1d9c:	779c                	ld	a5,40(a5)
+    1d9e:	f8f43423          	sd	a5,-120(s0)
+    1da2:	f8843783          	ld	a5,-120(s0)
+    1da6:	fd878793          	addi	a5,a5,-40
+    1daa:	fcf43023          	sd	a5,-64(s0)
+    1dae:	fc043783          	ld	a5,-64(s0)
+    1db2:	02878713          	addi	a4,a5,40
+    1db6:	649c                	ld	a5,8(s1)
+    1db8:	f8f71ce3          	bne	a4,a5,1d50 <schedule_sjf+0x72>
         }
     }
-
-    if (shortest_thread == NULL) 
-    1d4a:	fc843783          	ld	a5,-56(s0)
-    1d4e:	eb85                	bnez	a5,1d7e <schedule_sjf+0xd4>
-        return fill_sparse(args);
-    1d50:	609c                	ld	a5,0(s1)
-    1d52:	f4f43023          	sd	a5,-192(s0)
-    1d56:	649c                	ld	a5,8(s1)
-    1d58:	f4f43423          	sd	a5,-184(s0)
-    1d5c:	689c                	ld	a5,16(s1)
-    1d5e:	f4f43823          	sd	a5,-176(s0)
-    1d62:	f4040793          	addi	a5,s0,-192
-    1d66:	853e                	mv	a0,a5
-    1d68:	00000097          	auipc	ra,0x0
-    1d6c:	cbc080e7          	jalr	-836(ra) # 1a24 <fill_sparse>
-    1d70:	872a                	mv	a4,a0
-    1d72:	87ae                	mv	a5,a1
-    1d74:	f6e43c23          	sd	a4,-136(s0)
-    1d78:	f8f43023          	sd	a5,-128(s0)
-    1d7c:	a211                	j	1e80 <schedule_sjf+0x1d6>
 
     struct release_queue_entry *cur;
     int executing_time = shortest_thread->remaining_time;
-    1d7e:	fc843783          	ld	a5,-56(s0)
-    1d82:	4fbc                	lw	a5,88(a5)
-    1d84:	faf42a23          	sw	a5,-76(s0)
+    1dbc:	fc843783          	ld	a5,-56(s0)
+    1dc0:	4fbc                	lw	a5,88(a5)
+    1dc2:	faf42a23          	sw	a5,-76(s0)
     list_for_each_entry(cur, args.release_queue, thread_list) {
-    1d88:	689c                	ld	a5,16(s1)
-    1d8a:	639c                	ld	a5,0(a5)
-    1d8c:	faf43023          	sd	a5,-96(s0)
-    1d90:	fa043783          	ld	a5,-96(s0)
-    1d94:	17e1                	addi	a5,a5,-8
-    1d96:	faf43c23          	sd	a5,-72(s0)
-    1d9a:	a0d1                	j	1e5e <schedule_sjf+0x1b4>
+    1dc6:	689c                	ld	a5,16(s1)
+    1dc8:	639c                	ld	a5,0(a5)
+    1dca:	faf43023          	sd	a5,-96(s0)
+    1dce:	fa043783          	ld	a5,-96(s0)
+    1dd2:	17e1                	addi	a5,a5,-8
+    1dd4:	faf43c23          	sd	a5,-72(s0)
+    1dd8:	a0c9                	j	1e9a <schedule_sjf+0x1bc>
         int interval = cur->release_time - current_time;
-    1d9c:	fb843783          	ld	a5,-72(s0)
-    1da0:	4f98                	lw	a4,24(a5)
-    1da2:	fb042783          	lw	a5,-80(s0)
-    1da6:	40f707bb          	subw	a5,a4,a5
-    1daa:	f8f42e23          	sw	a5,-100(s0)
+    1dda:	fb843783          	ld	a5,-72(s0)
+    1dde:	4f98                	lw	a4,24(a5)
+    1de0:	fb042783          	lw	a5,-80(s0)
+    1de4:	40f707bb          	subw	a5,a4,a5
+    1de8:	f8f42e23          	sw	a5,-100(s0)
         if (interval > executing_time) continue;
-    1dae:	f9c42703          	lw	a4,-100(s0)
-    1db2:	fb442783          	lw	a5,-76(s0)
-    1db6:	2701                	sext.w	a4,a4
-    1db8:	2781                	sext.w	a5,a5
-    1dba:	08e7c563          	blt	a5,a4,1e44 <schedule_sjf+0x19a>
+    1dec:	f9c42703          	lw	a4,-100(s0)
+    1df0:	fb442783          	lw	a5,-76(s0)
+    1df4:	2701                	sext.w	a4,a4
+    1df6:	2781                	sext.w	a5,a5
+    1df8:	08e7c063          	blt	a5,a4,1e78 <schedule_sjf+0x19a>
         if (current_time + shortest_thread->remaining_time < cur->release_time || interval > executing_time) continue; 
-    1dbe:	fc843783          	ld	a5,-56(s0)
-    1dc2:	4fbc                	lw	a5,88(a5)
-    1dc4:	fb042703          	lw	a4,-80(s0)
-    1dc8:	9fb9                	addw	a5,a5,a4
-    1dca:	0007871b          	sext.w	a4,a5
-    1dce:	fb843783          	ld	a5,-72(s0)
-    1dd2:	4f9c                	lw	a5,24(a5)
-    1dd4:	06f74a63          	blt	a4,a5,1e48 <schedule_sjf+0x19e>
-    1dd8:	f9c42703          	lw	a4,-100(s0)
-    1ddc:	fb442783          	lw	a5,-76(s0)
-    1de0:	2701                	sext.w	a4,a4
-    1de2:	2781                	sext.w	a5,a5
-    1de4:	06e7c263          	blt	a5,a4,1e48 <schedule_sjf+0x19e>
+    1dfc:	fc843783          	ld	a5,-56(s0)
+    1e00:	4fbc                	lw	a5,88(a5)
+    1e02:	fb042703          	lw	a4,-80(s0)
+    1e06:	9fb9                	addw	a5,a5,a4
+    1e08:	0007871b          	sext.w	a4,a5
+    1e0c:	fb843783          	ld	a5,-72(s0)
+    1e10:	4f9c                	lw	a5,24(a5)
+    1e12:	06f74563          	blt	a4,a5,1e7c <schedule_sjf+0x19e>
+    1e16:	f9c42703          	lw	a4,-100(s0)
+    1e1a:	fb442783          	lw	a5,-76(s0)
+    1e1e:	2701                	sext.w	a4,a4
+    1e20:	2781                	sext.w	a5,a5
+    1e22:	04e7cd63          	blt	a5,a4,1e7c <schedule_sjf+0x19e>
         int remaining_time = shortest_thread->remaining_time - interval;
-    1de8:	fc843783          	ld	a5,-56(s0)
-    1dec:	4fb8                	lw	a4,88(a5)
-    1dee:	f9c42783          	lw	a5,-100(s0)
-    1df2:	40f707bb          	subw	a5,a4,a5
-    1df6:	f8f42c23          	sw	a5,-104(s0)
-        if (remaining_time > cur->thrd->processing_time) {
-    1dfa:	fb843783          	ld	a5,-72(s0)
-    1dfe:	639c                	ld	a5,0(a5)
-    1e00:	43f8                	lw	a4,68(a5)
-    1e02:	f9842783          	lw	a5,-104(s0)
-    1e06:	2781                	sext.w	a5,a5
-    1e08:	00f75763          	bge	a4,a5,1e16 <schedule_sjf+0x16c>
-            executing_time = interval;
-    1e0c:	f9c42783          	lw	a5,-100(s0)
-    1e10:	faf42a23          	sw	a5,-76(s0)
-    1e14:	a81d                	j	1e4a <schedule_sjf+0x1a0>
-        }
-        else if (remaining_time == cur->thrd->processing_time && shortest_thread->ID > cur->thrd->ID) {
-    1e16:	fb843783          	ld	a5,-72(s0)
-    1e1a:	639c                	ld	a5,0(a5)
-    1e1c:	43f8                	lw	a4,68(a5)
-    1e1e:	f9842783          	lw	a5,-104(s0)
-    1e22:	2781                	sext.w	a5,a5
-    1e24:	02e79363          	bne	a5,a4,1e4a <schedule_sjf+0x1a0>
-    1e28:	fc843783          	ld	a5,-56(s0)
-    1e2c:	5fd8                	lw	a4,60(a5)
-    1e2e:	fb843783          	ld	a5,-72(s0)
-    1e32:	639c                	ld	a5,0(a5)
-    1e34:	5fdc                	lw	a5,60(a5)
-    1e36:	00e7da63          	bge	a5,a4,1e4a <schedule_sjf+0x1a0>
-            executing_time = interval;
-    1e3a:	f9c42783          	lw	a5,-100(s0)
-    1e3e:	faf42a23          	sw	a5,-76(s0)
-    1e42:	a021                	j	1e4a <schedule_sjf+0x1a0>
-        if (interval > executing_time) continue;
-    1e44:	0001                	nop
-    1e46:	a011                	j	1e4a <schedule_sjf+0x1a0>
-        if (current_time + shortest_thread->remaining_time < cur->release_time || interval > executing_time) continue; 
-    1e48:	0001                	nop
-    list_for_each_entry(cur, args.release_queue, thread_list) {
+    1e26:	fc843783          	ld	a5,-56(s0)
+    1e2a:	4fb8                	lw	a4,88(a5)
+    1e2c:	f9c42783          	lw	a5,-100(s0)
+    1e30:	40f707bb          	subw	a5,a4,a5
+    1e34:	f8f42c23          	sw	a5,-104(s0)
+        if (remaining_time < cur->thrd->processing_time) continue;
+    1e38:	fb843783          	ld	a5,-72(s0)
+    1e3c:	639c                	ld	a5,0(a5)
+    1e3e:	43f8                	lw	a4,68(a5)
+    1e40:	f9842783          	lw	a5,-104(s0)
+    1e44:	2781                	sext.w	a5,a5
+    1e46:	02e7cd63          	blt	a5,a4,1e80 <schedule_sjf+0x1a2>
+        if (remaining_time == cur->thrd->processing_time && shortest_thread->ID < cur->thrd->ID) continue;
     1e4a:	fb843783          	ld	a5,-72(s0)
-    1e4e:	679c                	ld	a5,8(a5)
-    1e50:	f8f43823          	sd	a5,-112(s0)
-    1e54:	f9043783          	ld	a5,-112(s0)
-    1e58:	17e1                	addi	a5,a5,-8
-    1e5a:	faf43c23          	sd	a5,-72(s0)
-    1e5e:	fb843783          	ld	a5,-72(s0)
-    1e62:	00878713          	addi	a4,a5,8
-    1e66:	689c                	ld	a5,16(s1)
-    1e68:	f2f71ae3          	bne	a4,a5,1d9c <schedule_sjf+0xf2>
-        }
+    1e4e:	639c                	ld	a5,0(a5)
+    1e50:	43f8                	lw	a4,68(a5)
+    1e52:	f9842783          	lw	a5,-104(s0)
+    1e56:	2781                	sext.w	a5,a5
+    1e58:	00e79b63          	bne	a5,a4,1e6e <schedule_sjf+0x190>
+    1e5c:	fc843783          	ld	a5,-56(s0)
+    1e60:	5fd8                	lw	a4,60(a5)
+    1e62:	fb843783          	ld	a5,-72(s0)
+    1e66:	639c                	ld	a5,0(a5)
+    1e68:	5fdc                	lw	a5,60(a5)
+    1e6a:	00f74d63          	blt	a4,a5,1e84 <schedule_sjf+0x1a6>
+        executing_time = interval;
+    1e6e:	f9c42783          	lw	a5,-100(s0)
+    1e72:	faf42a23          	sw	a5,-76(s0)
+    1e76:	a801                	j	1e86 <schedule_sjf+0x1a8>
+        if (interval > executing_time) continue;
+    1e78:	0001                	nop
+    1e7a:	a031                	j	1e86 <schedule_sjf+0x1a8>
+        if (current_time + shortest_thread->remaining_time < cur->release_time || interval > executing_time) continue; 
+    1e7c:	0001                	nop
+    1e7e:	a021                	j	1e86 <schedule_sjf+0x1a8>
+        if (remaining_time < cur->thrd->processing_time) continue;
+    1e80:	0001                	nop
+    1e82:	a011                	j	1e86 <schedule_sjf+0x1a8>
+        if (remaining_time == cur->thrd->processing_time && shortest_thread->ID < cur->thrd->ID) continue;
+    1e84:	0001                	nop
+    list_for_each_entry(cur, args.release_queue, thread_list) {
+    1e86:	fb843783          	ld	a5,-72(s0)
+    1e8a:	679c                	ld	a5,8(a5)
+    1e8c:	f8f43823          	sd	a5,-112(s0)
+    1e90:	f9043783          	ld	a5,-112(s0)
+    1e94:	17e1                	addi	a5,a5,-8
+    1e96:	faf43c23          	sd	a5,-72(s0)
+    1e9a:	fb843783          	ld	a5,-72(s0)
+    1e9e:	00878713          	addi	a4,a5,8
+    1ea2:	689c                	ld	a5,16(s1)
+    1ea4:	f2f71be3          	bne	a4,a5,1dda <schedule_sjf+0xfc>
     }
 
     return (struct threads_sched_result) { .scheduled_thread_list_member = &shortest_thread->thread_list, .allocated_time = executing_time };
-    1e6c:	fc843783          	ld	a5,-56(s0)
-    1e70:	02878793          	addi	a5,a5,40
-    1e74:	f6f43c23          	sd	a5,-136(s0)
-    1e78:	fb442783          	lw	a5,-76(s0)
-    1e7c:	f8f42023          	sw	a5,-128(s0)
-    1e80:	4701                	li	a4,0
-    1e82:	f7843703          	ld	a4,-136(s0)
-    1e86:	4781                	li	a5,0
-    1e88:	f8043783          	ld	a5,-128(s0)
-    1e8c:	893a                	mv	s2,a4
-    1e8e:	89be                	mv	s3,a5
-    1e90:	874a                	mv	a4,s2
-    1e92:	87ce                	mv	a5,s3
+    1ea8:	fc843783          	ld	a5,-56(s0)
+    1eac:	02878793          	addi	a5,a5,40
+    1eb0:	f6f43c23          	sd	a5,-136(s0)
+    1eb4:	fb442783          	lw	a5,-76(s0)
+    1eb8:	f8f42023          	sw	a5,-128(s0)
+    1ebc:	4701                	li	a4,0
+    1ebe:	f7843703          	ld	a4,-136(s0)
+    1ec2:	4781                	li	a5,0
+    1ec4:	f8043783          	ld	a5,-128(s0)
+    1ec8:	893a                	mv	s2,a4
+    1eca:	89be                	mv	s3,a5
+    1ecc:	874a                	mv	a4,s2
+    1ece:	87ce                	mv	a5,s3
 }
-    1e94:	853a                	mv	a0,a4
-    1e96:	85be                	mv	a1,a5
-    1e98:	70ea                	ld	ra,184(sp)
-    1e9a:	744a                	ld	s0,176(sp)
-    1e9c:	74aa                	ld	s1,168(sp)
-    1e9e:	790a                	ld	s2,160(sp)
-    1ea0:	69ea                	ld	s3,152(sp)
-    1ea2:	6129                	addi	sp,sp,192
-    1ea4:	8082                	ret
+    1ed0:	853a                	mv	a0,a4
+    1ed2:	85be                	mv	a1,a5
+    1ed4:	70ea                	ld	ra,184(sp)
+    1ed6:	744a                	ld	s0,176(sp)
+    1ed8:	74aa                	ld	s1,168(sp)
+    1eda:	790a                	ld	s2,160(sp)
+    1edc:	69ea                	ld	s3,152(sp)
+    1ede:	6129                	addi	sp,sp,192
+    1ee0:	8082                	ret
 
-0000000000001ea6 <schedule_lst>:
+0000000000001ee2 <schedule_lst>:
 
 /* MP3 Part 2 - Real-Time Scheduling*/
 /* Least-Slack-Time Scheduling */
 struct threads_sched_result schedule_lst(struct threads_sched_args args)
 {
-    1ea6:	7155                	addi	sp,sp,-208
-    1ea8:	e586                	sd	ra,200(sp)
-    1eaa:	e1a2                	sd	s0,192(sp)
-    1eac:	fd26                	sd	s1,184(sp)
-    1eae:	f94a                	sd	s2,176(sp)
-    1eb0:	f54e                	sd	s3,168(sp)
-    1eb2:	0980                	addi	s0,sp,208
-    1eb4:	84aa                	mv	s1,a0
+    1ee2:	7111                	addi	sp,sp,-256
+    1ee4:	fd86                	sd	ra,248(sp)
+    1ee6:	f9a2                	sd	s0,240(sp)
+    1ee8:	f5a6                	sd	s1,232(sp)
+    1eea:	f1ca                	sd	s2,224(sp)
+    1eec:	edce                	sd	s3,216(sp)
+    1eee:	0200                	addi	s0,sp,256
+    1ef0:	84aa                	mv	s1,a0
     // TODO: implement the least-slack-time scheduling algorithm
     // A slack time is defined by current deadline − current time − remaining time
+    
+    // no thread in the run queue
+    if (list_empty(args.run_queue)) 
+    1ef2:	649c                	ld	a5,8(s1)
+    1ef4:	853e                	mv	a0,a5
+    1ef6:	00000097          	auipc	ra,0x0
+    1efa:	b2e080e7          	jalr	-1234(ra) # 1a24 <list_empty>
+    1efe:	87aa                	mv	a5,a0
+    1f00:	cb85                	beqz	a5,1f30 <schedule_lst+0x4e>
+        return fill_sparse(args);
+    1f02:	609c                	ld	a5,0(s1)
+    1f04:	f0f43023          	sd	a5,-256(s0)
+    1f08:	649c                	ld	a5,8(s1)
+    1f0a:	f0f43423          	sd	a5,-248(s0)
+    1f0e:	689c                	ld	a5,16(s1)
+    1f10:	f0f43823          	sd	a5,-240(s0)
+    1f14:	f0040793          	addi	a5,s0,-256
+    1f18:	853e                	mv	a0,a5
+    1f1a:	00000097          	auipc	ra,0x0
+    1f1e:	b34080e7          	jalr	-1228(ra) # 1a4e <fill_sparse>
+    1f22:	872a                	mv	a4,a0
+    1f24:	87ae                	mv	a5,a1
+    1f26:	f4e43c23          	sd	a4,-168(s0)
+    1f2a:	f6f43023          	sd	a5,-160(s0)
+    1f2e:	ac41                	j	21be <schedule_lst+0x2dc>
+
     int current_time = args.current_time;
-    1eb6:	409c                	lw	a5,0(s1)
-    1eb8:	faf42823          	sw	a5,-80(s0)
+    1f30:	409c                	lw	a5,0(s1)
+    1f32:	faf42823          	sw	a5,-80(s0)
 
     // find the thread with the least slack time
     struct thread *least_slack_thread = NULL;
-    1ebc:	fc043423          	sd	zero,-56(s0)
+    1f36:	fc043423          	sd	zero,-56(s0)
     struct thread *th = NULL;
-    1ec0:	fc043023          	sd	zero,-64(s0)
+    1f3a:	fc043023          	sd	zero,-64(s0)
     list_for_each_entry(th, args.run_queue, thread_list) {
-    1ec4:	649c                	ld	a5,8(s1)
-    1ec6:	639c                	ld	a5,0(a5)
-    1ec8:	faf43423          	sd	a5,-88(s0)
-    1ecc:	fa843783          	ld	a5,-88(s0)
-    1ed0:	fd878793          	addi	a5,a5,-40
-    1ed4:	fcf43023          	sd	a5,-64(s0)
-    1ed8:	a855                	j	1f8c <schedule_lst+0xe6>
+    1f3e:	649c                	ld	a5,8(s1)
+    1f40:	639c                	ld	a5,0(a5)
+    1f42:	faf43423          	sd	a5,-88(s0)
+    1f46:	fa843783          	ld	a5,-88(s0)
+    1f4a:	fd878793          	addi	a5,a5,-40
+    1f4e:	fcf43023          	sd	a5,-64(s0)
+    1f52:	a0c1                	j	2012 <schedule_lst+0x130>
         int slack_time = th->current_deadline - current_time - th->remaining_time;
-    1eda:	fc043783          	ld	a5,-64(s0)
-    1ede:	4ff8                	lw	a4,92(a5)
-    1ee0:	fb042783          	lw	a5,-80(s0)
-    1ee4:	40f707bb          	subw	a5,a4,a5
-    1ee8:	0007871b          	sext.w	a4,a5
-    1eec:	fc043783          	ld	a5,-64(s0)
-    1ef0:	4fbc                	lw	a5,88(a5)
-    1ef2:	40f707bb          	subw	a5,a4,a5
-    1ef6:	f8f42223          	sw	a5,-124(s0)
-        if (least_slack_thread == NULL || slack_time < least_slack_thread->current_deadline - current_time - least_slack_thread->remaining_time) {
-    1efa:	fc843783          	ld	a5,-56(s0)
-    1efe:	c795                	beqz	a5,1f2a <schedule_lst+0x84>
-    1f00:	fc843783          	ld	a5,-56(s0)
-    1f04:	4ff8                	lw	a4,92(a5)
-    1f06:	fb042783          	lw	a5,-80(s0)
-    1f0a:	40f707bb          	subw	a5,a4,a5
-    1f0e:	0007871b          	sext.w	a4,a5
-    1f12:	fc843783          	ld	a5,-56(s0)
-    1f16:	4fbc                	lw	a5,88(a5)
-    1f18:	40f707bb          	subw	a5,a4,a5
-    1f1c:	0007871b          	sext.w	a4,a5
-    1f20:	f8442783          	lw	a5,-124(s0)
-    1f24:	2781                	sext.w	a5,a5
-    1f26:	00e7d763          	bge	a5,a4,1f34 <schedule_lst+0x8e>
+    1f54:	fc043783          	ld	a5,-64(s0)
+    1f58:	4ff8                	lw	a4,92(a5)
+    1f5a:	fb042783          	lw	a5,-80(s0)
+    1f5e:	40f707bb          	subw	a5,a4,a5
+    1f62:	0007871b          	sext.w	a4,a5
+    1f66:	fc043783          	ld	a5,-64(s0)
+    1f6a:	4fbc                	lw	a5,88(a5)
+    1f6c:	40f707bb          	subw	a5,a4,a5
+    1f70:	f6f42a23          	sw	a5,-140(s0)
+        if (th->current_deadline < current_time) continue;
+    1f74:	fc043783          	ld	a5,-64(s0)
+    1f78:	4ff8                	lw	a4,92(a5)
+    1f7a:	fb042783          	lw	a5,-80(s0)
+    1f7e:	2781                	sext.w	a5,a5
+    1f80:	06f74d63          	blt	a4,a5,1ffa <schedule_lst+0x118>
+        int least_slack_time = (least_slack_thread == NULL) ? 0 : least_slack_thread->current_deadline - current_time - least_slack_thread->remaining_time;
+    1f84:	fc843783          	ld	a5,-56(s0)
+    1f88:	c38d                	beqz	a5,1faa <schedule_lst+0xc8>
+    1f8a:	fc843783          	ld	a5,-56(s0)
+    1f8e:	4ff8                	lw	a4,92(a5)
+    1f90:	fb042783          	lw	a5,-80(s0)
+    1f94:	40f707bb          	subw	a5,a4,a5
+    1f98:	0007871b          	sext.w	a4,a5
+    1f9c:	fc843783          	ld	a5,-56(s0)
+    1fa0:	4fbc                	lw	a5,88(a5)
+    1fa2:	40f707bb          	subw	a5,a4,a5
+    1fa6:	2781                	sext.w	a5,a5
+    1fa8:	a011                	j	1fac <schedule_lst+0xca>
+    1faa:	4781                	li	a5,0
+    1fac:	f6f42823          	sw	a5,-144(s0)
+        if (least_slack_thread == NULL || slack_time < least_slack_time) {
+    1fb0:	fc843783          	ld	a5,-56(s0)
+    1fb4:	cb89                	beqz	a5,1fc6 <schedule_lst+0xe4>
+    1fb6:	f7442703          	lw	a4,-140(s0)
+    1fba:	f7042783          	lw	a5,-144(s0)
+    1fbe:	2701                	sext.w	a4,a4
+    1fc0:	2781                	sext.w	a5,a5
+    1fc2:	00f75763          	bge	a4,a5,1fd0 <schedule_lst+0xee>
             least_slack_thread = th;
-    1f2a:	fc043783          	ld	a5,-64(s0)
-    1f2e:	fcf43423          	sd	a5,-56(s0)
-    1f32:	a091                	j	1f76 <schedule_lst+0xd0>
+    1fc6:	fc043783          	ld	a5,-64(s0)
+    1fca:	fcf43423          	sd	a5,-56(s0)
+    1fce:	a03d                	j	1ffc <schedule_lst+0x11a>
         }
-        else if (slack_time == least_slack_thread->current_deadline - current_time - least_slack_thread->remaining_time && th->ID < least_slack_thread->ID) {
-    1f34:	fc843783          	ld	a5,-56(s0)
-    1f38:	4ff8                	lw	a4,92(a5)
-    1f3a:	fb042783          	lw	a5,-80(s0)
-    1f3e:	40f707bb          	subw	a5,a4,a5
-    1f42:	0007871b          	sext.w	a4,a5
-    1f46:	fc843783          	ld	a5,-56(s0)
-    1f4a:	4fbc                	lw	a5,88(a5)
-    1f4c:	40f707bb          	subw	a5,a4,a5
-    1f50:	0007871b          	sext.w	a4,a5
-    1f54:	f8442783          	lw	a5,-124(s0)
-    1f58:	2781                	sext.w	a5,a5
-    1f5a:	00e79e63          	bne	a5,a4,1f76 <schedule_lst+0xd0>
-    1f5e:	fc043783          	ld	a5,-64(s0)
-    1f62:	5fd8                	lw	a4,60(a5)
-    1f64:	fc843783          	ld	a5,-56(s0)
-    1f68:	5fdc                	lw	a5,60(a5)
-    1f6a:	00f75663          	bge	a4,a5,1f76 <schedule_lst+0xd0>
+        else if (slack_time == least_slack_time && th->ID < least_slack_thread->ID) {
+    1fd0:	f7442703          	lw	a4,-140(s0)
+    1fd4:	f7042783          	lw	a5,-144(s0)
+    1fd8:	2701                	sext.w	a4,a4
+    1fda:	2781                	sext.w	a5,a5
+    1fdc:	02f71063          	bne	a4,a5,1ffc <schedule_lst+0x11a>
+    1fe0:	fc043783          	ld	a5,-64(s0)
+    1fe4:	5fd8                	lw	a4,60(a5)
+    1fe6:	fc843783          	ld	a5,-56(s0)
+    1fea:	5fdc                	lw	a5,60(a5)
+    1fec:	00f75863          	bge	a4,a5,1ffc <schedule_lst+0x11a>
             least_slack_thread = th;
-    1f6e:	fc043783          	ld	a5,-64(s0)
-    1f72:	fcf43423          	sd	a5,-56(s0)
+    1ff0:	fc043783          	ld	a5,-64(s0)
+    1ff4:	fcf43423          	sd	a5,-56(s0)
+    1ff8:	a011                	j	1ffc <schedule_lst+0x11a>
+        if (th->current_deadline < current_time) continue;
+    1ffa:	0001                	nop
     list_for_each_entry(th, args.run_queue, thread_list) {
-    1f76:	fc043783          	ld	a5,-64(s0)
-    1f7a:	779c                	ld	a5,40(a5)
-    1f7c:	f6f43c23          	sd	a5,-136(s0)
-    1f80:	f7843783          	ld	a5,-136(s0)
-    1f84:	fd878793          	addi	a5,a5,-40
-    1f88:	fcf43023          	sd	a5,-64(s0)
-    1f8c:	fc043783          	ld	a5,-64(s0)
-    1f90:	02878713          	addi	a4,a5,40
-    1f94:	649c                	ld	a5,8(s1)
-    1f96:	f4f712e3          	bne	a4,a5,1eda <schedule_lst+0x34>
+    1ffc:	fc043783          	ld	a5,-64(s0)
+    2000:	779c                	ld	a5,40(a5)
+    2002:	f6f43423          	sd	a5,-152(s0)
+    2006:	f6843783          	ld	a5,-152(s0)
+    200a:	fd878793          	addi	a5,a5,-40
+    200e:	fcf43023          	sd	a5,-64(s0)
+    2012:	fc043783          	ld	a5,-64(s0)
+    2016:	02878713          	addi	a4,a5,40
+    201a:	649c                	ld	a5,8(s1)
+    201c:	f2f71ce3          	bne	a4,a5,1f54 <schedule_lst+0x72>
         }
     }
 
-    if (least_slack_thread == NULL) 
-    1f9a:	fc843783          	ld	a5,-56(s0)
-    1f9e:	eb85                	bnez	a5,1fce <schedule_lst+0x128>
-        return fill_sparse(args);
-    1fa0:	609c                	ld	a5,0(s1)
-    1fa2:	f2f43823          	sd	a5,-208(s0)
-    1fa6:	649c                	ld	a5,8(s1)
-    1fa8:	f2f43c23          	sd	a5,-200(s0)
-    1fac:	689c                	ld	a5,16(s1)
-    1fae:	f4f43023          	sd	a5,-192(s0)
-    1fb2:	f3040793          	addi	a5,s0,-208
-    1fb6:	853e                	mv	a0,a5
-    1fb8:	00000097          	auipc	ra,0x0
-    1fbc:	a6c080e7          	jalr	-1428(ra) # 1a24 <fill_sparse>
-    1fc0:	872a                	mv	a4,a0
-    1fc2:	87ae                	mv	a5,a1
-    1fc4:	f6e43423          	sd	a4,-152(s0)
-    1fc8:	f6f43823          	sd	a5,-144(s0)
-    1fcc:	a8e5                	j	20c4 <schedule_lst+0x21e>
-
-
+    // all thread missing the current deadline
+    if (least_slack_thread == NULL) {
+    2020:	fc843783          	ld	a5,-56(s0)
+    2024:	e7b5                	bnez	a5,2090 <schedule_lst+0x1ae>
+        list_for_each_entry(th, args.run_queue, thread_list) {
+    2026:	649c                	ld	a5,8(s1)
+    2028:	639c                	ld	a5,0(a5)
+    202a:	f8f43023          	sd	a5,-128(s0)
+    202e:	f8043783          	ld	a5,-128(s0)
+    2032:	fd878793          	addi	a5,a5,-40
+    2036:	fcf43023          	sd	a5,-64(s0)
+    203a:	a81d                	j	2070 <schedule_lst+0x18e>
+            if (least_slack_thread == NULL || th->ID < least_slack_thread->ID)
+    203c:	fc843783          	ld	a5,-56(s0)
+    2040:	cb89                	beqz	a5,2052 <schedule_lst+0x170>
+    2042:	fc043783          	ld	a5,-64(s0)
+    2046:	5fd8                	lw	a4,60(a5)
+    2048:	fc843783          	ld	a5,-56(s0)
+    204c:	5fdc                	lw	a5,60(a5)
+    204e:	00f75663          	bge	a4,a5,205a <schedule_lst+0x178>
+                least_slack_thread = th;
+    2052:	fc043783          	ld	a5,-64(s0)
+    2056:	fcf43423          	sd	a5,-56(s0)
+        list_for_each_entry(th, args.run_queue, thread_list) {
+    205a:	fc043783          	ld	a5,-64(s0)
+    205e:	779c                	ld	a5,40(a5)
+    2060:	f6f43c23          	sd	a5,-136(s0)
+    2064:	f7843783          	ld	a5,-136(s0)
+    2068:	fd878793          	addi	a5,a5,-40
+    206c:	fcf43023          	sd	a5,-64(s0)
+    2070:	fc043783          	ld	a5,-64(s0)
+    2074:	02878713          	addi	a4,a5,40
+    2078:	649c                	ld	a5,8(s1)
+    207a:	fcf711e3          	bne	a4,a5,203c <schedule_lst+0x15a>
+        }
+        return (struct threads_sched_result) { .scheduled_thread_list_member = &least_slack_thread->thread_list, .allocated_time = 0 };
+    207e:	fc843783          	ld	a5,-56(s0)
+    2082:	02878793          	addi	a5,a5,40
+    2086:	f4f43c23          	sd	a5,-168(s0)
+    208a:	f6042023          	sw	zero,-160(s0)
+    208e:	aa05                	j	21be <schedule_lst+0x2dc>
+    }
+    
+    // missing the deadline but still have some time to execute part of the task
+    if (least_slack_thread->remaining_time > least_slack_thread->current_deadline - current_time) 
+    2090:	fc843783          	ld	a5,-56(s0)
+    2094:	4fb4                	lw	a3,88(a5)
+    2096:	fc843783          	ld	a5,-56(s0)
+    209a:	4ff8                	lw	a4,92(a5)
+    209c:	fb042783          	lw	a5,-80(s0)
+    20a0:	40f707bb          	subw	a5,a4,a5
+    20a4:	2781                	sext.w	a5,a5
+    20a6:	8736                	mv	a4,a3
+    20a8:	02e7d363          	bge	a5,a4,20ce <schedule_lst+0x1ec>
+        return (struct threads_sched_result) { .scheduled_thread_list_member = &least_slack_thread->thread_list, .allocated_time = least_slack_thread->current_deadline - current_time };
+    20ac:	fc843783          	ld	a5,-56(s0)
+    20b0:	02878713          	addi	a4,a5,40
+    20b4:	fc843783          	ld	a5,-56(s0)
+    20b8:	4ff4                	lw	a3,92(a5)
+    20ba:	fb042783          	lw	a5,-80(s0)
+    20be:	40f687bb          	subw	a5,a3,a5
+    20c2:	2781                	sext.w	a5,a5
+    20c4:	f4e43c23          	sd	a4,-168(s0)
+    20c8:	f6f42023          	sw	a5,-160(s0)
+    20cc:	a8cd                	j	21be <schedule_lst+0x2dc>
+    
     struct release_queue_entry *cur;
     int slack_time = least_slack_thread->current_deadline - current_time - least_slack_thread->remaining_time;
-    1fce:	fc843783          	ld	a5,-56(s0)
-    1fd2:	4ff8                	lw	a4,92(a5)
-    1fd4:	fb042783          	lw	a5,-80(s0)
-    1fd8:	40f707bb          	subw	a5,a4,a5
-    1fdc:	0007871b          	sext.w	a4,a5
-    1fe0:	fc843783          	ld	a5,-56(s0)
-    1fe4:	4fbc                	lw	a5,88(a5)
-    1fe6:	40f707bb          	subw	a5,a4,a5
-    1fea:	faf42223          	sw	a5,-92(s0)
+    20ce:	fc843783          	ld	a5,-56(s0)
+    20d2:	4ff8                	lw	a4,92(a5)
+    20d4:	fb042783          	lw	a5,-80(s0)
+    20d8:	40f707bb          	subw	a5,a4,a5
+    20dc:	0007871b          	sext.w	a4,a5
+    20e0:	fc843783          	ld	a5,-56(s0)
+    20e4:	4fbc                	lw	a5,88(a5)
+    20e6:	40f707bb          	subw	a5,a4,a5
+    20ea:	faf42223          	sw	a5,-92(s0)
     int executing_time = least_slack_thread->remaining_time;
-    1fee:	fc843783          	ld	a5,-56(s0)
-    1ff2:	4fbc                	lw	a5,88(a5)
-    1ff4:	faf42a23          	sw	a5,-76(s0)
+    20ee:	fc843783          	ld	a5,-56(s0)
+    20f2:	4fbc                	lw	a5,88(a5)
+    20f4:	faf42a23          	sw	a5,-76(s0)
     list_for_each_entry(cur, args.release_queue, thread_list) {
-    1ff8:	689c                	ld	a5,16(s1)
-    1ffa:	639c                	ld	a5,0(a5)
-    1ffc:	f8f43c23          	sd	a5,-104(s0)
-    2000:	f9843783          	ld	a5,-104(s0)
-    2004:	17e1                	addi	a5,a5,-8
-    2006:	faf43c23          	sd	a5,-72(s0)
-    200a:	a861                	j	20a2 <schedule_lst+0x1fc>
-        int cur_slack_time = cur->thrd->deadline - cur->thrd->remaining_time;
-    200c:	fb843783          	ld	a5,-72(s0)
-    2010:	639c                	ld	a5,0(a5)
-    2012:	47f8                	lw	a4,76(a5)
-    2014:	fb843783          	ld	a5,-72(s0)
-    2018:	639c                	ld	a5,0(a5)
-    201a:	4fbc                	lw	a5,88(a5)
-    201c:	40f707bb          	subw	a5,a4,a5
-    2020:	f8f42a23          	sw	a5,-108(s0)
+    20f8:	689c                	ld	a5,16(s1)
+    20fa:	639c                	ld	a5,0(a5)
+    20fc:	f8f43c23          	sd	a5,-104(s0)
+    2100:	f9843783          	ld	a5,-104(s0)
+    2104:	17e1                	addi	a5,a5,-8
+    2106:	faf43c23          	sd	a5,-72(s0)
+    210a:	a849                	j	219c <schedule_lst+0x2ba>
+        int cur_slack_time = cur->thrd->deadline - cur->thrd->processing_time;
+    210c:	fb843783          	ld	a5,-72(s0)
+    2110:	639c                	ld	a5,0(a5)
+    2112:	47f8                	lw	a4,76(a5)
+    2114:	fb843783          	ld	a5,-72(s0)
+    2118:	639c                	ld	a5,0(a5)
+    211a:	43fc                	lw	a5,68(a5)
+    211c:	40f707bb          	subw	a5,a4,a5
+    2120:	f8f42a23          	sw	a5,-108(s0)
         int interval = cur->release_time - current_time;
-    2024:	fb843783          	ld	a5,-72(s0)
-    2028:	4f98                	lw	a4,24(a5)
-    202a:	fb042783          	lw	a5,-80(s0)
-    202e:	40f707bb          	subw	a5,a4,a5
-    2032:	f8f42823          	sw	a5,-112(s0)
-        if (interval > executing_time) continue;
-    2036:	f9042703          	lw	a4,-112(s0)
-    203a:	fb442783          	lw	a5,-76(s0)
-    203e:	2701                	sext.w	a4,a4
-    2040:	2781                	sext.w	a5,a5
-    2042:	04e7c563          	blt	a5,a4,208c <schedule_lst+0x1e6>
-        if (slack_time > cur_slack_time) {
-    2046:	fa442703          	lw	a4,-92(s0)
-    204a:	f9442783          	lw	a5,-108(s0)
-    204e:	2701                	sext.w	a4,a4
-    2050:	2781                	sext.w	a5,a5
-    2052:	00e7d763          	bge	a5,a4,2060 <schedule_lst+0x1ba>
-            executing_time = interval;
-    2056:	f9042783          	lw	a5,-112(s0)
-    205a:	faf42a23          	sw	a5,-76(s0)
-    205e:	a805                	j	208e <schedule_lst+0x1e8>
-        }
-        else if (slack_time == cur_slack_time && least_slack_thread->ID>cur->thrd->ID) {
-    2060:	fa442703          	lw	a4,-92(s0)
-    2064:	f9442783          	lw	a5,-108(s0)
-    2068:	2701                	sext.w	a4,a4
-    206a:	2781                	sext.w	a5,a5
-    206c:	02f71163          	bne	a4,a5,208e <schedule_lst+0x1e8>
-    2070:	fc843783          	ld	a5,-56(s0)
-    2074:	5fd8                	lw	a4,60(a5)
-    2076:	fb843783          	ld	a5,-72(s0)
-    207a:	639c                	ld	a5,0(a5)
-    207c:	5fdc                	lw	a5,60(a5)
-    207e:	00e7d863          	bge	a5,a4,208e <schedule_lst+0x1e8>
-            executing_time = interval;
-    2082:	f9042783          	lw	a5,-112(s0)
-    2086:	faf42a23          	sw	a5,-76(s0)
-    208a:	a011                	j	208e <schedule_lst+0x1e8>
-        if (interval > executing_time) continue;
-    208c:	0001                	nop
+    2124:	fb843783          	ld	a5,-72(s0)
+    2128:	4f98                	lw	a4,24(a5)
+    212a:	fb042783          	lw	a5,-80(s0)
+    212e:	40f707bb          	subw	a5,a4,a5
+    2132:	f8f42823          	sw	a5,-112(s0)
+        if (interval > executing_time || slack_time < cur_slack_time) continue;
+    2136:	f9042703          	lw	a4,-112(s0)
+    213a:	fb442783          	lw	a5,-76(s0)
+    213e:	2701                	sext.w	a4,a4
+    2140:	2781                	sext.w	a5,a5
+    2142:	04e7c063          	blt	a5,a4,2182 <schedule_lst+0x2a0>
+    2146:	fa442703          	lw	a4,-92(s0)
+    214a:	f9442783          	lw	a5,-108(s0)
+    214e:	2701                	sext.w	a4,a4
+    2150:	2781                	sext.w	a5,a5
+    2152:	02f74863          	blt	a4,a5,2182 <schedule_lst+0x2a0>
+        if (slack_time == cur_slack_time && least_slack_thread->ID < cur->thrd->ID) continue;
+    2156:	fa442703          	lw	a4,-92(s0)
+    215a:	f9442783          	lw	a5,-108(s0)
+    215e:	2701                	sext.w	a4,a4
+    2160:	2781                	sext.w	a5,a5
+    2162:	00f71b63          	bne	a4,a5,2178 <schedule_lst+0x296>
+    2166:	fc843783          	ld	a5,-56(s0)
+    216a:	5fd8                	lw	a4,60(a5)
+    216c:	fb843783          	ld	a5,-72(s0)
+    2170:	639c                	ld	a5,0(a5)
+    2172:	5fdc                	lw	a5,60(a5)
+    2174:	00f74963          	blt	a4,a5,2186 <schedule_lst+0x2a4>
+        executing_time = interval;
+    2178:	f9042783          	lw	a5,-112(s0)
+    217c:	faf42a23          	sw	a5,-76(s0)
+    2180:	a021                	j	2188 <schedule_lst+0x2a6>
+        if (interval > executing_time || slack_time < cur_slack_time) continue;
+    2182:	0001                	nop
+    2184:	a011                	j	2188 <schedule_lst+0x2a6>
+        if (slack_time == cur_slack_time && least_slack_thread->ID < cur->thrd->ID) continue;
+    2186:	0001                	nop
     list_for_each_entry(cur, args.release_queue, thread_list) {
-    208e:	fb843783          	ld	a5,-72(s0)
-    2092:	679c                	ld	a5,8(a5)
-    2094:	f8f43423          	sd	a5,-120(s0)
-    2098:	f8843783          	ld	a5,-120(s0)
-    209c:	17e1                	addi	a5,a5,-8
-    209e:	faf43c23          	sd	a5,-72(s0)
-    20a2:	fb843783          	ld	a5,-72(s0)
-    20a6:	00878713          	addi	a4,a5,8
-    20aa:	689c                	ld	a5,16(s1)
-    20ac:	f6f710e3          	bne	a4,a5,200c <schedule_lst+0x166>
-        }
+    2188:	fb843783          	ld	a5,-72(s0)
+    218c:	679c                	ld	a5,8(a5)
+    218e:	f8f43423          	sd	a5,-120(s0)
+    2192:	f8843783          	ld	a5,-120(s0)
+    2196:	17e1                	addi	a5,a5,-8
+    2198:	faf43c23          	sd	a5,-72(s0)
+    219c:	fb843783          	ld	a5,-72(s0)
+    21a0:	00878713          	addi	a4,a5,8
+    21a4:	689c                	ld	a5,16(s1)
+    21a6:	f6f713e3          	bne	a4,a5,210c <schedule_lst+0x22a>
     }
     return (struct threads_sched_result) { .scheduled_thread_list_member = &least_slack_thread->thread_list, .allocated_time = executing_time };
-    20b0:	fc843783          	ld	a5,-56(s0)
-    20b4:	02878793          	addi	a5,a5,40
-    20b8:	f6f43423          	sd	a5,-152(s0)
-    20bc:	fb442783          	lw	a5,-76(s0)
-    20c0:	f6f42823          	sw	a5,-144(s0)
-    20c4:	4701                	li	a4,0
-    20c6:	f6843703          	ld	a4,-152(s0)
-    20ca:	4781                	li	a5,0
-    20cc:	f7043783          	ld	a5,-144(s0)
-    20d0:	893a                	mv	s2,a4
-    20d2:	89be                	mv	s3,a5
-    20d4:	874a                	mv	a4,s2
-    20d6:	87ce                	mv	a5,s3
+    21aa:	fc843783          	ld	a5,-56(s0)
+    21ae:	02878793          	addi	a5,a5,40
+    21b2:	f4f43c23          	sd	a5,-168(s0)
+    21b6:	fb442783          	lw	a5,-76(s0)
+    21ba:	f6f42023          	sw	a5,-160(s0)
+    21be:	4701                	li	a4,0
+    21c0:	f5843703          	ld	a4,-168(s0)
+    21c4:	4781                	li	a5,0
+    21c6:	f6043783          	ld	a5,-160(s0)
+    21ca:	893a                	mv	s2,a4
+    21cc:	89be                	mv	s3,a5
+    21ce:	874a                	mv	a4,s2
+    21d0:	87ce                	mv	a5,s3
 }
-    20d8:	853a                	mv	a0,a4
-    20da:	85be                	mv	a1,a5
-    20dc:	60ae                	ld	ra,200(sp)
-    20de:	640e                	ld	s0,192(sp)
-    20e0:	74ea                	ld	s1,184(sp)
-    20e2:	794a                	ld	s2,176(sp)
-    20e4:	79aa                	ld	s3,168(sp)
-    20e6:	6169                	addi	sp,sp,208
-    20e8:	8082                	ret
+    21d2:	853a                	mv	a0,a4
+    21d4:	85be                	mv	a1,a5
+    21d6:	70ee                	ld	ra,248(sp)
+    21d8:	744e                	ld	s0,240(sp)
+    21da:	74ae                	ld	s1,232(sp)
+    21dc:	790e                	ld	s2,224(sp)
+    21de:	69ee                	ld	s3,216(sp)
+    21e0:	6111                	addi	sp,sp,256
+    21e2:	8082                	ret
 
-00000000000020ea <schedule_dm>:
+00000000000021e4 <schedule_dm>:
 
 /* Deadline-Monotonic Scheduling */
 struct threads_sched_result schedule_dm(struct threads_sched_args args)
 {
-    20ea:	7155                	addi	sp,sp,-208
-    20ec:	e586                	sd	ra,200(sp)
-    20ee:	e1a2                	sd	s0,192(sp)
-    20f0:	fd26                	sd	s1,184(sp)
-    20f2:	f94a                	sd	s2,176(sp)
-    20f4:	f54e                	sd	s3,168(sp)
-    20f6:	0980                	addi	s0,sp,208
-    20f8:	84aa                	mv	s1,a0
+    21e4:	7155                	addi	sp,sp,-208
+    21e6:	e586                	sd	ra,200(sp)
+    21e8:	e1a2                	sd	s0,192(sp)
+    21ea:	fd26                	sd	s1,184(sp)
+    21ec:	f94a                	sd	s2,176(sp)
+    21ee:	f54e                	sd	s3,168(sp)
+    21f0:	0980                	addi	s0,sp,208
+    21f2:	84aa                	mv	s1,a0
     // TODO: implement the deadline-monotonic scheduling algorithm
     // Task with shortest deadline is assigned highest priority.
     int current_time = args.current_time;
-    20fa:	409c                	lw	a5,0(s1)
-    20fc:	faf42823          	sw	a5,-80(s0)
+    21f4:	409c                	lw	a5,0(s1)
+    21f6:	faf42823          	sw	a5,-80(s0)
 
     struct thread *highest_priority_thread = NULL;
-    2100:	fc043423          	sd	zero,-56(s0)
+    21fa:	fc043423          	sd	zero,-56(s0)
     struct thread *th = NULL;
-    2104:	fc043023          	sd	zero,-64(s0)
+    21fe:	fc043023          	sd	zero,-64(s0)
     list_for_each_entry(th, args.run_queue, thread_list) {
-    2108:	649c                	ld	a5,8(s1)
-    210a:	639c                	ld	a5,0(a5)
-    210c:	faf43423          	sd	a5,-88(s0)
-    2110:	fa843783          	ld	a5,-88(s0)
-    2114:	fd878793          	addi	a5,a5,-40
-    2118:	fcf43023          	sd	a5,-64(s0)
-    211c:	a085                	j	217c <schedule_dm+0x92>
+    2202:	649c                	ld	a5,8(s1)
+    2204:	639c                	ld	a5,0(a5)
+    2206:	faf43423          	sd	a5,-88(s0)
+    220a:	fa843783          	ld	a5,-88(s0)
+    220e:	fd878793          	addi	a5,a5,-40
+    2212:	fcf43023          	sd	a5,-64(s0)
+    2216:	a085                	j	2276 <schedule_dm+0x92>
         if (highest_priority_thread == NULL || th->deadline < highest_priority_thread->deadline) {
-    211e:	fc843783          	ld	a5,-56(s0)
-    2122:	cb89                	beqz	a5,2134 <schedule_dm+0x4a>
-    2124:	fc043783          	ld	a5,-64(s0)
-    2128:	47f8                	lw	a4,76(a5)
-    212a:	fc843783          	ld	a5,-56(s0)
-    212e:	47fc                	lw	a5,76(a5)
-    2130:	00f75763          	bge	a4,a5,213e <schedule_dm+0x54>
+    2218:	fc843783          	ld	a5,-56(s0)
+    221c:	cb89                	beqz	a5,222e <schedule_dm+0x4a>
+    221e:	fc043783          	ld	a5,-64(s0)
+    2222:	47f8                	lw	a4,76(a5)
+    2224:	fc843783          	ld	a5,-56(s0)
+    2228:	47fc                	lw	a5,76(a5)
+    222a:	00f75763          	bge	a4,a5,2238 <schedule_dm+0x54>
             highest_priority_thread = th;
-    2134:	fc043783          	ld	a5,-64(s0)
-    2138:	fcf43423          	sd	a5,-56(s0)
-    213c:	a02d                	j	2166 <schedule_dm+0x7c>
+    222e:	fc043783          	ld	a5,-64(s0)
+    2232:	fcf43423          	sd	a5,-56(s0)
+    2236:	a02d                	j	2260 <schedule_dm+0x7c>
         }
         else if (th->deadline == highest_priority_thread->deadline && th->ID < highest_priority_thread->ID) {
-    213e:	fc043783          	ld	a5,-64(s0)
-    2142:	47f8                	lw	a4,76(a5)
-    2144:	fc843783          	ld	a5,-56(s0)
-    2148:	47fc                	lw	a5,76(a5)
-    214a:	00f71e63          	bne	a4,a5,2166 <schedule_dm+0x7c>
-    214e:	fc043783          	ld	a5,-64(s0)
-    2152:	5fd8                	lw	a4,60(a5)
-    2154:	fc843783          	ld	a5,-56(s0)
-    2158:	5fdc                	lw	a5,60(a5)
-    215a:	00f75663          	bge	a4,a5,2166 <schedule_dm+0x7c>
+    2238:	fc043783          	ld	a5,-64(s0)
+    223c:	47f8                	lw	a4,76(a5)
+    223e:	fc843783          	ld	a5,-56(s0)
+    2242:	47fc                	lw	a5,76(a5)
+    2244:	00f71e63          	bne	a4,a5,2260 <schedule_dm+0x7c>
+    2248:	fc043783          	ld	a5,-64(s0)
+    224c:	5fd8                	lw	a4,60(a5)
+    224e:	fc843783          	ld	a5,-56(s0)
+    2252:	5fdc                	lw	a5,60(a5)
+    2254:	00f75663          	bge	a4,a5,2260 <schedule_dm+0x7c>
             highest_priority_thread = th;
-    215e:	fc043783          	ld	a5,-64(s0)
-    2162:	fcf43423          	sd	a5,-56(s0)
+    2258:	fc043783          	ld	a5,-64(s0)
+    225c:	fcf43423          	sd	a5,-56(s0)
     list_for_each_entry(th, args.run_queue, thread_list) {
-    2166:	fc043783          	ld	a5,-64(s0)
-    216a:	779c                	ld	a5,40(a5)
-    216c:	f8f43423          	sd	a5,-120(s0)
-    2170:	f8843783          	ld	a5,-120(s0)
-    2174:	fd878793          	addi	a5,a5,-40
-    2178:	fcf43023          	sd	a5,-64(s0)
-    217c:	fc043783          	ld	a5,-64(s0)
-    2180:	02878713          	addi	a4,a5,40
-    2184:	649c                	ld	a5,8(s1)
-    2186:	f8f71ce3          	bne	a4,a5,211e <schedule_dm+0x34>
+    2260:	fc043783          	ld	a5,-64(s0)
+    2264:	779c                	ld	a5,40(a5)
+    2266:	f8f43423          	sd	a5,-120(s0)
+    226a:	f8843783          	ld	a5,-120(s0)
+    226e:	fd878793          	addi	a5,a5,-40
+    2272:	fcf43023          	sd	a5,-64(s0)
+    2276:	fc043783          	ld	a5,-64(s0)
+    227a:	02878713          	addi	a4,a5,40
+    227e:	649c                	ld	a5,8(s1)
+    2280:	f8f71ce3          	bne	a4,a5,2218 <schedule_dm+0x34>
         }
     }
     
+    // no thread in the run queue
     if (highest_priority_thread == NULL) 
-    218a:	fc843783          	ld	a5,-56(s0)
-    218e:	eb85                	bnez	a5,21be <schedule_dm+0xd4>
+    2284:	fc843783          	ld	a5,-56(s0)
+    2288:	eb85                	bnez	a5,22b8 <schedule_dm+0xd4>
         return fill_sparse(args);
-    2190:	609c                	ld	a5,0(s1)
-    2192:	f2f43823          	sd	a5,-208(s0)
-    2196:	649c                	ld	a5,8(s1)
-    2198:	f2f43c23          	sd	a5,-200(s0)
-    219c:	689c                	ld	a5,16(s1)
-    219e:	f4f43023          	sd	a5,-192(s0)
-    21a2:	f3040793          	addi	a5,s0,-208
-    21a6:	853e                	mv	a0,a5
-    21a8:	00000097          	auipc	ra,0x0
-    21ac:	87c080e7          	jalr	-1924(ra) # 1a24 <fill_sparse>
-    21b0:	872a                	mv	a4,a0
-    21b2:	87ae                	mv	a5,a1
-    21b4:	f6e43c23          	sd	a4,-136(s0)
-    21b8:	f8f43023          	sd	a5,-128(s0)
-    21bc:	a8cd                	j	22ae <schedule_dm+0x1c4>
+    228a:	609c                	ld	a5,0(s1)
+    228c:	f2f43823          	sd	a5,-208(s0)
+    2290:	649c                	ld	a5,8(s1)
+    2292:	f2f43c23          	sd	a5,-200(s0)
+    2296:	689c                	ld	a5,16(s1)
+    2298:	f4f43023          	sd	a5,-192(s0)
+    229c:	f3040793          	addi	a5,s0,-208
+    22a0:	853e                	mv	a0,a5
+    22a2:	fffff097          	auipc	ra,0xfffff
+    22a6:	7ac080e7          	jalr	1964(ra) # 1a4e <fill_sparse>
+    22aa:	872a                	mv	a4,a0
+    22ac:	87ae                	mv	a5,a1
+    22ae:	f6e43c23          	sd	a4,-136(s0)
+    22b2:	f8f43023          	sd	a5,-128(s0)
+    22b6:	a8cd                	j	23a8 <schedule_dm+0x1c4>
     
+    // missing the deadline
     if (highest_priority_thread->remaining_time > highest_priority_thread->current_deadline - current_time) 
-    21be:	fc843783          	ld	a5,-56(s0)
-    21c2:	4fb4                	lw	a3,88(a5)
-    21c4:	fc843783          	ld	a5,-56(s0)
-    21c8:	4ff8                	lw	a4,92(a5)
-    21ca:	fb042783          	lw	a5,-80(s0)
-    21ce:	40f707bb          	subw	a5,a4,a5
-    21d2:	2781                	sext.w	a5,a5
-    21d4:	8736                	mv	a4,a3
-    21d6:	00e7db63          	bge	a5,a4,21ec <schedule_dm+0x102>
+    22b8:	fc843783          	ld	a5,-56(s0)
+    22bc:	4fb4                	lw	a3,88(a5)
+    22be:	fc843783          	ld	a5,-56(s0)
+    22c2:	4ff8                	lw	a4,92(a5)
+    22c4:	fb042783          	lw	a5,-80(s0)
+    22c8:	40f707bb          	subw	a5,a4,a5
+    22cc:	2781                	sext.w	a5,a5
+    22ce:	8736                	mv	a4,a3
+    22d0:	00e7db63          	bge	a5,a4,22e6 <schedule_dm+0x102>
         return (struct threads_sched_result) { .scheduled_thread_list_member = &highest_priority_thread->thread_list, .allocated_time = 0 };
-    21da:	fc843783          	ld	a5,-56(s0)
-    21de:	02878793          	addi	a5,a5,40
-    21e2:	f6f43c23          	sd	a5,-136(s0)
-    21e6:	f8042023          	sw	zero,-128(s0)
-    21ea:	a0d1                	j	22ae <schedule_dm+0x1c4>
+    22d4:	fc843783          	ld	a5,-56(s0)
+    22d8:	02878793          	addi	a5,a5,40
+    22dc:	f6f43c23          	sd	a5,-136(s0)
+    22e0:	f8042023          	sw	zero,-128(s0)
+    22e4:	a0d1                	j	23a8 <schedule_dm+0x1c4>
     
     struct release_queue_entry *cur;
     int executing_time = highest_priority_thread->remaining_time;
-    21ec:	fc843783          	ld	a5,-56(s0)
-    21f0:	4fbc                	lw	a5,88(a5)
-    21f2:	faf42a23          	sw	a5,-76(s0)
+    22e6:	fc843783          	ld	a5,-56(s0)
+    22ea:	4fbc                	lw	a5,88(a5)
+    22ec:	faf42a23          	sw	a5,-76(s0)
     list_for_each_entry(cur, args.release_queue, thread_list) {
-    21f6:	689c                	ld	a5,16(s1)
-    21f8:	639c                	ld	a5,0(a5)
-    21fa:	faf43023          	sd	a5,-96(s0)
-    21fe:	fa043783          	ld	a5,-96(s0)
-    2202:	17e1                	addi	a5,a5,-8
-    2204:	faf43c23          	sd	a5,-72(s0)
-    2208:	a051                	j	228c <schedule_dm+0x1a2>
+    22f0:	689c                	ld	a5,16(s1)
+    22f2:	639c                	ld	a5,0(a5)
+    22f4:	faf43023          	sd	a5,-96(s0)
+    22f8:	fa043783          	ld	a5,-96(s0)
+    22fc:	17e1                	addi	a5,a5,-8
+    22fe:	faf43c23          	sd	a5,-72(s0)
+    2302:	a051                	j	2386 <schedule_dm+0x1a2>
         int interval = cur->release_time - current_time;
-    220a:	fb843783          	ld	a5,-72(s0)
-    220e:	4f98                	lw	a4,24(a5)
-    2210:	fb042783          	lw	a5,-80(s0)
-    2214:	40f707bb          	subw	a5,a4,a5
-    2218:	f8f42e23          	sw	a5,-100(s0)
+    2304:	fb843783          	ld	a5,-72(s0)
+    2308:	4f98                	lw	a4,24(a5)
+    230a:	fb042783          	lw	a5,-80(s0)
+    230e:	40f707bb          	subw	a5,a4,a5
+    2312:	f8f42e23          	sw	a5,-100(s0)
         if (interval > executing_time) continue;
-    221c:	f9c42703          	lw	a4,-100(s0)
-    2220:	fb442783          	lw	a5,-76(s0)
-    2224:	2701                	sext.w	a4,a4
-    2226:	2781                	sext.w	a5,a5
-    2228:	04e7c763          	blt	a5,a4,2276 <schedule_dm+0x18c>
+    2316:	f9c42703          	lw	a4,-100(s0)
+    231a:	fb442783          	lw	a5,-76(s0)
+    231e:	2701                	sext.w	a4,a4
+    2320:	2781                	sext.w	a5,a5
+    2322:	04e7c763          	blt	a5,a4,2370 <schedule_dm+0x18c>
         if (highest_priority_thread->deadline > cur->thrd->deadline) {
-    222c:	fc843783          	ld	a5,-56(s0)
-    2230:	47f8                	lw	a4,76(a5)
-    2232:	fb843783          	ld	a5,-72(s0)
-    2236:	639c                	ld	a5,0(a5)
-    2238:	47fc                	lw	a5,76(a5)
-    223a:	00e7d763          	bge	a5,a4,2248 <schedule_dm+0x15e>
+    2326:	fc843783          	ld	a5,-56(s0)
+    232a:	47f8                	lw	a4,76(a5)
+    232c:	fb843783          	ld	a5,-72(s0)
+    2330:	639c                	ld	a5,0(a5)
+    2332:	47fc                	lw	a5,76(a5)
+    2334:	00e7d763          	bge	a5,a4,2342 <schedule_dm+0x15e>
             executing_time = interval;
-    223e:	f9c42783          	lw	a5,-100(s0)
-    2242:	faf42a23          	sw	a5,-76(s0)
-    2246:	a80d                	j	2278 <schedule_dm+0x18e>
+    2338:	f9c42783          	lw	a5,-100(s0)
+    233c:	faf42a23          	sw	a5,-76(s0)
+    2340:	a80d                	j	2372 <schedule_dm+0x18e>
         }
         else if (highest_priority_thread->deadline == cur->thrd->deadline && highest_priority_thread->ID > cur->thrd->ID) {
-    2248:	fc843783          	ld	a5,-56(s0)
-    224c:	47f8                	lw	a4,76(a5)
-    224e:	fb843783          	ld	a5,-72(s0)
-    2252:	639c                	ld	a5,0(a5)
-    2254:	47fc                	lw	a5,76(a5)
-    2256:	02f71163          	bne	a4,a5,2278 <schedule_dm+0x18e>
-    225a:	fc843783          	ld	a5,-56(s0)
-    225e:	5fd8                	lw	a4,60(a5)
-    2260:	fb843783          	ld	a5,-72(s0)
-    2264:	639c                	ld	a5,0(a5)
-    2266:	5fdc                	lw	a5,60(a5)
-    2268:	00e7d863          	bge	a5,a4,2278 <schedule_dm+0x18e>
+    2342:	fc843783          	ld	a5,-56(s0)
+    2346:	47f8                	lw	a4,76(a5)
+    2348:	fb843783          	ld	a5,-72(s0)
+    234c:	639c                	ld	a5,0(a5)
+    234e:	47fc                	lw	a5,76(a5)
+    2350:	02f71163          	bne	a4,a5,2372 <schedule_dm+0x18e>
+    2354:	fc843783          	ld	a5,-56(s0)
+    2358:	5fd8                	lw	a4,60(a5)
+    235a:	fb843783          	ld	a5,-72(s0)
+    235e:	639c                	ld	a5,0(a5)
+    2360:	5fdc                	lw	a5,60(a5)
+    2362:	00e7d863          	bge	a5,a4,2372 <schedule_dm+0x18e>
             executing_time = interval;
-    226c:	f9c42783          	lw	a5,-100(s0)
-    2270:	faf42a23          	sw	a5,-76(s0)
-    2274:	a011                	j	2278 <schedule_dm+0x18e>
+    2366:	f9c42783          	lw	a5,-100(s0)
+    236a:	faf42a23          	sw	a5,-76(s0)
+    236e:	a011                	j	2372 <schedule_dm+0x18e>
         if (interval > executing_time) continue;
-    2276:	0001                	nop
+    2370:	0001                	nop
     list_for_each_entry(cur, args.release_queue, thread_list) {
-    2278:	fb843783          	ld	a5,-72(s0)
-    227c:	679c                	ld	a5,8(a5)
-    227e:	f8f43823          	sd	a5,-112(s0)
-    2282:	f9043783          	ld	a5,-112(s0)
-    2286:	17e1                	addi	a5,a5,-8
-    2288:	faf43c23          	sd	a5,-72(s0)
-    228c:	fb843783          	ld	a5,-72(s0)
-    2290:	00878713          	addi	a4,a5,8
-    2294:	689c                	ld	a5,16(s1)
-    2296:	f6f71ae3          	bne	a4,a5,220a <schedule_dm+0x120>
+    2372:	fb843783          	ld	a5,-72(s0)
+    2376:	679c                	ld	a5,8(a5)
+    2378:	f8f43823          	sd	a5,-112(s0)
+    237c:	f9043783          	ld	a5,-112(s0)
+    2380:	17e1                	addi	a5,a5,-8
+    2382:	faf43c23          	sd	a5,-72(s0)
+    2386:	fb843783          	ld	a5,-72(s0)
+    238a:	00878713          	addi	a4,a5,8
+    238e:	689c                	ld	a5,16(s1)
+    2390:	f6f71ae3          	bne	a4,a5,2304 <schedule_dm+0x120>
         }
     }
     
     return (struct threads_sched_result) { .scheduled_thread_list_member = &highest_priority_thread->thread_list, .allocated_time = executing_time };
-    229a:	fc843783          	ld	a5,-56(s0)
-    229e:	02878793          	addi	a5,a5,40
-    22a2:	f6f43c23          	sd	a5,-136(s0)
-    22a6:	fb442783          	lw	a5,-76(s0)
-    22aa:	f8f42023          	sw	a5,-128(s0)
-    22ae:	4701                	li	a4,0
-    22b0:	f7843703          	ld	a4,-136(s0)
-    22b4:	4781                	li	a5,0
-    22b6:	f8043783          	ld	a5,-128(s0)
-    22ba:	893a                	mv	s2,a4
-    22bc:	89be                	mv	s3,a5
-    22be:	874a                	mv	a4,s2
-    22c0:	87ce                	mv	a5,s3
+    2394:	fc843783          	ld	a5,-56(s0)
+    2398:	02878793          	addi	a5,a5,40
+    239c:	f6f43c23          	sd	a5,-136(s0)
+    23a0:	fb442783          	lw	a5,-76(s0)
+    23a4:	f8f42023          	sw	a5,-128(s0)
+    23a8:	4701                	li	a4,0
+    23aa:	f7843703          	ld	a4,-136(s0)
+    23ae:	4781                	li	a5,0
+    23b0:	f8043783          	ld	a5,-128(s0)
+    23b4:	893a                	mv	s2,a4
+    23b6:	89be                	mv	s3,a5
+    23b8:	874a                	mv	a4,s2
+    23ba:	87ce                	mv	a5,s3
 }
-    22c2:	853a                	mv	a0,a4
-    22c4:	85be                	mv	a1,a5
-    22c6:	60ae                	ld	ra,200(sp)
-    22c8:	640e                	ld	s0,192(sp)
-    22ca:	74ea                	ld	s1,184(sp)
-    22cc:	794a                	ld	s2,176(sp)
-    22ce:	79aa                	ld	s3,168(sp)
-    22d0:	6169                	addi	sp,sp,208
-    22d2:	8082                	ret
+    23bc:	853a                	mv	a0,a4
+    23be:	85be                	mv	a1,a5
+    23c0:	60ae                	ld	ra,200(sp)
+    23c2:	640e                	ld	s0,192(sp)
+    23c4:	74ea                	ld	s1,184(sp)
+    23c6:	794a                	ld	s2,176(sp)
+    23c8:	79aa                	ld	s3,168(sp)
+    23ca:	6169                	addi	sp,sp,208
+    23cc:	8082                	ret
