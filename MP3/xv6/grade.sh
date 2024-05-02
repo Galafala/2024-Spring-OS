@@ -1,4 +1,9 @@
-# python3 grade-mp3-WRR.py
+make clean
+python3 grade-mp3-WRR.py
+make clean
 python3 grade-mp3-SJF.py
-# python3 grade-mp3-LST.py
-# python3 grade-mp3-DM.py
+make clean
+python3 grade-mp3-LST.py
+make clean
+python3 grade-mp3-DM.py
+make clean
