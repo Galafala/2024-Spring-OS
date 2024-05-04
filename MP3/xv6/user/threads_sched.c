@@ -53,10 +53,30 @@ struct threads_sched_result schedule_wrr(struct threads_sched_args args)
     struct thread *process_thread = NULL;
     struct thread *th = NULL;
     list_for_each_entry(th, args.run_queue, thread_list) {
+        
         if (process_thread == NULL) {
             process_thread = th;
+            continue;
+        }
+
+        // int thread_arrive_time = th->current_deadline - th->deadline;
+        // int process_thread_arrive_time = process_thread->current_deadline - process_thread->deadline;
+        // thread_arrive_time = process_thread_arrive_time;
+
+        if (process_thread->processing_time != process_thread->remaining_time) {
             break;
         }
+        else if (th->processing_time == th->remaining_time && th->ID < process_thread->ID) {
+            process_thread = th;
+        }
+        // else if (th->processing_time == th->remaining_time) {
+        //     if (thread_arrive_time==process_thread_arrive_time && th->ID < process_thread->ID) {
+        //         process_thread = th;
+        //     }
+        //     else if (thread_arrive_time < process_thread_arrive_time) {
+        //         process_thread = th;
+        //     }
+        // }
     }
     
     int time_quantum = args.time_quantum;
