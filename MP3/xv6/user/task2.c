@@ -23,6 +23,7 @@ int main(int argc, char **argv)
     thread_set_weight(t2, 1);
     thread_add_at(t2, 0);
 
+
     thread_start_threading();
     printf("\nexited\n");
     exit(0);

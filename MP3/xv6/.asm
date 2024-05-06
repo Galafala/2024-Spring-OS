@@ -3679,7 +3679,6 @@ struct threads_sched_result schedule_lst(struct threads_sched_args args)
     1f8a:	4fbc                	lw	a5,88(a5)
     1f8c:	40f707bb          	subw	a5,a4,a5
     1f90:	f6f42e23          	sw	a5,-132(s0)
-        // if (th->current_deadline < current_time) continue;
         int least_slack_time = (least_slack_thread == NULL) ? 0 : least_slack_thread->current_deadline - current_time - least_slack_thread->remaining_time;
     1f94:	fc843783          	ld	a5,-56(s0)
     1f98:	c38d                	beqz	a5,1fba <schedule_lst+0xb8>
