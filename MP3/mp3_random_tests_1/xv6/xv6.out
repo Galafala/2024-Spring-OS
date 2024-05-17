@@ -1,0 +1,23 @@
+*** Now run 'gdb' in another window.
+
+xv6 kernel is booting
+
+init: starting sh
+$ custom_task
+run_queue is empty, sleep for 11 ticks
+dispatch thread#15 at 11: allocated_time=4
+thread#15 finish at 15
+run_queue is empty, sleep for 3 ticks
+dispatch thread#7 at 18: allocated_time=10
+dispatch thread#13 at 28: allocated_time=1
+dispatch thread#12 at 29: allocated_time=7
+thread#12 finish at 36
+dispatch thread#13 at 36: allocated_time=15
+dispatch thread#3 at 51: allocated_time=1
+thread#3 finish at 52
+dispatch thread#13 at 52: allocated_time=2
+thread#13 finish at 54
+dispatch thread#11 at 54: allocated_time=20
+thread#11 finish at 74
+dispatch thread#1 at 74: allocated_time=28
+qemu-system-riscv64: terminating on signal 2

@@ -1,0 +1,96 @@
+riscv64-linux-gnu-ld: warning: cannot find entry symbol main; defaulting to 0000000000000000
+riscv64-linux-gnu-ld: warning: cannot find entry symbol main; defaulting to 0000000000000000
+nmeta 46 (boot, super, log blocks 30 inode blocks 13, bitmap blocks 1) blocks 954 total 1000
+balloc: first 995 blocks have been allocated
+balloc: write bitmap block at sector 45
+*** Now run 'gdb' in another window.
+
+xv6 kernel is booting
+
+init: starting sh
+$ custom_task4
+run_queue is empty, sleep for 3 ticks
+dispatch thread#1 at 3: allocated_time=3
+thread#1 finish at 6
+run_queue is empty, sleep for 2 ticks
+dispatch thread#2 at 8: allocated_time=3
+thread#2 finish at 11
+run_queue is empty, sleep for 2 ticks
+dispatch thread#3 at 13: allocated_time=3
+thread#3 finish at 16
+run_queue is empty, sleep for 2 ticks
+dispatch thread#4 at 18: allocated_time=2
+dispatch thread#13 at 20: allocated_time=4
+dispatch thread#4 at 24: allocated_time=1
+thread#4 finish at 25
+dispatch thread#5 at 25: allocated_time=3
+thread#5 finish at 28
+dispatch thread#13 at 28: allocated_time=4
+dispatch thread#6 at 32: allocated_time=3
+thread#6 finish at 35
+dispatch thread#13 at 35: allocated_time=4
+dispatch thread#7 at 39: allocated_time=3
+thread#7 finish at 42
+dispatch thread#8 at 42: allocated_time=2
+dispatch thread#13 at 44: allocated_time=4
+dispatch thread#9 at 48: allocated_time=3
+thread#9 finish at 51
+dispatch thread#8 at 51: allocated_time=1
+thread#8 finish at 52
+dispatch thread#10 at 52: allocated_time=3
+thread#10 finish at 55
+dispatch thread#13 at 55: allocated_time=4
+dispatch thread#11 at 59: allocated_time=3
+thread#11 finish at 62
+dispatch thread#12 at 62: allocated_time=2
+dispatch thread#14 at 64: allocated_time=4
+dispatch thread#13 at 68: allocated_time=4
+dispatch thread#12 at 72: allocated_time=1
+thread#12 finish at 73
+dispatch thread#14 at 73: allocated_time=4
+dispatch thread#13 at 77: allocated_time=4
+dispatch thread#14 at 81: allocated_time=4
+dispatch thread#15 at 85: allocated_time=4
+dispatch thread#13 at 89: allocated_time=4
+dispatch thread#14 at 93: allocated_time=4
+dispatch thread#15 at 97: allocated_time=4
+dispatch thread#13 at 101: allocated_time=4
+dispatch thread#14 at 105: allocated_time=4
+dispatch thread#15 at 109: allocated_time=4
+dispatch thread#13 at 113: allocated_time=4
+dispatch thread#14 at 117: allocated_time=4
+dispatch thread#15 at 121: allocated_time=4
+dispatch thread#13 at 125: allocated_time=4
+dispatch thread#14 at 129: allocated_time=4
+dispatch thread#15 at 133: allocated_time=4
+dispatch thread#13 at 137: allocated_time=4
+dispatch thread#14 at 141: allocated_time=4
+dispatch thread#15 at 145: allocated_time=4
+dispatch thread#13 at 149: allocated_time=4
+dispatch thread#14 at 153: allocated_time=4
+dispatch thread#15 at 157: allocated_time=4
+dispatch thread#13 at 161: allocated_time=4
+dispatch thread#14 at 165: allocated_time=4
+dispatch thread#15 at 169: allocated_time=4
+dispatch thread#13 at 173: allocated_time=4
+dispatch thread#14 at 177: allocated_time=4
+dispatch thread#15 at 181: allocated_time=4
+dispatch thread#13 at 185: allocated_time=4
+thread#13 finish at 189
+dispatch thread#14 at 189: allocated_time=4
+dispatch thread#15 at 193: allocated_time=4
+dispatch thread#14 at 197: allocated_time=4
+dispatch thread#15 at 201: allocated_time=4
+dispatch thread#14 at 205: allocated_time=4
+dispatch thread#15 at 209: allocated_time=4
+dispatch thread#14 at 213: allocated_time=4
+dispatch thread#15 at 217: allocated_time=4
+dispatch thread#14 at 221: allocated_time=4
+thread#14 finish at 225
+dispatch thread#15 at 225: allocated_time=4
+dispatch thread#15 at 229: allocated_time=4
+dispatch thread#15 at 233: allocated_time=4
+thread#15 finish at 237
+
+exited
+$ qemu-system-riscv64: terminating on signal 15 from pid 42 (make)

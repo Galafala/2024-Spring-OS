@@ -1,0 +1,35 @@
+run_queue is empty, sleep for 11 ticks
+dispatch thread#15 at 11: allocated_time=4
+thread#15 finish at 15
+run_queue is empty, sleep for 3 ticks
+dispatch thread#7 at 18: allocated_time=10
+dispatch thread#13 at 28: allocated_time=1
+dispatch thread#12 at 29: allocated_time=7
+thread#12 finish at 36
+dispatch thread#13 at 36: allocated_time=15
+dispatch thread#3 at 51: allocated_time=1
+thread#3 finish at 52
+dispatch thread#13 at 52: allocated_time=2
+thread#13 finish at 54
+dispatch thread#11 at 54: allocated_time=20
+thread#11 finish at 74
+dispatch thread#1 at 74: allocated_time=28
+thread#1 finish at 102
+dispatch thread#14 at 102: allocated_time=14
+thread#14 finish at 116
+dispatch thread#9 at 116: allocated_time=22
+thread#9 finish at 138
+dispatch thread#7 at 138: allocated_time=32
+thread#7 finish at 170
+dispatch thread#6 at 170: allocated_time=36
+thread#6 finish at 206
+dispatch thread#10 at 206: allocated_time=36
+thread#10 finish at 242
+dispatch thread#2 at 242: allocated_time=38
+thread#2 finish at 280
+dispatch thread#8 at 280: allocated_time=40
+thread#8 finish at 320
+dispatch thread#5 at 320: allocated_time=55
+thread#5 finish at 375
+dispatch thread#4 at 375: allocated_time=58
+thread#4 finish at 433

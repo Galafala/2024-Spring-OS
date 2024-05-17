@@ -351,3 +351,12 @@ make clean
 make grade
 make STUDENT_ID=b08611041 zip
 exit
+cd
+make qemu
+make clean
+make lru
+exit
+make clean
+cd
+make clean
+exit

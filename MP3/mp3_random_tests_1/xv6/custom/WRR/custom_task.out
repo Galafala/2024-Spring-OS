@@ -1,0 +1,111 @@
+run_queue is empty, sleep for 11 ticks
+dispatch thread#15 at 11: allocated_time=4
+thread#15 finish at 15
+run_queue is empty, sleep for 3 ticks
+dispatch thread#5 at 18: allocated_time=6
+dispatch thread#7 at 24: allocated_time=4
+dispatch thread#10 at 28: allocated_time=6
+dispatch thread#5 at 34: allocated_time=6
+dispatch thread#13 at 40: allocated_time=4
+dispatch thread#7 at 44: allocated_time=4
+dispatch thread#12 at 48: allocated_time=6
+dispatch thread#10 at 54: allocated_time=6
+dispatch thread#5 at 60: allocated_time=6
+dispatch thread#4 at 66: allocated_time=2
+dispatch thread#13 at 68: allocated_time=4
+dispatch thread#7 at 72: allocated_time=4
+dispatch thread#3 at 76: allocated_time=1
+thread#3 finish at 77
+dispatch thread#11 at 77: allocated_time=8
+dispatch thread#12 at 85: allocated_time=1
+thread#12 finish at 86
+dispatch thread#10 at 86: allocated_time=6
+dispatch thread#2 at 92: allocated_time=8
+dispatch thread#5 at 100: allocated_time=6
+dispatch thread#4 at 106: allocated_time=2
+dispatch thread#13 at 108: allocated_time=4
+dispatch thread#1 at 112: allocated_time=8
+dispatch thread#7 at 120: allocated_time=4
+dispatch thread#8 at 124: allocated_time=8
+dispatch thread#9 at 132: allocated_time=8
+dispatch thread#11 at 140: allocated_time=8
+dispatch thread#6 at 148: allocated_time=8
+dispatch thread#10 at 156: allocated_time=6
+dispatch thread#14 at 162: allocated_time=4
+dispatch thread#2 at 166: allocated_time=8
+dispatch thread#5 at 174: allocated_time=6
+dispatch thread#4 at 180: allocated_time=2
+dispatch thread#13 at 182: allocated_time=4
+dispatch thread#1 at 186: allocated_time=8
+dispatch thread#7 at 194: allocated_time=4
+dispatch thread#8 at 198: allocated_time=8
+dispatch thread#9 at 206: allocated_time=8
+dispatch thread#11 at 214: allocated_time=4
+thread#11 finish at 218
+dispatch thread#6 at 218: allocated_time=8
+dispatch thread#10 at 226: allocated_time=6
+dispatch thread#14 at 232: allocated_time=4
+dispatch thread#2 at 236: allocated_time=8
+dispatch thread#5 at 244: allocated_time=6
+dispatch thread#4 at 250: allocated_time=2
+dispatch thread#13 at 252: allocated_time=2
+thread#13 finish at 254
+dispatch thread#1 at 254: allocated_time=8
+dispatch thread#7 at 262: allocated_time=4
+dispatch thread#8 at 266: allocated_time=8
+dispatch thread#9 at 274: allocated_time=6
+thread#9 finish at 280
+dispatch thread#6 at 280: allocated_time=8
+dispatch thread#10 at 288: allocated_time=6
+thread#10 finish at 294
+dispatch thread#14 at 294: allocated_time=4
+dispatch thread#2 at 298: allocated_time=8
+dispatch thread#5 at 306: allocated_time=6
+dispatch thread#4 at 312: allocated_time=2
+dispatch thread#1 at 314: allocated_time=4
+thread#1 finish at 318
+dispatch thread#7 at 318: allocated_time=4
+dispatch thread#8 at 322: allocated_time=8
+dispatch thread#6 at 330: allocated_time=8
+dispatch thread#14 at 338: allocated_time=2
+thread#14 finish at 340
+dispatch thread#2 at 340: allocated_time=6
+thread#2 finish at 346
+dispatch thread#5 at 346: allocated_time=6
+dispatch thread#4 at 352: allocated_time=2
+dispatch thread#7 at 354: allocated_time=4
+dispatch thread#8 at 358: allocated_time=8
+thread#8 finish at 366
+dispatch thread#6 at 366: allocated_time=4
+thread#6 finish at 370
+dispatch thread#5 at 370: allocated_time=6
+dispatch thread#4 at 376: allocated_time=2
+dispatch thread#7 at 378: allocated_time=4
+dispatch thread#5 at 382: allocated_time=1
+thread#5 finish at 383
+dispatch thread#4 at 383: allocated_time=2
+dispatch thread#7 at 385: allocated_time=4
+dispatch thread#4 at 389: allocated_time=2
+dispatch thread#7 at 391: allocated_time=2
+thread#7 finish at 393
+dispatch thread#4 at 393: allocated_time=2
+dispatch thread#4 at 395: allocated_time=2
+dispatch thread#4 at 397: allocated_time=2
+dispatch thread#4 at 399: allocated_time=2
+dispatch thread#4 at 401: allocated_time=2
+dispatch thread#4 at 403: allocated_time=2
+dispatch thread#4 at 405: allocated_time=2
+dispatch thread#4 at 407: allocated_time=2
+dispatch thread#4 at 409: allocated_time=2
+dispatch thread#4 at 411: allocated_time=2
+dispatch thread#4 at 413: allocated_time=2
+dispatch thread#4 at 415: allocated_time=2
+dispatch thread#4 at 417: allocated_time=2
+dispatch thread#4 at 419: allocated_time=2
+dispatch thread#4 at 421: allocated_time=2
+dispatch thread#4 at 423: allocated_time=2
+dispatch thread#4 at 425: allocated_time=2
+dispatch thread#4 at 427: allocated_time=2
+dispatch thread#4 at 429: allocated_time=2
+dispatch thread#4 at 431: allocated_time=2
+thread#4 finish at 433

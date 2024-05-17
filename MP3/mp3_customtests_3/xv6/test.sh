@@ -1,0 +1,9 @@
+make clean
+python3 custom-WRR.py
+make clean
+python3 custom-SJF.py
+make clean
+python3 custom-LST.py
+make clean
+python3 custom-DM.py
+make clean

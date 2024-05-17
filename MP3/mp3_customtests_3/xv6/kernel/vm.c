@@ -5,20 +5,6 @@
 #include "riscv.h"
 #include "defs.h"
 #include "fs.h"
-#include "spinlock.h"
-#include "proc.h"
-#include "vm.h"
-#include "fifo.h"
-#include "lru.h"
-
-// NTU OS 2024
-// you may want to declare page replacement buffer here
-// or other files
-#ifdef PG_REPLACEMENT_USE_LRU
-lru_t lru;
-#elif defined(PG_REPLACEMENT_USE_FIFO)
-queue_t q;
-#endif
 
 /*
  * the kernel's page table.
@@ -59,7 +45,7 @@ kvmmake(void)
 
   // map kernel stacks
   proc_mapstacks(kpgtbl);
-
+  
   return kpgtbl;
 }
 
@@ -102,58 +88,21 @@ walk(pagetable_t pagetable, uint64 va, int alloc)
     if(*pte & PTE_V) {
       pagetable = (pagetable_t)PTE2PA(*pte);
     } else {
-      if(!alloc || ((pagetable = (pde_t*)kalloc()) == 0))
+      if(!alloc || (pagetable = (pde_t*)kalloc()) == 0)
         return 0;
       memset(pagetable, 0, PGSIZE);
       *pte = PA2PTE(pagetable) | PTE_V;
     }
   }
-
-  pte_t *pte = &pagetable[PX(0, va)];
-  // NTU OS 2024
-  // pte is accessed, so determine how
-  // it affects the page replacement buffer here
-  
-  if (va == 0 || va == 0x1000 || va == 0x2000) return pte;
-  #ifdef PG_REPLACEMENT_USE_LRU
-  // TODO
-  int idx = lru_find(&lru, (uint64)pte);
-  if (idx != -1) lru_pop(&lru, idx); // pte is in the lru
-  else if (lru_full(&lru)){ // pte is not in the lru and the lru is full;
-    for (int i = 0; i < lru.size; i++) {
-      pte_t *tmp = (pte_t *) lru.bucket[i];
-      if (*tmp & PTE_P) continue;
-      idx = i;
-      lru_pop(&lru, idx);
-      break;
-    }
-    if (idx == -1) return pte;
-  }
-  lru_push(&lru, (uint64)pte);
-  #elif defined(PG_REPLACEMENT_USE_FIFO)
-  // TODO
-  int idx = q_find(&q, (uint64)pte);
-  if (idx != -1) return pte;
-  else if (q_full(&q)){
-    for (int i = 0; i < q.size; i++) {
-      pte_t *tmp = (pte_t *) q.bucket[i];
-      if (*tmp & PTE_P) continue;
-      idx = i;
-      q_pop_idx(&q, idx);
-      break;
-    }
-    if (idx == -1) return pte;
-  }
-  q_push(&q, (uint64)pte);
-  #endif
-  return pte;
+  return &pagetable[PX(0, va)];
 }
 
 // Look up a virtual address, return the physical address,
 // or 0 if not mapped.
 // Can only be used to look up user pages.
 uint64
-walkaddr(pagetable_t pagetable, uint64 va) {
+walkaddr(pagetable_t pagetable, uint64 va)
+{
   pte_t *pte;
   uint64 pa;
 
@@ -190,15 +139,14 @@ mappages(pagetable_t pagetable, uint64 va, uint64 size, uint64 pa, int perm)
 {
   uint64 a, last;
   pte_t *pte;
-  if(size == 0)
-    panic("mappages: size");
+
   a = PGROUNDDOWN(va);
   last = PGROUNDDOWN(va + size - 1);
   for(;;){
     if((pte = walk(pagetable, a, 1)) == 0)
       return -1;
     if(*pte & PTE_V)
-      panic("mappages: remap");
+      panic("remap");
     *pte = PA2PTE(pa) | perm | PTE_V;
     if(a == last)
       break;
@@ -223,21 +171,8 @@ uvmunmap(pagetable_t pagetable, uint64 va, uint64 npages, int do_free)
   for(a = va; a < va + npages*PGSIZE; a += PGSIZE){
     if((pte = walk(pagetable, a, 0)) == 0)
       panic("uvmunmap: walk");
-
-    if(*pte & PTE_S) {
-      /* NTU OS 2024 */
-      /* int blockno = PTE2BLOCKNO(*pte); */
-      /* bfree_page(ROOTDEV, blockno); */
-      /* HACK: Do nothing here.
-         The wait() syscall holds holds the proc lock and calls into this method.
-         It causes bfree_page() to panic. Here we leak the swapped pages anyway.
-      */
-      continue;
-    }
-
     if((*pte & PTE_V) == 0)
-      continue;
-
+      panic("uvmunmap: not mapped");
     if(PTE_FLAGS(*pte) == PTE_V)
       panic("uvmunmap: not a leaf");
     if(do_free){
@@ -252,7 +187,7 @@ uvmunmap(pagetable_t pagetable, uint64 va, uint64 npages, int do_free)
 // returns 0 if out of memory.
 pagetable_t
 uvmcreate()
-{ 
+{
   pagetable_t pagetable;
   pagetable = (pagetable_t) kalloc();
   if(pagetable == 0)
@@ -395,6 +330,7 @@ void
 uvmclear(pagetable_t pagetable, uint64 va)
 {
   pte_t *pte;
+  
   pte = walk(pagetable, va, 0);
   if(pte == 0)
     panic("uvmclear");
@@ -492,193 +428,4 @@ copyinstr(pagetable_t pagetable, char *dst, uint64 srcva, uint64 max)
   } else {
     return -1;
   }
-}
-
-/* NTU OS 2024 */
-/* Map pages to physical memory or swap space. */
-int madvise(uint64 base, uint64 len, int advice) {
-  struct proc *p = myproc();
-  pagetable_t pgtbl = p->pagetable;
-
-  if (base > p->sz || (base + len) > p->sz) {
-    return -1;
-  }
-
-  if (len == 0) {
-    return 0;
-  }
-
-  uint64 begin = PGROUNDDOWN(base);
-  uint64 last = PGROUNDDOWN(base + len - 1);
-
-  if (advice == MADV_NORMAL) { // Expands to 0
-    // TODO
-    return 0;
-  } 
-  else if (advice == MADV_WILLNEED) { // Expands to 1
-    // TODO
-    begin_op();
-    for (uint64 va = begin; va <= last; va += PGSIZE) {
-      pte_t *pte = walk(pgtbl, va, 0);
-      if (pte != 0 && !(*pte & PTE_V)) {
-        uint64 blk = PTE2BLOCKNO(*pte);
-        char *pa = kalloc();
-        memset(pa, 0, PGSIZE);
-        read_page_from_disk(ROOTDEV, pa, blk);
-        bfree_page(ROOTDEV, blk);
-        mappages(pgtbl, va, PGSIZE, (uint64)pa, PTE_FLAGS(*pte) & ~PTE_S);
-      }
-    }
-    end_op();
-    return 0;
-  } 
-  else if (advice == MADV_DONTNEED) { // Expands to 2. Do not expect any access in the near future.
-    begin_op();
-
-    pte_t *pte;
-    for (uint64 va = begin; va <= last; va += PGSIZE) {
-      pte = walk(pgtbl, va, 0);
-      if (pte != 0 && (*pte & PTE_V)) {
-        char *pa = (char*) swap_page_from_pte(pte);
-        if (pa == 0) {
-          end_op();
-          return -1;
-        }
-        kfree(pa);
-        
-        // NTU OS 2024
-        // Swapped out page should not appear in
-        // page replacement buffer
-        #ifdef PG_REPLACEMENT_USE_LRU
-        // TODO
-        int idx = lru_find(&lru, (uint64)pte);
-        if (idx != -1) lru_pop(&lru, idx);
-        #elif defined(PG_REPLACEMENT_USE_FIFO)
-        // TODO
-        int idx = q_find(&q, (uint64)pte);
-        if (idx != -1) q_pop_idx(&q, idx);
-        #endif
-      }
-    }
-
-    end_op();
-    return 0;
-  } 
-  else if(advice == MADV_PIN) { // Expands to 3
-    // TODO
-    for (uint64 va = begin; va <= last; va += PGSIZE) {
-      pte_t *pte = walk(pgtbl, va, 0);
-      if (pte != 0 && (*pte & PTE_V)) {
-        *pte |= PTE_P;
-      }
-    }
-    
-  } 
-  else if(advice == MADV_UNPIN) { // Expands to 4
-    // TODO
-    for (uint64 va = begin; va <= last; va += PGSIZE) {
-      pte_t *pte = walk(pgtbl, va, 0);
-      if (pte != 0 && (*pte & PTE_V)) {
-        *pte &= ~PTE_P;
-      }
-    }
-  }
-  return -1;
-}
-
-/* NTU OS 2024 */
-/* print pages from page replacement buffers */
-#if defined(PG_REPLACEMENT_USE_LRU) || defined(PG_REPLACEMENT_USE_FIFO)
-void pgprint() {
-  #ifdef PG_REPLACEMENT_USE_LRU
-  // TODO
-  printf("Page replacement buffers\n");
-  printf("------Start------------\n");
-  for (int i = 0; i < lru.size; i++) {
-    printf("pte: %p\n", lru.bucket[i]);
-  }
-  printf("------End--------------\n");
-  #elif defined(PG_REPLACEMENT_USE_FIFO)
-  // TODO
-  printf("Page replacement buffers\n");
-  printf("------Start------------\n");
-  for (int i = 0; i < q.size; i++) {
-    printf("pte: %p\n", q.bucket[i]);
-  }
-  printf("------End--------------\n");
-  #endif
-}
-#endif
-
-/* NTU OS 2024 */
-/* Print multi layer page table. */
-uint64 calculate_va(int index, int level, uint64 preVa) {
-    int LEVEL = 3;
-    int bits_per_level = 9;
-    int offset = bits_per_level * (LEVEL - level - 1) + 12;
-    uint64 va = index;
-    va = va << offset;
-    va += preVa;
-    return va;
-}
-
-void print_format(pte_t *pte, uint64 va, int page_num, int level, int isLastOne, int isLastTwo){
-  if (level == 0){
-    printf("+-- %d: ", page_num);
-  }
-  else if (level == 1){
-    if (isLastOne) printf(" ");
-    else printf("|");
-    printf("   +-- %d: ", page_num);
-  }
-  else if (level == 2){
-    if (isLastOne) printf("    ");
-    else printf("|   ");
-    if (isLastTwo) printf(" ");
-    else printf("|");
-    printf("   +-- %d: ", page_num);
-
-  }
-  if (*pte & PTE_V) {
-    printf("pte=%p va=%p pa=%p", pte, va, PTE2PA(*pte));
-    printf(" V");
-  }
-  else{
-    printf("pte=%p va=%p blockno=%p", pte, va, PTE2BLOCKNO(*pte));
-  }
-  if (*pte & PTE_R) printf(" R");
-  if (*pte & PTE_W) printf(" W");
-  if (*pte & PTE_X) printf(" X");
-  if (*pte & PTE_U) printf(" U");
-  if (*pte & PTE_S) printf(" S");
-  else if (*pte & PTE_D) printf(" D");
-  if (*pte & PTE_P) printf(" P");
-
-  printf("\n");
-}
-
-void vmTraversal(pagetable_t pagetable, int level, uint64 preVa, int lastOne, int lastTwo, int isLastOne, int isLastTwo) {
-  if (level > 2) return;
-  if (level == 0) for(int i = 0; i < 512; i++) if (pagetable[i]) lastOne = i;
-  if (level == 1) for(int i = 0; i < 512; i++) if (pagetable[i]) lastTwo = i;
-  for (int i = 0; i < 512; i++) {
-    pte_t *pte = &pagetable[i];
-    if (!*pte) continue;
-    if (level == 0) {
-      preVa = 0;
-      isLastOne = (i == lastOne);
-    }
-    else if (level == 1) {
-      isLastTwo = (i == lastTwo);
-    }
-    uint64 va = calculate_va(i, level, preVa);
-    print_format(pte, va, i, level, isLastOne, isLastTwo);
-    vmTraversal((pagetable_t)PTE2PA(*pte), level+1, va, lastOne, lastTwo, isLastOne, isLastTwo);
-  }
-}
-
-void vmprint(pagetable_t pagetable) {
-  /* TODO */
-  printf("page table %p\n", pagetable);
-  vmTraversal(pagetable, 0, 0, 0, 0, 0, 0);
 }

@@ -1,1 +1,0 @@
-docker run --rm -it -v $PWD:/root ntuos/mp2
