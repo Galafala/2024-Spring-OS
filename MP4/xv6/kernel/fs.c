@@ -392,15 +392,15 @@ bmap(struct inode *ip, uint bn)
 
   if(bn < NINDIRECT){
     // Load indirect block, allocating if necessary.
-    uint single_indirect_bn = (bn / NBLOCK) + NDIRECT;
-    if((addr = ip->addrs[single_indirect_bn]) == 0)
-      ip->addrs[single_indirect_bn] = addr = balloc(ip->dev);
+    uint single_addr_idx = (bn / NBLOCK) + NDIRECT;
+    if((addr = ip->addrs[single_addr_idx]) == 0)
+      ip->addrs[single_addr_idx] = addr = balloc(ip->dev);
 
     bp = bread(ip->dev, addr);
     a = (uint*)bp->data;
-    uint addr_bn = bn % NBLOCK;
-    if((addr = a[addr_bn]) == 0){
-      a[addr_bn] = addr = balloc(ip->dev);
+    uint single_bn = bn % NBLOCK;
+    if((addr = a[single_bn]) == 0){
+      a[single_bn] = addr = balloc(ip->dev);
       log_write(bp);
     }
     brelse(bp);

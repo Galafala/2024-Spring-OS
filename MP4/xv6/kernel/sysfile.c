@@ -16,6 +16,8 @@
 #include "file.h"
 #include "fcntl.h"
 
+void traverse_dir(struct inode *dp, char *target, char *userbuf, int bufsize, char *path);
+
 // Fetch the nth word-sized system call argument as a file descriptor
 // and return both the descriptor and the corresponding struct file.
 static int
@@ -293,6 +295,8 @@ sys_open(void)
   // and return the corresponding file.
 
   char path[MAXPATH];
+  char symlink_path[MAXPATH];
+  int depth;
   int fd, omode;
   struct file *f;
   struct inode *ip;
@@ -303,23 +307,39 @@ sys_open(void)
 
   begin_op();
 
-  if(omode & O_CREATE){
-    ip = create(path, T_FILE, 0, 0);
-    if(ip == 0){
-      end_op();
-      return -1;
+
+  for (depth = 0; depth < 20; depth++){
+    if(omode & O_CREATE){
+      ip = create(path, T_FILE, 0, 0); // The file is created if it does not exist
+      if(ip == 0){
+        end_op();
+        return -1;
+      }
+    } else {
+      if((ip = namei(path)) == 0){ // look up the inode of the file with the given path
+        end_op();
+        return -1;
+      }
+      ilock(ip);
+      if (ip->type == T_SYMLINK && !(omode & O_NOFOLLOW)) {
+        // Read the symlink target
+        if (readi(ip, 0, (uint64)symlink_path, 0, MAXPATH) < 0 || depth == 19) {
+          iunlockput(ip);
+          end_op();
+          return -1;
+        }
+        symlink_path[MAXPATH-1] = '\0'; // Ensure null-terminated string
+        strncpy(path, symlink_path, MAXPATH); // Copy symlink path to path
+        iunlockput(ip);
+        continue; // Continue to follow the next symlink
+      }
+      if(ip->type == T_DIR && omode != O_RDONLY){ // The file is a directory and it is not opened for read only
+        iunlockput(ip);
+        end_op();
+        return -1;
+      }
     }
-  } else {
-    if((ip = namei(path)) == 0){
-      end_op();
-      return -1;
-    }
-    ilock(ip);
-    if(ip->type == T_DIR && omode != O_RDONLY){
-      iunlockput(ip);
-      end_op();
-      return -1;
-    }
+    break;
   }
 
   if(ip->type == T_DEVICE && (ip->major < 0 || ip->major >= NDEV)){
@@ -496,13 +516,29 @@ sys_symlink(void)
 {
   // TODO: symbolic link
   // You should implement this symlink system call.
-  // char target[MAXPATH], path[MAXPATH];
-  // struct inode *ip;
+  char target[MAXPATH], path[MAXPATH];
+  struct inode *ip;
 
-  // if(argstr(0, target, MAXPATH) < 0 || argstr(1, path, MAXPATH) < 0)
-  //   return -1;
+  if(argstr(0, target, MAXPATH) < 0 || argstr(1, path, MAXPATH) < 0)
+    return -1;
   
-  panic("You should implement symlink system call.");
+  begin_op();
+
+  if((ip = create(path, T_SYMLINK, 0, 0)) == 0){
+    end_op();
+    return -1;
+  }
+
+  // write the target path to the inode data field
+  // ilock(ip);
+  if(writei(ip, 0, (uint64)target, 0, strlen(target)) != strlen(target)){
+    iunlockput(ip);
+    end_op();
+    return -1;
+  }
+
+  iunlockput(ip);
+  end_op();
 
   return 0;
 }
@@ -511,25 +547,96 @@ uint64
 sys_revreadlink(void) 
 {
   // TODO: Find all symbolic links that point to 'target'
-  // char target[MAXPATH];
-  // uint64 bufaddr;
-  // int bufsize;
+  /*
+  buf: A user-space buffer where the paths of the symbolic links will be stored. 
+  You must implement the functionality to write the resulting symbolic link paths directly into this buf.
+  The buf should be managed carefully to handle string operations efficiently:
+  •No leading whitespace at the beginning of the buf.
+  •A single space must separate each path; ensure only one space is used.
+  •No need of any trailing characters, spaces after the final path.
+  •All paths must be absolute paths, beginning from the root directory (start with /).
+  •If there are multiple paths, the order of these paths in the buffer can vary.
+  */
+  char target[MAXPATH];
+  uint64 bufaddr;
+  int bufsize;
 
-  // if(argstr(0, target, MAXPATH) < 0 || argaddr(1, &bufaddr) < 0 || argint(2, &bufsize) < 0)
-  //   return -1;
+  if(argstr(0, target, MAXPATH) < 0 || argaddr(1, &bufaddr) < 0 || argint(2, &bufsize) < 0)
+    return -1;
 
-  // char userbuf[bufsize];
-  // memset(userbuf, 0, sizeof(userbuf));
+  char userbuf[bufsize];
+  memset(userbuf, 0, sizeof(userbuf));
 
-  // implement the code
+  // implement the code to find all symbolic links that point to 'target'
+  begin_op();
+
+  struct inode *dp;
+  dp = namei("/");
+  traverse_dir(dp, target, userbuf, bufsize, "/");
+  
+  end_op();
 
   // Copy the result from kernel to user space, userbuf should store all symbolic links that point to 'target'
-  // if(copyout(myproc()->pagetable, bufaddr, userbuf, strlen(userbuf)) < 0)
-  //   return -1;
+  if(copyout(myproc()->pagetable, bufaddr, userbuf, strlen(userbuf)) < 0)
+    return -1;
 
   // Return the number of bytes written to user buffer
-    
-  panic("sys_revreadlink is not implemented yet");
+  return strlen(userbuf);
+}
 
-  return -1;
+void
+traverse_dir(struct inode *dp, char *target, char *userbuf, int bufsize, char *path)
+{ 
+  struct dirent de;
+  struct inode *ip;
+  char newpath[MAXPATH] = "";
+
+  ilock(dp);
+
+  for(int i = 0; i < dp->size; i += sizeof(de)){
+    if(readi(dp, 0, (uint64)&de, i, sizeof(de)) != sizeof(de)) // read the directory entry
+      continue;
+    if(de.inum == 0) // skip empty directory entries
+      continue;
+    if(strncmp(de.name, ".", DIRSIZ) == 0 || strncmp(de.name, "..", DIRSIZ) == 0) // skip "." and ".."
+      continue;
+    if((ip = iget(dp->dev, de.inum)) == 0) // get the inode of the file
+      continue;
+
+    if (strlen(path) + strlen(de.name) + 1 >= MAXPATH) {
+      iunlock(ip);
+      continue;
+    }
+    
+    strncpy(newpath, path, MAXPATH);
+    if (strncmp(path, "/", strlen(path)) != 0)
+      strcat(newpath, "/");
+    strcat(newpath, de.name);
+    ilock(ip);    
+
+    if(ip->type == T_SYMLINK){
+      char link[MAXPATH];
+      memset(link, 0, sizeof(link));
+      if(readi(ip, 0, (uint64)link, 0, MAXPATH) < 0){
+        iunlock(ip);
+        continue;
+      }
+      if(strncmp(link, target, strlen(link)) == 0){
+        if(strlen(userbuf) > 0)
+              strcat(userbuf, " ");
+        strcat(userbuf, newpath);      
+      }
+      iunlock(ip);
+    } 
+    else if(ip->type == T_DIR){
+      iunlock(ip);
+      traverse_dir(ip, target, userbuf, bufsize, newpath);
+    }
+    else{
+      iunlock(ip);
+    }
+  }
+
+  iunlockput(dp);
+  return;
 }
