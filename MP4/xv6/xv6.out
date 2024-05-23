@@ -5,9 +5,11 @@ xv6 kernel is booting
 hart 1 starting
 hart 2 starting
 init: starting sh
-$ mp4_2
+$ mp4_3
 public testcase 1:
-public testcase 1: ok
+/test2
 public testcase 2:
-public testcase 2: ok
-$ qemu-system-riscv64: terminating on signal 15 from pid 7065 (make)
+/testb /testc /testd
+public testcase 3:
+/testdir1/testx /testdir1/testy /testdir1/testz
+$ qemu-system-riscv64: terminating on signal 15 from pid 749 (make)

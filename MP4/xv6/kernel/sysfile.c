@@ -305,8 +305,9 @@ sys_open(void)
   if((n = argstr(0, path, MAXPATH)) < 0 || argint(1, &omode) < 0)
     return -1;
 
-  begin_op();
+  path[MAXPATH-1] = '\0';
 
+  begin_op();
 
   for (depth = 0; depth < 20; depth++){
     if(omode & O_CREATE){
@@ -315,7 +316,8 @@ sys_open(void)
         end_op();
         return -1;
       }
-    } else {
+    } 
+    else {
       if((ip = namei(path)) == 0){ // look up the inode of the file with the given path
         end_op();
         return -1;
@@ -522,6 +524,9 @@ sys_symlink(void)
   if(argstr(0, target, MAXPATH) < 0 || argstr(1, path, MAXPATH) < 0)
     return -1;
   
+  path[MAXPATH-1] = '\0';
+  target[MAXPATH-1] = '\0';
+
   begin_op();
 
   if((ip = create(path, T_SYMLINK, 0, 0)) == 0){
@@ -530,8 +535,7 @@ sys_symlink(void)
   }
 
   // write the target path to the inode data field
-  // ilock(ip);
-  if(writei(ip, 0, (uint64)target, 0, strlen(target)) != strlen(target)){
+  if(writei(ip, 0, (uint64)target, 0, MAXPATH) != MAXPATH){
     iunlockput(ip);
     end_op();
     return -1;
@@ -547,16 +551,6 @@ uint64
 sys_revreadlink(void) 
 {
   // TODO: Find all symbolic links that point to 'target'
-  /*
-  buf: A user-space buffer where the paths of the symbolic links will be stored. 
-  You must implement the functionality to write the resulting symbolic link paths directly into this buf.
-  The buf should be managed carefully to handle string operations efficiently:
-  •No leading whitespace at the beginning of the buf.
-  •A single space must separate each path; ensure only one space is used.
-  •No need of any trailing characters, spaces after the final path.
-  •All paths must be absolute paths, beginning from the root directory (start with /).
-  •If there are multiple paths, the order of these paths in the buffer can vary.
-  */
   char target[MAXPATH];
   uint64 bufaddr;
   int bufsize;
@@ -567,7 +561,7 @@ sys_revreadlink(void)
   char userbuf[bufsize];
   memset(userbuf, 0, sizeof(userbuf));
 
-  // implement the code to find all symbolic links that point to 'target'
+  // Implement the code to find all symbolic links that point to 'target'
   begin_op();
 
   struct inode *dp;
@@ -589,7 +583,7 @@ traverse_dir(struct inode *dp, char *target, char *userbuf, int bufsize, char *p
 { 
   struct dirent de;
   struct inode *ip;
-  char newpath[MAXPATH] = "";
+  char newpath[MAXPATH];
 
   ilock(dp);
 
@@ -609,9 +603,10 @@ traverse_dir(struct inode *dp, char *target, char *userbuf, int bufsize, char *p
     }
     
     strncpy(newpath, path, MAXPATH);
-    if (strncmp(path, "/", strlen(path)) != 0)
-      strcat(newpath, "/");
+    newpath[MAXPATH-1] = '\0';
+    if (strncmp(path, "/", strlen(path)) != 0) strcat(newpath, "/");
     strcat(newpath, de.name);
+
     ilock(ip);    
 
     if(ip->type == T_SYMLINK){
@@ -622,8 +617,7 @@ traverse_dir(struct inode *dp, char *target, char *userbuf, int bufsize, char *p
         continue;
       }
       if(strncmp(link, target, strlen(link)) == 0){
-        if(strlen(userbuf) > 0)
-              strcat(userbuf, " ");
+        if(strlen(userbuf) > 0) strcat(userbuf, " ");
         strcat(userbuf, newpath);      
       }
       iunlock(ip);

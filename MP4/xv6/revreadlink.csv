@@ -35,7 +35,7 @@ riscv64-linux-gnu-ld: warning: cannot find entry symbol _entry; defaulting to 00
 riscv64-linux-gnu-objdump -S kernel/kernel > kernel/kernel.asm
 riscv64-linux-gnu-objdump -t kernel/kernel | sed '1,/SYMBOL TABLE/d; s/ .* / /; /^$/d' > kernel/kernel.sym
 make[1]: Leaving directory '/home/xv6'
-Testing reverse readlink (public): (61.9s) 
+Testing reverse readlink (public): (71.5s) 
   Reverse readlink: public testcase 1 (8 points): OK 
   Reverse readlink: public testcase 2 (8 points): OK 
   Reverse readlink: public testcase 3 (8 points): OK 
